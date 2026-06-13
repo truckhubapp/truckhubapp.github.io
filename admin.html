@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Адміністративна панель — Truck Hub UA</title>
+<meta name="description" content="Адміністративна панель платформи Truck Hub. Управління користувачами, верифікація, фінанси, SafePay, арбітраж спорів, аналітика.">
+<meta name="keywords" content="адмін панель логістика, truck hub admin, верифікація перевізників">
+<meta name="author" content="Truck Hub UA">
+<meta name="robots" content="index, follow">
+<meta name="language" content="uk">
+<link rel="canonical" href="https://truckhub.ua/admin.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Адмін панель — Truck Hub UA">
+<meta property="og:description" content="Управління платформою Truck Hub — верифікація, фінанси, аналітика.">
+<meta property="og:url" content="https://truckhub.ua/admin.html">
+<meta property="og:image" content="https://truckhub.ua/og-image.jpg">
+<meta property="og:site_name" content="Truck Hub UA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Адмін панель — Truck Hub UA">
+<meta name="twitter:description" content="Управління платформою Truck Hub — верифікація, фінанси, аналітика.">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --dark:#040d1e;--dark2:#071428;--dark3:#0a1a35;
+  --blue:#1a4a8a;--ua-blue:#005bbb;--ua-yellow:#ffd500;
+  --accent:#f0a500;--accent2:#ffbe2e;--cyan:#00c8ff;
+  --green:#00d68f;--red:#ff4d4d;--orange:#ff8c00;--purple:#8b5cf6;
+  --text:#ccdcf0;--text2:#8aaccc;--white:#fff;
+  --card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);
+  --sidebar:240px;
+}
+html,body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ua-blue) 50%,var(--ua-yellow) 50%);z-index:9999}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;top:3px;left:0;width:var(--sidebar);height:calc(100vh - 3px);background:var(--dark2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sb-head{padding:16px 20px;border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:8px;font-family:'Exo 2',sans-serif;font-weight:800;font-size:16px;text-decoration:none;color:var(--white)}
+.logo span{color:var(--accent)}
+.logo-badge{background:var(--blue);color:var(--white);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px}
+.admin-badge{display:flex;align-items:center;gap:6px;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);border-radius:6px;padding:5px 10px;margin-top:10px;font-size:11px;font-weight:700;color:#a78bfa}
+
+.sb-user{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--white);flex-shrink:0}
+.sb-uname{font-size:13px;font-weight:600;color:var(--white)}
+.sb-urole{font-size:10px;color:var(--text2)}
+
+.sb-nav{padding:8px 0;flex:1}
+.sb-sec{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text2);padding:8px 20px 3px;margin-top:6px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:9px 20px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .2s;position:relative}
+.sb-item:hover{background:rgba(255,255,255,.03);color:var(--white)}
+.sb-item.on{background:rgba(240,165,0,.08);color:var(--accent)}
+.sb-item.on::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:0 2px 2px 0}
+.sb-item .ico{font-size:14px;width:18px;text-align:center}
+.sb-badge{margin-left:auto;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px}
+.sb-badge.red{background:var(--red);color:var(--white)}
+.sb-badge.amber{background:rgba(240,165,0,.15);color:var(--accent);border:1px solid rgba(240,165,0,.3)}
+.sb-badge.green{background:rgba(0,214,143,.15);color:var(--green);border:1px solid rgba(0,214,143,.3)}
+
+.sb-bottom{padding:12px 20px;border-top:1px solid var(--border)}
+.btn-logout{display:flex;align-items:center;gap:8px;width:100%;background:transparent;border:1px solid var(--border);border-radius:7px;padding:8px 12px;color:var(--text2);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar);min-height:100vh;padding-top:3px}
+
+.topbar{height:56px;background:rgba(4,13,30,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;justify-content:space-between;position:sticky;top:3px;z-index:50}
+.tb-left{display:flex;align-items:center;gap:8px}
+.tb-left h2{font-family:'Exo 2',sans-serif;font-size:17px;font-weight:700;color:var(--white)}
+.tb-left .sep{color:var(--border)}
+.tb-left .sub{font-size:12px;color:var(--text2)}
+.tb-right{display:flex;align-items:center;gap:10px}
+.tb-time{font-size:12px;color:var(--text2);font-family:'Exo 2',sans-serif}
+.tb-notif{width:32px;height:32px;background:var(--card);border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;position:relative}
+.tb-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;background:var(--red);border-radius:50%;border:2px solid var(--dark)}
+.tb-env{font-size:10px;font-weight:700;background:rgba(255,77,77,.12);border:1px solid rgba(255,77,77,.25);color:var(--red);border-radius:4px;padding:3px 8px}
+
+.content{padding:24px 28px}
+.panel{display:none}.panel.show{display:block}
+.ua-stripe{height:2px;background:linear-gradient(90deg,var(--ua-blue),var(--ua-yellow));border-radius:1px;margin-bottom:20px}
+
+/* ── COMMON ── */
+.row-cards{display:grid;gap:14px;margin-bottom:20px}
+.r4{grid-template-columns:repeat(4,1fr)}
+.r3{grid-template-columns:repeat(3,1fr)}
+.r2{grid-template-columns:1fr 1fr}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px;position:relative;overflow:hidden;transition:all .3s}
+.kpi:hover{transform:translateY(-2px)}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi.k1::after{background:linear-gradient(90deg,var(--accent),transparent)}
+.kpi.k2::after{background:linear-gradient(90deg,var(--green),transparent)}
+.kpi.k3::after{background:linear-gradient(90deg,var(--cyan),transparent)}
+.kpi.k4::after{background:linear-gradient(90deg,var(--red),transparent)}
+.kpi.k5::after{background:linear-gradient(90deg,var(--purple),transparent)}
+.kpi.k6::after{background:linear-gradient(90deg,var(--orange),transparent)}
+.kpi-ico{font-size:22px;margin-bottom:8px}
+.kpi-val{font-family:'Exo 2',sans-serif;font-size:26px;font-weight:900;color:var(--white);line-height:1}
+.kpi-val span{font-size:14px;color:var(--text2)}
+.kpi-lbl{font-size:11px;color:var(--text2);margin-top:3px}
+.kpi-chg{font-size:10px;margin-top:5px}
+.up{color:var(--green)}.dn{color:var(--red)}.neu{color:var(--text2)}
+
+.box{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px}
+.box-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.box-hdr h3{font-family:'Exo 2',sans-serif;font-size:14px;font-weight:700;color:var(--white)}
+.box-hdr-right{display:flex;align-items:center;gap:8px}
+
+/* FILTERS */
+.filters{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.fi{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:7px 12px;color:var(--white);font-size:12px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;min-width:0}
+.fi::placeholder{color:rgba(138,172,204,.4)}
+.fi:focus{border-color:rgba(0,200,255,.4)}
+.fi-sel{-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238aaccc' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.fi-sel option{background:var(--dark2)}
+.fi-btn{background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.25);border-radius:7px;padding:7px 14px;color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap}
+.fi-btn:hover{background:rgba(240,165,0,.15)}
+.fi-btn.red{background:rgba(255,77,77,.08);border-color:rgba(255,77,77,.25);color:var(--red)}
+.fi-btn.red:hover{background:rgba(255,77,77,.15)}
+.fi-btn.green{background:rgba(0,214,143,.08);border-color:rgba(0,214,143,.25);color:var(--green)}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{padding:8px 12px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+.tbl tr:hover td{background:rgba(255,255,255,.02)}
+.tbl tr:last-child td{border-bottom:none}
+
+/* BADGES */
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap}
+.tag-green{background:rgba(0,214,143,.12);color:var(--green);border:1px solid rgba(0,214,143,.2)}
+.tag-amber{background:rgba(240,165,0,.12);color:var(--accent);border:1px solid rgba(240,165,0,.2)}
+.tag-red{background:rgba(255,77,77,.12);color:var(--red);border:1px solid rgba(255,77,77,.2)}
+.tag-blue{background:rgba(0,200,255,.1);color:var(--cyan);border:1px solid rgba(0,200,255,.2)}
+.tag-purple{background:rgba(139,92,246,.12);color:#a78bfa;border:1px solid rgba(139,92,246,.2)}
+.tag-gray{background:rgba(255,255,255,.05);color:var(--text2);border:1px solid var(--border)}
+
+/* ACTION BUTTONS */
+.act-btn{background:transparent;border:1px solid var(--border);border-radius:5px;padding:4px 9px;font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.act-btn:hover{border-color:rgba(0,200,255,.3);color:var(--white)}
+.act-btn.green{border-color:rgba(0,214,143,.3);color:var(--green)}
+.act-btn.green:hover{background:rgba(0,214,143,.08)}
+.act-btn.red{border-color:rgba(255,77,77,.3);color:var(--red)}
+.act-btn.red:hover{background:rgba(255,77,77,.08)}
+.act-btn.amber{border-color:rgba(240,165,0,.3);color:var(--accent)}
+.act-btn.amber:hover{background:rgba(240,165,0,.08)}
+
+/* USER AVATAR */
+.u-ava{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--white);flex-shrink:0}
+
+/* MINI SPARKLINE */
+.sparkline{display:flex;align-items:flex-end;gap:2px;height:28px}
+.spark-bar{width:5px;border-radius:2px 2px 0 0;background:rgba(0,200,255,.3);transition:height .3s}
+.spark-bar.hi{background:var(--accent)}
+
+/* SCORE RING */
+.score-ring{display:inline-flex;align-items:center;gap:6px}
+.score-ring .num{font-family:'Exo 2',sans-serif;font-size:14px;font-weight:800}
+.score-ring .stars{font-size:10px;color:var(--accent)}
+
+/* PROGRESS */
+.prog-bar{height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px}
+
+/* MODAL */
+.modal-ov{display:none;position:fixed;inset:0;z-index:9000;background:rgba(2,8,20,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center}
+.modal-ov.show{display:flex}
+.modal-box{background:linear-gradient(145deg,#0d1e3a,#071428);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:28px 32px;width:100%;max-width:520px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+.modal-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.07);border:none;color:var(--text2);width:28px;height:28px;border-radius:6px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close:hover{background:rgba(255,255,255,.12);color:var(--white)}
+.modal-title{font-family:'Exo 2',sans-serif;font-size:17px;font-weight:800;color:var(--white);margin-bottom:16px}
+.inp-g{margin-bottom:12px}
+.inp-g label{display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:5px}
+.inp-g input,.inp-g select,.inp-g textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:7px;padding:9px 12px;color:var(--white);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.inp-g input:focus,.inp-g select:focus{border-color:rgba(0,200,255,.4)}
+.inp-g select option{background:var(--dark2)}
+.inp-g textarea{resize:vertical;min-height:70px}
+.modal-btns{display:flex;gap:8px;margin-top:16px}
+.btn-primary{background:var(--accent);border:none;border-radius:7px;padding:10px 20px;color:var(--dark);font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-primary:hover{background:var(--accent2)}
+.btn-secondary{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:10px 16px;color:var(--text);font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-secondary:hover{background:rgba(255,255,255,.08)}
+
+/* ALERT BANNER */
+.alert-banner{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:12px}
+.alert-banner.warn{background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);color:var(--accent)}
+.alert-banner.danger{background:rgba(255,77,77,.08);border:1px solid rgba(255,77,77,.2);color:var(--red)}
+.alert-banner.info{background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.15);color:var(--cyan)}
+.alert-banner.success{background:rgba(0,214,143,.06);border:1px solid rgba(0,214,143,.15);color:var(--green)}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:12px;padding-bottom:14px;position:relative}
+.tl-item::before{content:'';position:absolute;left:11px;top:22px;bottom:0;width:1px;background:var(--border)}
+.tl-item:last-child::before{display:none}
+.tl-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin-top:1px}
+.tl-dot.green{background:rgba(0,214,143,.15);border:1px solid rgba(0,214,143,.3)}
+.tl-dot.amber{background:rgba(240,165,0,.15);border:1px solid rgba(240,165,0,.3)}
+.tl-dot.red{background:rgba(255,77,77,.15);border:1px solid rgba(255,77,77,.3)}
+.tl-dot.blue{background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.2)}
+.tl-body{flex:1}
+.tl-title{font-size:12px;font-weight:600;color:var(--white)}
+.tl-sub{font-size:11px;color:var(--text2);margin-top:2px}
+.tl-time{font-size:10px;color:var(--text2);margin-top:2px}
+
+/* CHART BARS */
+.chart-wrap{display:flex;align-items:flex-end;gap:6px;height:100px}
+.cb-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1}
+.cb{width:100%;border-radius:3px 3px 0 0;min-height:4px;transition:height .5s}
+.cb-lbl{font-size:9px;color:var(--text2)}
+
+/* TABS inside panel */
+.ptabs{display:flex;gap:4px;margin-bottom:16px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:3px}
+.ptab{flex:1;text-align:center;padding:7px;border-radius:6px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s}
+.ptab.on{background:rgba(240,165,0,.1);color:var(--accent)}
+
+/* DISPUTE card */
+.dispute-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px;transition:all .2s}
+.dispute-card:hover{border-color:rgba(255,77,77,.2)}
+.dispute-card.urgent{border-color:rgba(255,77,77,.3);background:rgba(255,77,77,.03)}
+.dc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.dc-title{font-size:13px;font-weight:700;color:var(--white)}
+.dc-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.dc-meta span{font-size:11px;color:var(--text2)}
+.dc-desc{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:10px;padding:8px 10px;background:rgba(255,255,255,.02);border-radius:6px;border-left:2px solid var(--border)}
+.dc-actions{display:flex;gap:6px}
+
+/* SETTINGS */
+.settings-grid{display:grid;grid-template-columns:220px 1fr;gap:16px}
+.settings-nav{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px}
+.sn-item{padding:9px 12px;border-radius:7px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .2s}
+.sn-item:hover{background:rgba(255,255,255,.03);color:var(--white)}
+.sn-item.on{background:rgba(240,165,0,.08);color:var(--accent)}
+.settings-form{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px}
+.sf-title{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-info h5{font-size:13px;font-weight:600;color:var(--white)}
+.toggle-info p{font-size:11px;color:var(--text2);margin-top:2px}
+.toggle{width:38px;height:22px;background:rgba(255,255,255,.1);border-radius:11px;position:relative;cursor:pointer;transition:all .3s;flex-shrink:0}
+.toggle.on{background:var(--accent)}
+.toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:var(--white);top:3px;left:3px;transition:left .3s}
+.toggle.on::after{left:19px}
+.r2-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Адміністративна панель Truck Hub UA</h1>
+  <div class="sb-head">
+    <a href="truckhub.html" class="logo">TRUCK <span>HUB</span> <span class="logo-badge">UA</span></a>
+    <div class="admin-badge">🔐 Адміністратор</div>
+  </div>
+  <div class="sb-user">
+    <div class="avatar">АД</div>
+    <div><div class="sb-uname">Адміністратор</div><div class="sb-urole">Super Admin · Повний доступ</div></div>
+  </div>
+
+  <div class="sb-nav">
+    <div class="sb-sec">Моніторинг</div>
+    <div class="sb-item on" onclick="show('dashboard')"><span class="ico">📊</span> Дашборд</div>
+    <div class="sb-item" onclick="show('orders')"><span class="ico">📦</span> Замовлення <span class="sb-badge green">184</span></div>
+    <div class="sb-item" onclick="show('auctions')"><span class="ico">🏛️</span> Аукціони <span class="sb-badge amber">47</span></div>
+    <div class="sb-item" onclick="show('trips')"><span class="ico">🚛</span> Рейси в дорозі <span class="sb-badge green">23</span></div>
+
+    <div class="sb-sec">Користувачі</div>
+    <div class="sb-item" onclick="show('users')"><span class="ico">👥</span> Всі користувачі</div>
+    <div class="sb-item" onclick="show('verification')"><span class="ico">✅</span> Верифікація <span class="sb-badge red">12</span></div>
+
+    <div class="sb-sec">Фінанси</div>
+    <div class="sb-item" onclick="show('finance')"><span class="ico">💰</span> Транзакції</div>
+    <div class="sb-item" onclick="show('safepay')"><span class="ico">🔐</span> SafePay <span class="sb-badge amber">8</span></div>
+
+    <div class="sb-sec">Підтримка</div>
+    <div class="sb-item" onclick="show('disputes')"><span class="ico">⚖️</span> Спори <span class="sb-badge red">5</span></div>
+    <div class="sb-item" onclick="show('support')"><span class="ico">💬</span> Тікети <span class="sb-badge red">9</span></div>
+
+    <div class="sb-sec">Система</div>
+    <div class="sb-item" onclick="show('analytics')"><span class="ico">📈</span> Аналітика</div>
+    <div class="sb-item" onclick="show('settings')"><span class="ico">⚙️</span> Налаштування</div>
+    <div class="sb-item" onclick="show('logs')"><span class="ico">📋</span> Логи</div>
+  </div>
+
+  <div class="sb-bottom">
+    <button class="btn-logout" onclick="location.href='truckhub.html'">🚪 Вийти</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="tb-left">
+      <h2 id="topTitle">Дашборд</h2>
+      <span class="sep">·</span>
+      <span class="sub" id="topSub">Загальний огляд платформи</span>
+    </div>
+    <div class="tb-right">
+      <span class="tb-env">🔴 PRODUCTION</span>
+      <span class="tb-time" id="clock">--:--:--</span>
+      <div class="tb-notif">🔔<div class="tb-dot"></div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ════════ DASHBOARD ════════ -->
+    <div class="panel show" id="panel_dashboard">
+      <div class="ua-stripe"></div>
+
+      <div class="alert-banner warn">⚠️ <strong>12 заявок на верифікацію</strong> очікують розгляду. <span style="cursor:pointer;text-decoration:underline" onclick="show('verification')">Перейти →</span></div>
+      <div class="alert-banner danger">🔴 <strong>5 активних спорів</strong> потребують втручання адміна. <span style="cursor:pointer;text-decoration:underline" onclick="show('disputes')">Перейти →</span></div>
+
+      <div class="row-cards r4">
+        <div class="kpi k1"><div class="kpi-ico">👥</div><div class="kpi-val">2 450<span> осіб</span></div><div class="kpi-lbl">Верифікованих перевізників</div><div class="kpi-chg up">↑ +24 за тиждень</div></div>
+        <div class="kpi k2"><div class="kpi-ico">📦</div><div class="kpi-val">184</div><div class="kpi-lbl">Активних аукціонів</div><div class="kpi-chg neu">→ 47 нових сьогодні</div></div>
+        <div class="kpi k3"><div class="kpi-ico">💰</div><div class="kpi-val">3.2М<span> грн</span></div><div class="kpi-lbl">Обіг SafePay цього місяця</div><div class="kpi-chg up">↑ +18%</div></div>
+        <div class="kpi k4"><div class="kpi-ico">⚖️</div><div class="kpi-val">5</div><div class="kpi-lbl">Відкритих спорів</div><div class="kpi-chg dn">↑ +2 за добу</div></div>
+      </div>
+
+      <div class="row-cards r4">
+        <div class="kpi k5"><div class="kpi-ico">🚛</div><div class="kpi-val">23</div><div class="kpi-lbl">Рейсів в дорозі</div><div class="kpi-chg up">↑ Все штатно</div></div>
+        <div class="kpi k6"><div class="kpi-ico">✅</div><div class="kpi-val">1 247</div><div class="kpi-lbl">Завершених рейсів / місяць</div><div class="kpi-chg up">↑ +8%</div></div>
+        <div class="kpi k1"><div class="kpi-ico">⭐</div><div class="kpi-val">4.72</div><div class="kpi-lbl">Середній Trust Score</div><div class="kpi-chg up">↑ +0.04</div></div>
+        <div class="kpi k2"><div class="kpi-ico">⚡</div><div class="kpi-val">11<span> хв</span></div><div class="kpi-lbl">Середній час пошуку авто</div><div class="kpi-chg up">↓ -2 хв</div></div>
+      </div>
+
+      <div class="row-cards r2">
+        <!-- Activity chart -->
+        <div class="box">
+          <div class="box-hdr">
+            <h3>📈 Активність платформи (7 днів)</h3>
+            <div class="box-hdr-right">
+              <select class="fi fi-sel" style="font-size:11px;padding:4px 24px 4px 8px">
+                <option>Замовлення</option><option>Реєстрації</option><option>Виплати</option>
+              </select>
+            </div>
+          </div>
+          <div class="chart-wrap" id="mainChart"></div>
+          <div style="display:flex;justify-content:space-around;margin-top:6px">
+            <div style="text-align:center"><div style="font-family:'Exo 2',sans-serif;font-size:16px;font-weight:800;color:var(--white)">1 247</div><div style="font-size:10px;color:var(--text2)">Рейсів</div></div>
+            <div style="text-align:center"><div style="font-family:'Exo 2',sans-serif;font-size:16px;font-weight:800;color:var(--accent)">3.2М</div><div style="font-size:10px;color:var(--text2)">Грн обігу</div></div>
+            <div style="text-align:center"><div style="font-family:'Exo 2',sans-serif;font-size:16px;font-weight:800;color:var(--green)">98.2%</div><div style="font-size:10px;color:var(--text2)">Успішних</div></div>
+          </div>
+        </div>
+
+        <!-- Recent activity -->
+        <div class="box">
+          <div class="box-hdr"><h3>🕐 Остання активність</h3></div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-dot green">✓</div><div class="tl-body"><div class="tl-title">Верифіковано перевізника</div><div class="tl-sub">Коваль Микола · ФОП · Київ</div><div class="tl-time">2 хв тому</div></div></div>
+            <div class="tl-item"><div class="tl-dot amber">💰</div><div class="tl-body"><div class="tl-title">SafePay виплата</div><div class="tl-sub">38 000 грн → Петренко І.В.</div><div class="tl-time">8 хв тому</div></div></div>
+            <div class="tl-item"><div class="tl-dot red">⚖️</div><div class="tl-body"><div class="tl-title">Новий спір #SP-2025-047</div><div class="tl-sub">Замовник vs Перевізник · 22 000 грн</div><div class="tl-time">15 хв тому</div></div></div>
+            <div class="tl-item"><div class="tl-dot blue">📦</div><div class="tl-body"><div class="tl-title">Новий аукціон #TH-04912</div><div class="tl-sub">Київ → Варшава · 20 т · 38 000 грн</div><div class="tl-time">22 хв тому</div></div></div>
+            <div class="tl-item"><div class="tl-dot green">👤</div><div class="tl-body"><div class="tl-title">Нова реєстрація</div><div class="tl-sub">ТОВ «Логіст-Груп» · Юр. особа</div><div class="tl-time">31 хв тому</div></div></div>
+            <div class="tl-item"><div class="tl-dot amber">⚠️</div><div class="tl-body"><div class="tl-title">Документ на перевірці</div><div class="tl-sub">ОСЦПВ · Mercedes Actros · АА5678МН</div><div class="tl-time">45 хв тому</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick stats table -->
+      <div class="box">
+        <div class="box-hdr"><h3>🌍 Топ маршрути цього тижня</h3></div>
+        <table class="tbl">
+          <thead><tr><th>Маршрут</th><th>Рейсів</th><th>Сер. ціна</th><th>Сер. час пошуку</th><th>Тренд</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Київ → Варшава</strong></td><td>87</td><td>36 500 грн</td><td>8 хв</td><td><div class="sparkline" id="sp1"></div></td></tr>
+            <tr><td><strong>Харків → Одеса</strong></td><td>64</td><td>21 200 грн</td><td>12 хв</td><td><div class="sparkline" id="sp2"></div></td></tr>
+            <tr><td><strong>Дніпро → Берлін</strong></td><td>43</td><td>52 000 грн</td><td>15 хв</td><td><div class="sparkline" id="sp3"></div></td></tr>
+            <tr><td><strong>Львів → Краків</strong></td><td>38</td><td>9 800 грн</td><td>6 хв</td><td><div class="sparkline" id="sp4"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════ ORDERS ════════ -->
+    <div class="panel" id="panel_orders">
+      <div class="ua-stripe"></div>
+      <div class="filters">
+        <input class="fi" placeholder="🔍 Пошук за ID, маршрутом, замовником..." style="flex:1;min-width:220px">
+        <select class="fi fi-sel"><option>Всі статуси</option><option>Аукціон</option><option>Підтверджено</option><option>В дорозі</option><option>Завершено</option><option>Скасовано</option><option>Спір</option></select>
+        <select class="fi fi-sel"><option>Всі типи</option><option>Вантажний</option><option>Пасажирський</option><option>Спецтехніка</option><option>Мікровантаж</option></select>
+        <input class="fi" type="date" style="width:140px">
+        <button class="fi-btn">Експорт CSV</button>
+      </div>
+      <div class="box">
+        <div class="box-hdr"><h3>📦 Замовлення</h3><span style="font-size:11px;color:var(--text2)">Всього: 1 247 · Показано: 10</span></div>
+        <table class="tbl">
+          <thead><tr><th>ID</th><th>Маршрут</th><th>Замовник</th><th>Перевізник</th><th>Тип</th><th>Сума</th><th>Оплата</th><th>Статус</th><th>Дата</th><th>Дії</th></tr></thead>
+          <tbody id="ordersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════ AUCTIONS ════════ -->
+    <div class="panel" id="panel_auctions">
+      <div class="ua-stripe"></div>
+      <div class="filters">
+        <input class="fi" placeholder="🔍 Пошук..." style="flex:1">
+        <select class="fi fi-sel"><option>Всі статуси</option><option>Активний</option><option>Завершений</option><option>Скасований</option></select>
+        <select class="fi fi-sel"><option>Всі типи</option><option>🚛 Вантажний</option><option>🚌 Пасажирський</option><option>🏗️ Спецтехніка</option></select>
+        <button class="fi-btn red">🚫 Зупинити аукціон</button>
+      </div>
+      <div class="box">
+        <div class="box-hdr"><h3>🏛️ Активні аукціони</h3><span style="font-size:11px;color:var(--text2)">Активних: 184</span></div>
+        <table class="tbl">
+          <thead><tr><th>ID</th><th>Маршрут</th><th>Замовник</th><th>Тип</th><th>Ставок</th><th>Мін. ставка</th><th>Старт. ціна</th><th>Залишилось</th><th>Статус</th><th>Дії</th></tr></thead>
+          <tbody id="auctionsTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════ TRIPS ════════ -->
+    <div class="panel" id="panel_trips">
+      <div class="ua-stripe"></div>
+      <div class="row-cards r3" style="margin-bottom:16px">
+        <div class="kpi k2"><div class="kpi-ico">🟢</div><div class="kpi-val">23</div><div class="kpi-lbl">Рейсів в дорозі</div></div>
+        <div class="kpi k3"><div class="kpi-ico">⏳</div><div class="kpi-val">8</div><div class="kpi-lbl">Завантаження/розвантаження</div></div>
+        <div class="kpi k4"><div class="kpi-ico">⚠️</div><div class="kpi-val">2</div><div class="kpi-lbl">Затримки понад 2 год</div></div>
+      </div>
+
+      <!-- MAP + SIDEBAR LAYOUT -->
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:16px">
+
+        <!-- MAP -->
+        <div class="box" style="padding:0;overflow:hidden;position:relative;min-height:480px">
+          <!-- Map placeholder with SVG Europe -->
+          <div id="tripMap" style="width:100%;height:480px;background:linear-gradient(135deg,#071428,#0a1e38);position:relative;overflow:hidden">
+
+            <!-- Grid -->
+            <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,0.04) 1px,transparent 1px);background-size:40px 40px"></div>
+
+            <!-- Europe SVG map -->
+            <svg id="mapSvg" viewBox="0 0 800 550" style="width:100%;height:100%;position:absolute;top:0;left:0" fill="none">
+              <defs>
+                <radialGradient id="mapBg" cx="55%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#0a3070" stop-opacity="0.5"/>
+                  <stop offset="100%" stop-color="#040d1e" stop-opacity="0"/>
+                </radialGradient>
+                <filter id="glow2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                <filter id="glowSm"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <ellipse cx="430" cy="280" rx="380" ry="260" fill="url(#mapBg)"/>
+
+              <!-- Country fills -->
+              <g fill="rgba(15,40,90,0.5)" stroke="rgba(0,150,255,0.2)" stroke-width="0.7" stroke-linejoin="round">
+                <path d="M340,55 L360,48 L378,58 L392,50 L402,64 L388,78 L372,73 L357,83 L347,75 L338,68 Z"/>
+                <path d="M402,64 L422,55 L437,64 L442,78 L427,88 L412,80 Z"/>
+                <path d="M372,73 L388,78 L402,72 L412,80 L417,98 L407,118 L397,133 L382,143 L370,128 L362,108 L367,88 Z"/>
+                <path d="M418,58 L433,50 L453,53 L468,65 L463,83 L453,98 L438,103 L423,95 L418,78 Z"/>
+                <path d="M342,118 L354,112 L360,122 L352,132 L340,128 Z"/>
+                <path d="M272,108 L287,100 L297,112 L294,128 L282,138 L270,132 L267,118 Z"/>
+                <path d="M262,142 L274,136 L280,150 L272,162 L260,156 Z"/>
+                <path d="M242,136 L254,132 L257,147 L247,155 L240,147 Z"/>
+                <path d="M332,142 L344,138 L347,152 L335,156 L329,148 Z"/>
+                <path d="M320,154 L334,150 L337,164 L322,168 L317,160 Z"/>
+                <path d="M272,164 L297,154 L322,158 L337,172 L332,194 L322,212 L307,219 L287,214 L270,202 L262,184 L267,172 Z"/>
+                <path d="M217,220 L247,212 L277,216 L297,222 L307,240 L302,260 L282,273 L257,277 L230,270 L214,252 L212,234 Z"/>
+                <path d="M207,232 L217,228 L222,245 L217,263 L207,268 L200,255 L202,238 Z"/>
+                <path d="M337,154 L360,148 L377,156 L380,172 L372,188 L354,196 L337,188 L330,174 Z"/>
+                <path d="M327,196 L342,192 L350,202 L340,212 L325,208 Z"/>
+                <path d="M350,184 L372,182 L382,188 L380,202 L362,206 L347,202 Z"/>
+                <path d="M312,220 L330,212 L344,216 L350,232 L347,252 L337,272 L324,290 L312,303 L300,295 L297,274 L302,252 L307,232 Z"/>
+                <path d="M357,172 L380,168 L397,174 L400,186 L382,192 L360,188 Z"/>
+                <path d="M360,142 L390,136 L417,142 L422,158 L410,172 L390,176 L364,172 L357,158 Z"/>
+                <path d="M370,192 L394,188 L410,194 L412,206 L397,214 L374,212 Z"/>
+                <path d="M402,182 L430,176 L450,182 L457,196 L450,212 L430,219 L410,214 L400,202 Z"/>
+                <path d="M410,216 L434,212 L450,216 L452,229 L434,236 L412,232 Z"/>
+                <path d="M357,206 L374,202 L390,206 L392,222 L380,232 L360,228 L352,218 Z"/>
+                <path d="M392,234 L410,230 L417,242 L412,259 L400,267 L387,259 L384,244 Z"/>
+                <path d="M407,118 L424,113 L437,118 L440,132 L427,138 L410,134 Z"/>
+                <path d="M422,142 L447,136 L467,142 L470,158 L454,168 L430,166 L417,156 Z"/>
+                <!-- Ukraine highlighted -->
+                <path d="M450,158 L483,150 L514,155 L529,168 L526,188 L512,202 L488,208 L463,206 L448,192 L445,176 Z"
+                  fill="rgba(240,165,0,0.1)" stroke="rgba(240,165,0,0.5)" stroke-width="1.2"/>
+                <path d="M462,198 L474,195 L480,204 L472,212 L460,208 Z"/>
+                <path d="M427,244 L457,238 L482,242 L490,256 L472,267 L442,265 L424,256 Z"/>
+              </g>
+
+              <!-- ── ROUTE LINES (animated) ── -->
+              <!-- Kyiv -> Warsaw -->
+              <line x1="488" y1="172" x2="392" y2="148" stroke="rgba(0,214,143,0.6)" stroke-width="2" stroke-dasharray="6,3">
+                <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="1.5s" repeatCount="indefinite"/>
+              </line>
+              <!-- Odessa -> Berlin -->
+              <line x1="492" y1="198" x2="362" y2="148" stroke="rgba(0,200,255,0.5)" stroke-width="1.5" stroke-dasharray="6,3">
+                <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="2s" repeatCount="indefinite"/>
+              </line>
+              <!-- Kharkiv -> Poland -->
+              <line x1="520" y1="165" x2="392" y2="148" stroke="rgba(240,165,0,0.5)" stroke-width="1.5" stroke-dasharray="6,3">
+                <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="1.8s" repeatCount="indefinite"/>
+              </line>
+              <!-- Dnipro -> Bucharest -->
+              <line x1="505" y1="182" x2="432" y2="208" stroke="rgba(139,92,246,0.5)" stroke-width="1.5" stroke-dasharray="6,3">
+                <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="2.2s" repeatCount="indefinite"/>
+              </line>
+              <!-- Lviv -> Krakow -->
+              <line x1="452" y1="168" x2="392" y2="156" stroke="rgba(255,140,0,0.5)" stroke-width="1.5" stroke-dasharray="6,3">
+                <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="1.3s" repeatCount="indefinite"/>
+              </line>
+
+              <!-- ── TRUCK MARKERS (animated position) ── -->
+              <!-- Truck 1: Kyiv->Warsaw (65% progress) -->
+              <g id="truck1" filter="url(#glow2)" style="cursor:pointer" onclick="selectTrip('TH-04821')">
+                <circle cx="428" cy="151" r="10" fill="rgba(0,214,143,0.2)" stroke="rgba(0,214,143,0.8)" stroke-width="1.5">
+                  <animate attributeName="r" values="10;13;10" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="428" cy="151" r="5" fill="#00d68f"/>
+                <text x="428" y="140" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter">TH-04821</text>
+              </g>
+
+              <!-- Truck 2: Odessa->Berlin (5% progress) -->
+              <g id="truck2" filter="url(#glow2)" style="cursor:pointer" onclick="selectTrip('TH-04756')">
+                <circle cx="486" cy="196" r="9" fill="rgba(0,200,255,0.2)" stroke="rgba(0,200,255,0.8)" stroke-width="1.5"/>
+                <circle cx="486" cy="196" r="4.5" fill="#00c8ff"/>
+                <text x="486" y="185" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter">TH-04756</text>
+              </g>
+
+              <!-- Truck 3: Kharkiv->Poland (88%) -->
+              <g id="truck3" filter="url(#glow2)" style="cursor:pointer" onclick="selectTrip('TH-04812')">
+                <circle cx="408" cy="150" r="9" fill="rgba(240,165,0,0.2)" stroke="rgba(240,165,0,0.8)" stroke-width="1.5">
+                  <animate attributeName="r" values="9;12;9" dur="2.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="408" cy="150" r="4.5" fill="#f0a500"/>
+                <text x="408" y="139" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter">TH-04812</text>
+              </g>
+
+              <!-- Truck 4: Dnipro->Bucharest (30%) -->
+              <g id="truck4" filter="url(#glowSm)" style="cursor:pointer" onclick="selectTrip('TH-04799')">
+                <circle cx="482" cy="186" r="8" fill="rgba(139,92,246,0.2)" stroke="rgba(139,92,246,0.8)" stroke-width="1.5"/>
+                <circle cx="482" cy="186" r="4" fill="#8b5cf6"/>
+                <text x="482" y="175" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter">TH-04799</text>
+              </g>
+
+              <!-- Truck 5: Lviv->Krakow (70%) -->
+              <g id="truck5" filter="url(#glowSm)" style="cursor:pointer" onclick="selectTrip('TH-04834')">
+                <circle cx="418" cy="160" r="8" fill="rgba(255,140,0,0.2)" stroke="rgba(255,140,0,0.8)" stroke-width="1.5"/>
+                <circle cx="418" cy="160" r="4" fill="#ff8c00"/>
+                <text x="418" y="149" text-anchor="middle" fill="white" font-size="9" font-weight="700" font-family="Inter">TH-04834</text>
+              </g>
+
+              <!-- City dots -->
+              <g filter="url(#glowSm)">
+                <circle cx="488" cy="172" r="4" fill="rgba(240,165,0,0.9)"/>
+                <circle cx="392" cy="148" r="3.5" fill="rgba(0,200,255,0.9)"/>
+                <circle cx="362" cy="148" r="3.5" fill="rgba(0,200,255,0.9)"/>
+                <circle cx="432" cy="208" r="3" fill="rgba(0,200,255,0.7)"/>
+                <circle cx="452" cy="168" r="3" fill="rgba(0,200,255,0.7)"/>
+                <circle cx="520" cy="165" r="3" fill="rgba(0,200,255,0.7)"/>
+                <circle cx="505" cy="182" r="3" fill="rgba(0,200,255,0.7)"/>
+                <circle cx="492" cy="198" r="3" fill="rgba(0,200,255,0.7)"/>
+              </g>
+              <!-- City labels -->
+              <text x="495" y="170" fill="rgba(240,165,0,0.9)" font-size="9" font-weight="700" font-family="Inter">Київ</text>
+              <text x="395" y="144" fill="rgba(200,220,255,0.7)" font-size="9" font-family="Inter">Варшава</text>
+              <text x="355" y="144" fill="rgba(200,220,255,0.7)" font-size="9" font-family="Inter">Берлін</text>
+              <text x="435" y="222" fill="rgba(200,220,255,0.7)" font-size="9" font-family="Inter">Бухарест</text>
+              <text x="493" y="208" fill="rgba(200,220,255,0.7)" font-size="9" font-family="Inter">Одеса</text>
+              <text x="524" y="163" fill="rgba(200,220,255,0.7)" font-size="9" font-family="Inter">Харків</text>
+            </svg>
+
+            <!-- Map controls -->
+            <div style="position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:6px">
+              <div style="background:rgba(4,13,30,0.9);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:8px;padding:10px 14px">
+                <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Легенда</div>
+                <div style="display:flex;flex-direction:column;gap:5px">
+                  <div style="display:flex;align-items:center;gap:7px;font-size:11px"><span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block"></span> В дорозі</div>
+                  <div style="display:flex;align-items:center;gap:7px;font-size:11px"><span style="width:10px;height:10px;border-radius:50%;background:var(--cyan);display:inline-block"></span> Завантаження</div>
+                  <div style="display:flex;align-items:center;gap:7px;font-size:11px"><span style="width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block"></span> Наближається</div>
+                  <div style="display:flex;align-items:center;gap:7px;font-size:11px"><span style="width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block"></span> Затримка</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- API hint -->
+            <div style="position:absolute;bottom:12px;left:12px;right:12px;background:rgba(4,13,30,0.85);backdrop-filter:blur(8px);border:1px solid rgba(240,165,0,0.2);border-radius:8px;padding:8px 12px;font-size:11px;color:var(--text2);display:flex;align-items:center;gap:8px">
+              <span>🗺️</span>
+              <span>Для реального трекінгу підключіть Google Maps API: замініть <code style="background:rgba(0,0,0,.3);padding:1px 6px;border-radius:3px;color:var(--accent)">YOUR_API_KEY</code> і активуйте WebSocket оновлення координат.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRIP DETAIL SIDEBAR -->
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="box" style="padding:14px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text2);margin-bottom:10px">📍 Деталі рейсу</div>
+            <div id="tripDetail">
+              <div style="text-align:center;padding:20px 0;color:var(--text2);font-size:12px">← Оберіть рейс на карті</div>
+            </div>
+          </div>
+          <!-- Active trips mini list -->
+          <div class="box" style="padding:14px;flex:1">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text2);margin-bottom:10px">🚛 Активні рейси (23)</div>
+            <div style="display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto" id="miniTripList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="box">
+        <div class="box-hdr"><h3>🚛 Всі рейси в реальному часі</h3>
+          <div class="box-hdr-right">
+            <select class="fi fi-sel" style="font-size:11px;padding:5px 24px 5px 8px"><option>Всі статуси</option><option>В дорозі</option><option>Завантаження</option><option>Затримка</option></select>
+          </div>
+        </div>
+        <table class="tbl">
+          <thead><tr><th>ID рейсу</th><th>Маршрут</th><th>Перевізник</th><th>Замовник</th><th>Вантаж</th><th>Прогрес</th><th>SafePay</th><th>Статус</th><th>Дії</th></tr></thead>
+          <tbody id="tripsTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════ USERS ════════ -->
+    <div class="panel" id="panel_users">
+      <div class="ua-stripe"></div>
+      <div class="filters">
+        <input class="fi" placeholder="🔍 Ім'я, телефон, email, ЄДРПОУ..." style="flex:1">
+        <select class="fi fi-sel"><option>Всі ролі</option><option>Замовник</option><option>Перевізник</option><option>Експедитор</option></select>
+        <select class="fi fi-sel"><option>Всі статуси</option><option>Верифікований</option><option>На перевірці</option><option>Заблокований</option></select>
+        <select class="fi fi-sel"><option>Фіз. та юр. особи</option><option>Фізична особа</option><option>ФОП</option><option>Юридична особа</option></select>
+        <button class="fi-btn">+ Додати користувача</button>
+      </div>
+      <div class="box">
+        <div class="box-hdr"><h3>👥 Користувачі</h3><span style="font-size:11px;color:var(--text2)">Всього: 3 847</span></div>
+        <table class="tbl">
+          <thead><tr><th>Користувач</th><th>Роль</th><th>Тип особи</th><th>Trust Score</th><th>Рейсів</th><th>Обіг</th><th>Реєстрація</th><th>Статус</th><th>Дії</th></tr></thead>
+          <tbody id="usersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════ VERIFICATION ════════ -->
+    <div class="panel" id="panel_verification">
+      <div class="ua-stripe"></div>
+      <div class="alert-banner info">📋 12 заявок очікують перевірки. Середній час розгляду: <strong>2.4 год</strong>. Ціль: до 4 год.</div>
+
+      <div class="ptabs">
+        <div class="ptab on" onclick="selVTab(this,'v_docs')">📋 Документи (8)</div>
+        <div class="ptab" onclick="selVTab(this,'v_transport')">🚛 Транспорт (4)</div>
+        <div class="ptab" onclick="selVTab(this,'v_companies')">🏢 Компанії (3)</div>
+        <div class="ptab" onclick="selVTab(this,'v_done')">✅ Завершені</div>
+      </div>
+
+      <div id="v_docs">
+        <div class="box">
+          <div class="box-hdr"><h3>📋 Документи на перевірці</h3></div>
+          <table class="tbl">
+            <thead><tr><th>Користувач</th><th>Тип документу</th><th>Завантажено</th><th>Очікує</th><th>Попередній перегляд</th><th>Дії</th></tr></thead>
+            <tbody id="verifyTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <div id="v_transport" style="display:none">
+        <div class="box">
+          <div class="box-hdr"><h3>🚛 Транспорт на верифікації</h3></div>
+          <table class="tbl">
+            <thead><tr><th>Перевізник</th><th>Транспорт</th><th>Держ. номер</th><th>VIN</th><th>Документи</th><th>Статус страховки</th><th>Дії</th></tr></thead>
+            <tbody>
+              <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="u-ava" style="background:linear-gradient(135deg,#1a4a8a,#00c8ff)">МК</div>Коваль М.В.</div></td><td>🚐 Ford Transit 2022</td><td>КА 9012 ВС</td><td>WDB963032...189</td><td><span class="tag tag-amber">⏳ 2 з 3</span></td><td><span class="tag tag-green">✓ До 06.2026</span></td><td><div style="display:flex;gap:4px"><button class="act-btn">👁 Переглянути</button><button class="act-btn green" onclick="verifyAction(this,'✓ Верифіковано')">✓ Підтвердити</button><button class="act-btn red" onclick="verifyAction(this,'✗ Відхилено')">✗ Відхилити</button></div></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="u-ava" style="background:linear-gradient(135deg,#7c3aed,#00c8ff)">ОС</div>Сидоренко О.</div></td><td>🚛 Volvo FH 2019</td><td>ВА 3344 ОП</td><td>YV2R4C2A4KB...</td><td><span class="tag tag-green">✓ Всі є</span></td><td><span class="tag tag-amber">⚠️ До 02.2025</span></td><td><div style="display:flex;gap:4px"><button class="act-btn">👁 Переглянути</button><button class="act-btn amber">⚠️ Запит документів</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="v_companies" style="display:none">
+        <div class="box">
+          <div class="box-hdr"><h3>🏢 Компанії на верифікації</h3></div>
+          <table class="tbl">
+            <thead><tr><th>Компанія</th><th>ЄДРПОУ</th><th>Тип</th><th>Контакт</th><th>Документи</th><th>Дії</th></tr></thead>
+            <tbody>
+              <tr><td><strong>ТОВ «Логіст-Груп»</strong></td><td>45678901</td><td><span class="tag tag-blue">Юр. особа</span></td><td>+380 67 234 56 78</td><td><span class="tag tag-green">✓ Всі є</span></td><td><div style="display:flex;gap:4px"><button class="act-btn green" onclick="verifyAction(this,'✓ Верифіковано')">✓ Підтвердити</button><button class="act-btn red">✗ Відхилити</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="v_done" style="display:none">
+        <div class="box">
+          <div class="box-hdr"><h3>✅ Завершені верифікації (сьогодні)</h3></div>
+          <table class="tbl">
+            <thead><tr><th>Користувач</th><th>Тип</th><th>Час розгляду</th><th>Адмін</th><th>Рішення</th></tr></thead>
+            <tbody>
+              <tr><td>Петренко І.В.</td><td>Паспорт + ІПН</td><td>1 год 12 хв</td><td>Адміністратор</td><td><span class="tag tag-green">✓ Підтверджено</span></td></tr>
+              <tr><td>Морозенко С.К.</td><td>Водійське посвідчення</td><td>45 хв</td><td>Адміністратор</td><td><span class="tag tag-green">✓ Підтверджено</span></td></tr>
+              <tr><td>ФОП Захаренко</td><td>Виписка ФОП</td><td>2 год 05 хв</td><td>Адміністратор</td><td><span class="tag tag-red">✗ Відхилено</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════ FINANCE ════════ -->
+    <div class="panel" id="panel_finance">
+      <div class="ua-stripe"></div>
+      <div class="row-cards r3">
+        <div class="kpi k2"><div class="kpi-ico">💰</div><div class="kpi-val">3.2М<span> грн</span></div><div class="kpi-lbl">Обіг цього місяця</div><div class="kpi-chg up">↑ +18%</div></div>
+        <div class="kpi k3"><div class="kpi-ico">🔐</div><div class="kpi-val">840К<span> грн</span></div><div class="kpi-lbl">Заморожено в SafePay</div><div class="kpi-chg neu">→ 22 транзакції</div></div>
+        <div class="kpi k1"><div class="kpi-ico">📊</div><div class="kpi-val">2.4%</div><div class="kpi-lbl">Комісія платформи</div><div class="kpi-chg up">↑ 76 800 грн</div></div>
+      </div>
+      <div class="box">
+        <div class="box-hdr">
+          <h3>💳 Транзакції</h3>
+          <div class="box-hdr-right">
+            <select class="fi fi-sel" style="font-size:11px;padding:5px 24px 5px 8px"><option>Всі типи</option><option>SafePay</option><option>Готівка</option><option>Безнал</option></select>
+            <button class="fi-btn" style="font-size:11px;padding:5px 10px">Експорт</button>
+          </div>
+        </div>
+        <table class="tbl">
+          <thead><tr><th>ID</th><th>Замовлення</th><th>Від</th><th>Кому</th><th>Сума</th><th>Комісія</th><th>Спосіб</th><th>Статус</th><th>Дата</th><th>Дії</th></tr></thead>
+          <tbody id="financeTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════ SAFEPAY ════════ -->
+    <div class="panel" id="panel_safepay">
+      <div class="ua-stripe"></div>
+      <div class="alert-banner warn">⏳ <strong>8 виплат</strong> очікують підтвердження доставки замовниками. Максимальний час утримання: <strong>72 год</strong>.</div>
+      <div class="row-cards r3">
+        <div class="kpi k2"><div class="kpi-ico">🔐</div><div class="kpi-val">840К<span> грн</span></div><div class="kpi-lbl">Заморожено в SafePay</div></div>
+        <div class="kpi k1"><div class="kpi-ico">⏳</div><div class="kpi-val">8</div><div class="kpi-lbl">Очікують підтвердження</div></div>
+        <div class="kpi k4"><div class="kpi-ico">⚠️</div><div class="kpi-val">2</div><div class="kpi-lbl">Прострочені (>48 год)</div></div>
+      </div>
+      <div class="box">
+        <div class="box-hdr"><h3>🔐 SafePay черга</h3></div>
+        <table class="tbl">
+          <thead><tr><th>ID</th><th>Замовлення</th><th>Замовник</th><th>Перевізник</th><th>Сума</th><th>Заморожено</th><th>Очікує</th><th>Статус</th><th>Дії</th></tr></thead>
+          <tbody id="safepayTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════ DISPUTES ════════ -->
+    <div class="panel" id="panel_disputes">
+      <div class="ua-stripe"></div>
+      <div class="alert-banner danger">⚖️ <strong>2 спори прострочені</strong> — понад 48 год без рішення. Потребують термінового розгляду.</div>
+
+      <div class="row-cards r3">
+        <div class="kpi k4"><div class="kpi-ico">🔴</div><div class="kpi-val">5</div><div class="kpi-lbl">Відкритих спорів</div></div>
+        <div class="kpi k1"><div class="kpi-ico">⏳</div><div class="kpi-val">2</div><div class="kpi-lbl">Прострочені (>48 год)</div></div>
+        <div class="kpi k2"><div class="kpi-ico">✅</div><div class="kpi-val">94%</div><div class="kpi-lbl">Вирішених на користь замовника</div></div>
+      </div>
+
+      <div class="dispute-card urgent">
+        <div class="dc-hdr"><div class="dc-title">⚖️ Спір #SP-2025-045 <span class="tag tag-red" style="margin-left:8px">🔴 Прострочений</span></div><span class="tag tag-amber">55 год у роботі</span></div>
+        <div class="dc-meta"><span>📦 Замовлення #TH-2025-04712</span><span>💰 Сума спору: 38 000 грн</span><span>🗓 Відкрито: 02.06.2025</span></div>
+        <div class="dc-desc">Замовник стверджує, що вантаж прибув з пошкодженнями. Перевізник заперечує та надав фото при завантаженні. Обидві сторони надали документи. SafePay заморожено. Потрібне рішення адміна.</div>
+        <div class="dc-actions">
+          <button class="act-btn">📁 Переглянути матеріали</button>
+          <button class="act-btn">💬 Чат зі сторонами</button>
+          <button class="act-btn green" onclick="resolveDispute(this,'замовника')">✓ На користь замовника</button>
+          <button class="act-btn amber" onclick="resolveDispute(this,'перевізника')">✓ На користь перевізника</button>
+          <button class="act-btn" onclick="resolveDispute(this,'поділу 50/50')">⚖️ Поділити 50/50</button>
+        </div>
+      </div>
+
+      <div class="dispute-card urgent">
+        <div class="dc-hdr"><div class="dc-title">⚖️ Спір #SP-2025-046 <span class="tag tag-red" style="margin-left:8px">🔴 Прострочений</span></div><span class="tag tag-amber">49 год у роботі</span></div>
+        <div class="dc-meta"><span>📦 Замовлення #TH-2025-04756</span><span>💰 Сума спору: 22 000 грн</span><span>🗓 Відкрито: 02.06.2025</span></div>
+        <div class="dc-desc">Перевізник не з'явився на завантаження. Замовник вимагає компенсацію простою. Перевізник стверджує про форс-мажор (поломка авто). Документів про поломку не надано.</div>
+        <div class="dc-actions">
+          <button class="act-btn">📁 Матеріали</button>
+          <button class="act-btn green" onclick="resolveDispute(this,'замовника')">✓ На користь замовника</button>
+          <button class="act-btn amber" onclick="resolveDispute(this,'перевізника')">✓ На користь перевізника</button>
+          <button class="act-btn red" onclick="resolveDispute(this,'штрафу перевізнику')">🚫 Штраф перевізнику</button>
+        </div>
+      </div>
+
+      <div class="dispute-card">
+        <div class="dc-hdr"><div class="dc-title">⚖️ Спір #SP-2025-047</div><span class="tag tag-blue">15 год у роботі</span></div>
+        <div class="dc-meta"><span>📦 Замовлення #TH-2025-04890</span><span>💰 Сума спору: 8 500 грн</span><span>🗓 Відкрито: 04.06.2025</span></div>
+        <div class="dc-desc">Спір щодо додаткових витрат на митниці. Замовник відмовляється сплачувати понад вказану суму. Перевізник надав митні документи.</div>
+        <div class="dc-actions">
+          <button class="act-btn">📁 Матеріали</button>
+          <button class="act-btn">💬 Медіація</button>
+          <button class="act-btn green" onclick="resolveDispute(this,'замовника')">✓ На користь замовника</button>
+          <button class="act-btn amber" onclick="resolveDispute(this,'перевізника')">✓ На користь перевізника</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════ SUPPORT ════════ -->
+    <div class="panel" id="panel_support">
+      <div class="ua-stripe"></div>
+      <div class="filters">
+        <input class="fi" placeholder="🔍 Пошук тікетів..." style="flex:1">
+        <select class="fi fi-sel"><option>Всі статуси</option><option>Новий</option><option>В роботі</option><option>Очікує відповіді</option><option>Закрито</option></select>
+        <select class="fi fi-sel"><option>Всі пріоритети</option><option>🔴 Критичний</option><option>🟡 Середній</option><option>🟢 Низький</option></select>
+      </div>
+      <div class="box">
+        <div class="box-hdr"><h3>💬 Тікети підтримки</h3><span style="font-size:11px;color:var(--text2)">Відкритих: 9</span></div>
+        <table class="tbl">
+          <thead><tr><th>ID</th><th>Тема</th><th>Користувач</th><th>Пріоритет</th><th>Статус</th><th>Відкрито</th><th>Відповідей</th><th>Дії</th></tr></thead>
+          <tbody>
+            <tr><td>#TK-0091</td><td>Не можу завантажити документ</td><td>Коваль М.В.</td><td><span class="tag tag-red">🔴 Критичний</span></td><td><span class="tag tag-amber">⏳ Новий</span></td><td>2 год тому</td><td>0</td><td><div style="display:flex;gap:4px"><button class="act-btn amber">Взяти в роботу</button><button class="act-btn">Відповісти</button></div></td></tr>
+            <tr><td>#TK-0090</td><td>Питання щодо SafePay виплати</td><td>Петренко І.В.</td><td><span class="tag tag-amber">🟡 Середній</span></td><td><span class="tag tag-blue">💬 В роботі</span></td><td>5 год тому</td><td>2</td><td><div style="display:flex;gap:4px"><button class="act-btn">Відповісти</button><button class="act-btn green">Закрити</button></div></td></tr>
+            <tr><td>#TK-0089</td><td>Помилка при реєстрації ТЗ</td><td>ТОВ Логіст-Груп</td><td><span class="tag tag-amber">🟡 Середній</span></td><td><span class="tag tag-amber">⏳ Очікує відповіді</span></td><td>1 день тому</td><td>3</td><td><div style="display:flex;gap:4px"><button class="act-btn">Відповісти</button><button class="act-btn green">Закрити</button></div></td></tr>
+            <tr><td>#TK-0088</td><td>Як змінити тип транспорту?</td><td>Сидоренко О.</td><td><span class="tag tag-green">🟢 Низький</span></td><td><span class="tag tag-gray">Закрито</span></td><td>2 дні тому</td><td>4</td><td><button class="act-btn">Переглянути</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ════════ ANALYTICS ════════ -->
+    <div class="panel" id="panel_analytics">
+      <div class="ua-stripe"></div>
+      <div class="row-cards r3">
+        <div class="kpi k1"><div class="kpi-ico">📈</div><div class="kpi-val">+24%</div><div class="kpi-lbl">Зростання нових користувачів (місяць)</div></div>
+        <div class="kpi k2"><div class="kpi-ico">🔄</div><div class="kpi-val">78%</div><div class="kpi-lbl">Повторні замовлення</div></div>
+        <div class="kpi k3"><div class="kpi-ico">⏱</div><div class="kpi-val">4.2<span> хв</span></div><div class="kpi-lbl">Середній час розміщення замовлення</div></div>
+      </div>
+      <div class="row-cards r2">
+        <div class="box">
+          <div class="box-hdr"><h3>📊 Замовлення по типах транспорту</h3></div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>🚛 Вантажний (тент)</span><span style="color:var(--accent);font-weight:600">38%</span></div><div class="prog-bar"><div class="prog-fill" style="width:38%;background:var(--accent)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>❄️ Рефрижератор</span><span style="color:var(--cyan);font-weight:600">22%</span></div><div class="prog-bar"><div class="prog-fill" style="width:22%;background:var(--cyan)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>🚐 Мікровантаж/Кур'єр</span><span style="color:var(--green);font-weight:600">18%</span></div><div class="prog-bar"><div class="prog-fill" style="width:18%;background:var(--green)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>🚌 Пасажирський</span><span style="color:var(--purple);font-weight:600">12%</span></div><div class="prog-bar"><div class="prog-fill" style="width:12%;background:#8b5cf6"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>🏗️ Спецтехніка</span><span style="color:var(--orange);font-weight:600">10%</span></div><div class="prog-bar"><div class="prog-fill" style="width:10%;background:var(--orange)"></div></div></div>
+          </div>
+        </div>
+        <div class="box">
+          <div class="box-hdr"><h3>💳 Оплата по методах</h3></div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>🔐 SafePay</span><span style="color:var(--green);font-weight:600">54%</span></div><div class="prog-bar"><div class="prog-fill" style="width:54%;background:var(--green)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>🏦 Безготівковий</span><span style="color:var(--cyan);font-weight:600">28%</span></div><div class="prog-bar"><div class="prog-fill" style="width:28%;background:var(--cyan)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>💵 Готівка</span><span style="color:var(--text2);font-weight:600">18%</span></div><div class="prog-bar"><div class="prog-fill" style="width:18%;background:var(--text2)"></div></div></div>
+          </div>
+          <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)">
+            <div class="box-hdr" style="margin-bottom:10px"><h3>🌍 Топ регіони</h3></div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:12px">
+              <div style="display:flex;justify-content:space-between"><span>🇺🇦 Київ та область</span><span style="color:var(--white);font-weight:600">34%</span></div>
+              <div style="display:flex;justify-content:space-between"><span>🇺🇦 Харків</span><span style="color:var(--white);font-weight:600">18%</span></div>
+              <div style="display:flex;justify-content:space-between"><span>🇺🇦 Дніпро</span><span style="color:var(--white);font-weight:600">14%</span></div>
+              <div style="display:flex;justify-content:space-between"><span>🇺🇦 Одеса</span><span style="color:var(--white);font-weight:600">12%</span></div>
+              <div style="display:flex;justify-content:space-between"><span>🇵🇱 Польща (вхідні)</span><span style="color:var(--white);font-weight:600">9%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════ SETTINGS ════════ -->
+    <div class="panel" id="panel_settings">
+      <div class="ua-stripe"></div>
+      <div class="settings-grid">
+        <div class="settings-nav">
+          <div class="sn-item on" onclick="selSetting(this,'s_platform')">⚙️ Платформа</div>
+          <div class="sn-item" onclick="selSetting(this,'s_safepay')">🔐 SafePay</div>
+          <div class="sn-item" onclick="selSetting(this,'s_trust')">⭐ Trust Score</div>
+          <div class="sn-item" onclick="selSetting(this,'s_notifications')">🔔 Сповіщення</div>
+          <div class="sn-item" onclick="selSetting(this,'s_admins')">👥 Адміни</div>
+        </div>
+        <div>
+          <div id="s_platform" class="settings-form">
+            <div class="sf-title">⚙️ Налаштування платформи</div>
+            <div class="r2-form">
+              <div class="inp-g"><label>Комісія платформи (%)</label><input type="number" value="2.4" step="0.1"></div>
+              <div class="inp-g"><label>Мінімальна сума замовлення (грн)</label><input type="number" value="500"></div>
+            </div>
+            <div class="r2-form">
+              <div class="inp-g"><label>Макс. тривалість аукціону (год)</label><input type="number" value="72"></div>
+              <div class="inp-g"><label>Мін. тривалість аукціону (год)</label><input type="number" value="1"></div>
+            </div>
+            <div class="toggle-row"><div class="toggle-info"><h5>Реєстрація нових користувачів</h5><p>Дозволити нові реєстрації на платформі</p></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><div class="toggle-info"><h5>Обов'язкова верифікація</h5><p>Перевізники повинні пройти верифікацію до першого рейсу</p></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><div class="toggle-info"><h5>Автоматичний Trust Score</h5><p>Розраховувати рейтинг автоматично після кожного рейсу</p></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><div class="toggle-info"><h5>Режим технічного обслуговування</h5><p>Тимчасово закрити платформу для користувачів</p></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+            <button class="btn-primary" style="margin-top:16px">💾 Зберегти налаштування</button>
+          </div>
+          <div id="s_safepay" class="settings-form" style="display:none">
+            <div class="sf-title">🔐 Налаштування SafePay</div>
+            <div class="r2-form">
+              <div class="inp-g"><label>Макс. час утримання коштів (год)</label><input type="number" value="72"></div>
+              <div class="inp-g"><label>Авто-виплата після підтвердження (год)</label><input type="number" value="24"></div>
+            </div>
+            <div class="toggle-row"><div class="toggle-info"><h5>Авто-виплата при відсутності спорів</h5><p>Автоматично виплачувати через 24 год після доставки</p></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><div class="toggle-info"><h5>Заморожувати при відкритті спору</h5><p>Блокувати виплату при наявності активного спору</p></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <button class="btn-primary" style="margin-top:16px">💾 Зберегти</button>
+          </div>
+          <div id="s_trust" class="settings-form" style="display:none">
+            <div class="sf-title">⭐ Налаштування Trust Score</div>
+            <div class="r2-form">
+              <div class="inp-g"><label>Вага вчасності (%)</label><input type="number" value="40"></div>
+              <div class="inp-g"><label>Вага відгуків (%)</label><input type="number" value="35"></div>
+              <div class="inp-g"><label>Вага верифікації (%)</label><input type="number" value="15"></div>
+              <div class="inp-g"><label>Вага досвіду (%)</label><input type="number" value="10"></div>
+            </div>
+            <div class="inp-g"><label>Мінімальний Trust Score для аукціону</label><input type="number" value="3.5" step="0.1"></div>
+            <div class="toggle-row"><div class="toggle-info"><h5>Знижувати рейтинг при спорах</h5><p>-0.2 за кожен програний спір</p></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <button class="btn-primary" style="margin-top:16px">💾 Зберегти</button>
+          </div>
+          <div id="s_notifications" class="settings-form" style="display:none">
+            <div class="sf-title">🔔 Налаштування сповіщень</div>
+            <div class="toggle-row"><div class="toggle-info"><h5>Email при новому спорі</h5><p>Надсилати email адміну при відкритті спору</p></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><div class="toggle-info"><h5>SMS при прострочених виплатах</h5><p>Сповіщення якщо SafePay >48 год без дії</p></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="toggle-row"><div class="toggle-info"><h5>Щоденний звіт на email</h5><p>Зведення активності платформи о 09:00</p></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <button class="btn-primary" style="margin-top:16px">💾 Зберегти</button>
+          </div>
+          <div id="s_admins" class="settings-form" style="display:none">
+            <div class="sf-title">👥 Управління адміністраторами</div>
+            <table class="tbl" style="margin-bottom:14px">
+              <thead><tr><th>Адмін</th><th>Email</th><th>Роль</th><th>Останній вхід</th><th>Дії</th></tr></thead>
+              <tbody>
+                <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="u-ava" style="background:linear-gradient(135deg,var(--purple),var(--cyan))">АД</div>Адміністратор</div></td><td>admin@truckhub.ua</td><td><span class="tag tag-purple">Super Admin</span></td><td>Зараз</td><td><span style="color:var(--text2);font-size:11px">Ви</span></td></tr>
+                <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="u-ava" style="background:linear-gradient(135deg,#1a4a8a,#00c8ff)">МО</div>Мороз О.В.</div></td><td>moroz@truckhub.ua</td><td><span class="tag tag-blue">Модератор</span></td><td>2 год тому</td><td><div style="display:flex;gap:4px"><button class="act-btn">✏️ Редагувати</button><button class="act-btn red">🚫 Блокувати</button></div></td></tr>
+              </tbody>
+            </table>
+            <button class="fi-btn">+ Додати адміністратора</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════ LOGS ════════ -->
+    <div class="panel" id="panel_logs">
+      <div class="ua-stripe"></div>
+      <div class="filters">
+        <input class="fi" placeholder="🔍 Пошук у логах..." style="flex:1">
+        <select class="fi fi-sel"><option>Всі типи</option><option>Авторизація</option><option>Верифікація</option><option>Фінанси</option><option>Спори</option><option>Система</option></select>
+        <input class="fi" type="date">
+        <button class="fi-btn">Завантажити логи</button>
+      </div>
+      <div class="box">
+        <div class="box-hdr"><h3>📋 Системні логи</h3></div>
+        <table class="tbl">
+          <thead><tr><th>Час</th><th>Тип</th><th>Дія</th><th>Користувач / IP</th><th>Результат</th></tr></thead>
+          <tbody>
+            <tr><td style="color:var(--text2);font-size:11px">04.06 14:32:11</td><td><span class="tag tag-green">Верифікація</span></td><td>Підтверджено документи Коваль М.В.</td><td>admin@truckhub.ua · 192.168.1.1</td><td><span class="tag tag-green">✓ OK</span></td></tr>
+            <tr><td style="color:var(--text2);font-size:11px">04.06 14:24:05</td><td><span class="tag tag-amber">SafePay</span></td><td>Виплата 38 000 грн → Петренко І.В.</td><td>Система · auto</td><td><span class="tag tag-green">✓ OK</span></td></tr>
+            <tr><td style="color:var(--text2);font-size:11px">04.06 14:17:33</td><td><span class="tag tag-red">Спір</span></td><td>Відкрито спір #SP-2025-047</td><td>user_4821 · 95.47.23.11</td><td><span class="tag tag-amber">⏳ В роботі</span></td></tr>
+            <tr><td style="color:var(--text2);font-size:11px">04.06 14:09:18</td><td><span class="tag tag-blue">Авторизація</span></td><td>Вхід в систему</td><td>admin@truckhub.ua · 192.168.1.1</td><td><span class="tag tag-green">✓ OK</span></td></tr>
+            <tr><td style="color:var(--text2);font-size:11px">04.06 13:55:44</td><td><span class="tag tag-purple">Система</span></td><td>Автоматичний розрахунок Trust Score (batch)</td><td>system · cron</td><td><span class="tag tag-green">✓ 2 450 оновлено</span></td></tr>
+            <tr><td style="color:var(--text2);font-size:11px">04.06 13:40:22</td><td><span class="tag tag-amber">SafePay</span></td><td>Заморожено кошти #TH-2025-04901 · 38 000 грн</td><td>user_1247 · 91.200.12.4</td><td><span class="tag tag-green">✓ OK</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- MODAL -->
+<div class="modal-ov" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modalTitle">Дія</div>
+    <div id="modalBody"></div>
+    <div class="modal-btns"><button class="btn-primary" onclick="closeModal()">Підтвердити</button><button class="btn-secondary" onclick="closeModal()">Скасувати</button></div>
+  </div>
+</div>
+
+<script>
+// ── PANEL NAVIGATION ──
+const panelTitles = {
+  dashboard:    ['Дашборд','Загальний огляд платформи'],
+  orders:       ['Замовлення','Всі замовлення платформи'],
+  auctions:     ['Аукціони','Активні та завершені аукціони'],
+  trips:        ['Рейси в дорозі','Моніторинг в реальному часі'],
+  users:        ['Користувачі','Управління акаунтами'],
+  verification: ['Верифікація','Перевірка документів та транспорту'],
+  finance:      ['Транзакції','Фінансовий моніторинг'],
+  safepay:      ['SafePay','Управління заморожених коштів'],
+  disputes:     ['Арбітраж спорів','Розгляд та вирішення спорів'],
+  support:      ['Підтримка','Тікети користувачів'],
+  analytics:    ['Аналітика','Статистика та звіти'],
+  settings:     ['Налаштування','Конфігурація платформи'],
+  logs:         ['Системні логи','Журнал дій та подій'],
+};
+
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('on'));
+  document.getElementById('panel_' + id).classList.add('show');
+  document.querySelectorAll('.sb-item').forEach(i => {
+    if (i.getAttribute('onclick') === `show('${id}')`) i.classList.add('on');
+  });
+  const t = panelTitles[id] || [id, ''];
+  document.getElementById('topTitle').textContent = t[0];
+  document.getElementById('topSub').textContent = t[1];
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── CLOCK ──
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    now.toLocaleTimeString('uk-UA', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ── CHARTS ──
+function drawChart(id, data, color) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const max = Math.max(...data);
+  el.innerHTML = data.map((v,i) =>
+    `<div class="cb-wrap"><div class="cb" style="height:${Math.round(v/max*100)}%;background:${i===data.length-1?color:'rgba(0,200,255,0.25)'};"></div><div class="cb-lbl">${['Пн','Вт','Ср','Чт','Пт','Сб','Нд'][i]}</div></div>`
+  ).join('');
+}
+drawChart('mainChart', [142,168,134,187,204,176,189], 'var(--accent)');
+
+function drawSparkline(id, data) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const max = Math.max(...data);
+  el.innerHTML = data.map((v,i) =>
+    `<div class="spark-bar ${i===data.length-1?'hi':''}" style="height:${Math.round(v/max*100)}%;"></div>`
+  ).join('');
+}
+drawSparkline('sp1',[60,72,68,80,77,85,87]);
+drawSparkline('sp2',[48,55,60,58,62,60,64]);
+drawSparkline('sp3',[30,35,38,40,42,41,43]);
+drawSparkline('sp4',[28,31,34,33,35,37,38]);
+
+// ── TABLE DATA ──
+const users = [
+  {name:'Коваль М.В.',role:'Перевізник',type:'ФОП',score:'4.8',trips:127,rev:'142 500',reg:'01.01.2024',status:'ok'},
+  {name:'Петренко І.В.',role:'Замовник',type:'Фіз. особа',score:'4.5',trips:34,rev:'48 200',reg:'15.03.2024',status:'ok'},
+  {name:'ТОВ Логіст-Груп',role:'Замовник',type:'Юр. особа',score:'4.2',trips:12,rev:'120 000',reg:'20.04.2024',status:'pending'},
+  {name:'Сидоренко О.',role:'Перевізник',type:'ФОП',score:'3.9',trips:45,rev:'67 300',reg:'10.02.2024',status:'ok'},
+  {name:'Захаренко Р.',role:'Перевізник',type:'ФОП',score:'2.1',trips:8,rev:'9 800',reg:'01.05.2024',status:'blocked'},
+];
+
+const tbody = document.getElementById('usersTable');
+if (tbody) users.forEach(u => {
+  const stMap = {ok:'<span class="tag tag-green">✓ Верифікований</span>',pending:'<span class="tag tag-amber">⏳ На перевірці</span>',blocked:'<span class="tag tag-red">🚫 Заблокований</span>'};
+  const colors = ['linear-gradient(135deg,#1a4a8a,#00c8ff)','linear-gradient(135deg,#065f46,#00d68f)','linear-gradient(135deg,#7c3aed,#a78bfa)','linear-gradient(135deg,#92400e,#f0a500)','linear-gradient(135deg,#7f1d1d,#ff4d4d)'];
+  const ci = users.indexOf(u);
+  tbody.innerHTML += `<tr>
+    <td><div style="display:flex;align-items:center;gap:8px"><div class="u-ava" style="background:${colors[ci]}">${u.name.substring(0,2)}</div><strong>${u.name}</strong></div></td>
+    <td>${u.role}</td><td>${u.type}</td>
+    <td><div class="score-ring"><span class="num" style="color:${parseFloat(u.score)>=4?'var(--green)':parseFloat(u.score)>=3?'var(--accent)':'var(--red)'}">${u.score}</span><span class="stars">★</span></div></td>
+    <td>${u.trips}</td><td>${u.rev} грн</td><td>${u.reg}</td><td>${stMap[u.status]}</td>
+    <td><div style="display:flex;gap:4px">
+      <button class="act-btn">👁 Профіль</button>
+      ${u.status==='blocked'?'<button class="act-btn green">✓ Розблок.</button>':'<button class="act-btn red" onclick="blockUser(this)">🚫 Блок.</button>'}
+    </div></td></tr>`;
+});
+
+const orders = [
+  {id:'TH-04901',route:'Київ → Варшава',cust:'Петренко І.',carrier:'Коваль М.',type:'🚛 Тент',sum:'38 000',pay:'🔐 SafePay',status:'active'},
+  {id:'TH-04898',route:'Харків → Одеса',cust:'ТОВ Логіст',carrier:'Сидоренко О.',type:'❄️ Реф',sum:'22 000',pay:'💵 Готівка',status:'loading'},
+  {id:'TH-04895',route:'Дніпро → Берлін',cust:'Мороз С.',carrier:'—',type:'🚛 Тент',sum:'54 000',pay:'🔐 SafePay',status:'auction'},
+  {id:'TH-04890',route:'Львів → Краків',cust:'ФОП Захаренко',carrier:'Бойко В.',type:'🚌 Мікроавт.',sum:'8 500',pay:'🏦 Безнал',status:'done'},
+  {id:'TH-04885',route:'Запоріжжя → Київ',cust:'Іванець Р.',carrier:'Ткач О.',type:'🛢️ Цистерна',sum:'14 500',pay:'🔐 SafePay',status:'dispute'},
+];
+const ordBody = document.getElementById('ordersTable');
+if (ordBody) orders.forEach(o => {
+  const stMap = {active:'<span class="tag tag-green">🟢 В дорозі</span>',loading:'<span class="tag tag-blue">⏳ Завантаження</span>',auction:'<span class="tag tag-amber">🏛️ Аукціон</span>',done:'<span class="tag tag-gray">✓ Завершено</span>',dispute:'<span class="tag tag-red">⚖️ Спір</span>'};
+  ordBody.innerHTML += `<tr><td style="font-weight:700;color:var(--accent)">#${o.id}</td><td>${o.route}</td><td>${o.cust}</td><td>${o.carrier}</td><td>${o.type}</td><td>${o.sum} грн</td><td>${o.pay}</td><td>${stMap[o.status]}</td><td style="color:var(--text2)">04.06.2025</td>
+    <td><div style="display:flex;gap:4px"><button class="act-btn">👁</button>${o.status==='dispute'?'<button class="act-btn red" onclick="show(\'disputes\')">⚖️</button>':''}</div></td></tr>`;
+});
+
+const auctions = [
+  {id:'TH-04895',route:'Дніпро → Берлін',cust:'Мороз С.',type:'🚛 Тент',bids:7,min:'48 000',start:'54 000',time:'5г 30хв',status:'active'},
+  {id:'TH-04880',route:'Київ → Бухарест',cust:'Петренко І.',type:'🏗️ Платформа',bids:3,min:'28 000',start:'31 000',time:'8г 00хв',status:'active'},
+  {id:'TH-04870',route:'Одеса → Варшава',cust:'ТОВ Логіст',type:'❄️ Реф',bids:12,min:'35 000',start:'42 000',time:'1г 15хв',status:'active'},
+];
+const aucBody = document.getElementById('auctionsTable');
+if (aucBody) auctions.forEach(a => {
+  aucBody.innerHTML += `<tr><td style="color:var(--accent);font-weight:700">#${a.id}</td><td>${a.route}</td><td>${a.cust}</td><td>${a.type}</td>
+    <td><strong>${a.bids}</strong></td><td>${a.min} грн</td><td>${a.start} грн</td>
+    <td style="color:${a.time.startsWith('1')?'var(--red)':'var(--accent)'}">${a.time}</td>
+    <td><span class="tag tag-green">● Активний</span></td>
+    <td><div style="display:flex;gap:4px"><button class="act-btn">👁</button><button class="act-btn red">🚫 Зупинити</button></div></td></tr>`;
+});
+
+const trips = [
+  {id:'TH-04821',route:'Київ → Варшава',carrier:'Коваль М.',cust:'Петренко І.',cargo:'🚛 20 т',progress:65,sp:'38 000',status:'active'},
+  {id:'TH-04756',route:'Одеса → Берлін',carrier:'Сидоренко О.',cust:'ТОВ Логіст',cargo:'🚛 18 т',progress:5,sp:'54 000',status:'loading'},
+  {id:'TH-04812',route:'Харків → Польща',carrier:'Бойко В.',cust:'Мороз С.',cargo:'❄️ 15 т',progress:88,sp:'31 000',status:'active'},
+];
+const tripBody = document.getElementById('tripsTable');
+if (tripBody) trips.forEach(t => {
+  const stMap = {active:'<span class="tag tag-green">🟢 В дорозі</span>',loading:'<span class="tag tag-blue">⏳ Завантаження</span>'};
+  tripBody.innerHTML += `<tr><td style="color:var(--accent);font-weight:700">#${t.id}</td><td>${t.route}</td><td>${t.carrier}</td><td>${t.cust}</td><td>${t.cargo}</td>
+    <td><div style="min-width:80px"><div class="prog-bar"><div class="prog-fill" style="width:${t.progress}%;background:${t.progress>50?'var(--green)':'var(--accent)'}"></div></div><div style="font-size:10px;color:var(--text2);margin-top:2px">${t.progress}%</div></div></td>
+    <td>${t.sp} грн</td><td>${stMap[t.status]}</td>
+    <td><div style="display:flex;gap:4px"><button class="act-btn">📍 Трекінг</button><button class="act-btn">💬 Чат</button></div></td></tr>`;
+});
+
+const finRows = [
+  {id:'TX-5521',order:'TH-04821',from:'Петренко І.',to:'Коваль М.',sum:'38 000',fee:'912',method:'🔐 SafePay',status:'frozen'},
+  {id:'TX-5520',order:'TH-04756',from:'Мороз С.',to:'Сидоренко О.',sum:'22 000',fee:'528',method:'🏦 Безнал',status:'paid'},
+  {id:'TX-5519',order:'TH-04698',from:'ТОВ Логіст',to:'Бойко В.',sum:'9 800',fee:'235',method:'💵 Готівка',status:'paid'},
+  {id:'TX-5518',order:'TH-04680',from:'Іванець Р.',to:'Ткач О.',sum:'54 000',fee:'1 296',method:'🔐 SafePay',status:'dispute'},
+];
+const finBody = document.getElementById('financeTable');
+if (finBody) finRows.forEach(f => {
+  const stMap = {frozen:'<span class="tag tag-amber">🔐 Заморожено</span>',paid:'<span class="tag tag-green">✓ Виплачено</span>',dispute:'<span class="tag tag-red">⚖️ Спір</span>'};
+  finBody.innerHTML += `<tr><td style="color:var(--text2)">#${f.id}</td><td style="color:var(--accent)">#${f.order}</td><td>${f.from}</td><td>${f.to}</td>
+    <td style="font-weight:700;color:var(--white)">${f.sum} грн</td><td style="color:var(--text2)">${f.fee} грн</td><td>${f.method}</td><td>${stMap[f.status]}</td><td style="color:var(--text2)">04.06.2025</td>
+    <td><button class="act-btn">👁</button></td></tr>`;
+});
+
+const spRows = [
+  {id:'SP-4821',order:'TH-04821',cust:'Петренко І.',carrier:'Коваль М.',sum:'38 000',frozen:'48 год',wait:'24 год',status:'await'},
+  {id:'SP-4756',order:'TH-04756',cust:'ТОВ Логіст',carrier:'Сидоренко О.',sum:'22 000',frozen:'72 год',wait:'48 год ⚠️',status:'overdue'},
+  {id:'SP-4812',order:'TH-04812',cust:'Мороз С.',carrier:'Бойко В.',sum:'31 000',frozen:'12 год',wait:'12 год',status:'await'},
+];
+const spBody = document.getElementById('safepayTable');
+if (spBody) spRows.forEach(s => {
+  const stMap = {await:'<span class="tag tag-amber">⏳ Очікує підтвердження</span>',overdue:'<span class="tag tag-red">🔴 Прострочено</span>'};
+  spBody.innerHTML += `<tr><td style="color:var(--text2)">#${s.id}</td><td style="color:var(--accent)">#${s.order}</td><td>${s.cust}</td><td>${s.carrier}</td>
+    <td style="font-weight:700;color:var(--white)">${s.sum} грн</td><td style="color:var(--text2)">${s.frozen}</td>
+    <td style="color:${s.wait.includes('⚠️')?'var(--red)':'var(--text2)'}">${s.wait}</td><td>${stMap[s.status]}</td>
+    <td><div style="display:flex;gap:4px">
+      <button class="act-btn green" onclick="forceRelease(this)">✓ Виплатити</button>
+      <button class="act-btn red" onclick="forceFreeze(this)">🔒 Заморозити</button>
+    </div></td></tr>`;
+});
+
+const verRows = [
+  {user:'Коваль М.В.',doc:'Паспорт (ID-карта)',time:'1 год 12 хв',wait:'2 год'},
+  {user:'Захаренко Р.',doc:'Виписка ФОП',time:'4 год 30 хв',wait:'5 год'},
+  {user:'ТОВ Нова Пошта',doc:'Статут компанії',time:'30 хв',wait:'30 хв'},
+  {user:'Бойко В.С.',doc:'Водійське посвідч. (кат. CE)',time:'2 год 15 хв',wait:'3 год'},
+];
+const verBody = document.getElementById('verifyTable');
+if (verBody) verRows.forEach(v => {
+  verBody.innerHTML += `<tr><td><div style="display:flex;align-items:center;gap:8px"><div class="u-ava" style="background:linear-gradient(135deg,#1a4a8a,#00c8ff)">${v.user.substring(0,2)}</div>${v.user}</div></td>
+    <td>${v.doc}</td><td style="color:var(--text2)">${v.time} тому</td>
+    <td style="color:${v.wait.startsWith('5')||v.wait.startsWith('3')?'var(--accent)':'var(--text2)'}">${v.wait}</td>
+    <td><button class="act-btn">👁 Переглянути</button></td>
+    <td><div style="display:flex;gap:4px">
+      <button class="act-btn green" onclick="verifyAction(this,'✓ Верифіковано')">✓ Підтвердити</button>
+      <button class="act-btn red" onclick="verifyAction(this,'✗ Відхилено')">✗ Відхилити</button>
+      <button class="act-btn amber">↩ Запросити</button>
+    </div></td></tr>`;
+});
+
+// ── ACTIONS ──
+function verifyAction(btn, result) {
+  const row = btn.closest('tr');
+  row.querySelectorAll('.act-btn').forEach(b => { b.disabled = true; b.style.opacity = '.4'; });
+  const td = document.createElement('td');
+  td.innerHTML = result.includes('✓') ? '<span class="tag tag-green">'+result+'</span>' : '<span class="tag tag-red">'+result+'</span>';
+  row.lastElementChild.replaceWith(td);
+}
+
+function blockUser(btn) {
+  if (!confirm('Заблокувати користувача?')) return;
+  const row = btn.closest('tr');
+  row.querySelector('.tag').className = 'tag tag-red';
+  row.querySelector('.tag').textContent = '🚫 Заблокований';
+  btn.textContent = '✓ Розблокувати';
+  btn.className = 'act-btn green';
+  btn.onclick = null;
+}
+
+function resolveDispute(btn, side) {
+  const card = btn.closest('.dispute-card');
+  card.innerHTML = `<div class="alert-banner success" style="margin:0">✅ Спір вирішено на користь <strong>${side}</strong>. SafePay буде виплачено протягом 1 год.</div>`;
+}
+
+function forceRelease(btn) {
+  const row = btn.closest('tr');
+  row.querySelector('.tag').outerHTML = '<span class="tag tag-green">✓ Виплачено</span>';
+  btn.closest('td').innerHTML = '<span style="color:var(--text2);font-size:11px">Виконано</span>';
+}
+
+function forceFreeze(btn) {
+  btn.textContent = '🔒 Заморожено';
+  btn.disabled = true;
+  btn.style.opacity = '.5';
+}
+
+// ── TABS ──
+function selVTab(btn, id) {
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('on'));
+  btn.classList.add('on');
+  ['v_docs','v_transport','v_companies','v_done'].forEach(i => {
+    const el = document.getElementById(i);
+    if (el) el.style.display = i === id ? 'block' : 'none';
+  });
+}
+
+function selSetting(item, id) {
+  document.querySelectorAll('.sn-item').forEach(i => i.classList.remove('on'));
+  item.classList.add('on');
+  ['s_platform','s_safepay','s_trust','s_notifications','s_admins'].forEach(i => {
+    const el = document.getElementById(i);
+    if (el) el.style.display = i === id ? 'block' : 'none';
+  });
+}
+
+// ── TRIP MAP ──
+const tripData = {
+  'TH-04821':{route:'Київ → Варшава',carrier:'Коваль М.В.',cargo:'🚛 Тент · 20 т',progress:65,status:'active',color:'var(--green)',sp:'38 000 грн',lat:'50.4°N',lng:'22.1°E',speed:'72 км/год',eta:'4 год 20 хв'},
+  'TH-04756':{route:'Одеса → Берлін',carrier:'Сидоренко О.',cargo:'🚛 Тент · 18 т',progress:5,status:'loading',color:'var(--cyan)',sp:'54 000 грн',lat:'46.5°N',lng:'30.7°E',speed:'0 км/год',eta:'28 год'},
+  'TH-04812':{route:'Харків → Польща',carrier:'Бойко В.',cargo:'❄️ Реф · 15 т',progress:88,status:'active',color:'var(--accent)',sp:'31 000 грн',lat:'51.2°N',lng:'20.8°E',speed:'68 км/год',eta:'1 год 45 хв'},
+  'TH-04799':{route:'Дніпро → Бухарест',carrier:'Ткач О.',cargo:'🏗️ Платформа · 22 т',progress:30,status:'active',color:'#8b5cf6',sp:'24 000 грн',lat:'47.8°N',lng:'27.2°E',speed:'65 км/год',eta:'9 год 10 хв'},
+  'TH-04834':{route:'Львів → Краків',carrier:'Мельник А.',cargo:'📦 Джамбо · 12 т',progress:70,status:'active',color:'var(--orange)',sp:'9 500 грн',lat:'49.8°N',lng:'21.4°E',speed:'74 км/год',eta:'55 хв'},
+};
+
+function selectTrip(id) {
+  const t = tripData[id]; if (!t) return;
+  const stMap = {active:'<span class="tag tag-green">🟢 В дорозі</span>',loading:'<span class="tag tag-blue">⏳ Завантаження</span>'};
+  document.getElementById('tripDetail').innerHTML = `
+    <div style="font-family:'Exo 2',sans-serif;font-size:15px;font-weight:800;color:var(--white);margin-bottom:6px">#${id}</div>
+    <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:8px">${t.route}</div>
+    <div style="margin-bottom:10px">${stMap[t.status]}</div>
+    <div style="display:flex;flex-direction:column;gap:5px;font-size:12px;margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Перевізник</span><span>${t.carrier}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Вантаж</span><span>${t.cargo}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">SafePay</span><span style="color:var(--accent)">${t.sp}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Координати</span><span style="color:var(--cyan);font-size:11px">${t.lat}, ${t.lng}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Швидкість</span><span>${t.speed}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">ETA</span><span style="color:var(--green)">${t.eta}</span></div>
+    </div>
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:4px"><span>Прогрес</span><span>${t.progress}%</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${t.progress}%;background:${t.color}"></div></div>
+    </div>
+    <div style="display:flex;gap:6px">
+      <button class="act-btn" style="flex:1">💬 Чат</button>
+      <button class="act-btn green" style="flex:1">📍 Слідкувати</button>
+    </div>`;
+}
+
+function buildMiniList() {
+  const el = document.getElementById('miniTripList'); if (!el) return;
+  Object.entries(tripData).forEach(([id, t]) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'padding:8px 10px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:7px;cursor:pointer;transition:border-color .2s;margin-bottom:4px';
+    div.innerHTML = `<div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:11px;font-weight:700;color:${t.color}">#${id}</span><span style="font-size:10px;color:var(--text2)">${t.progress}%</span></div><div style="font-size:12px;color:var(--white);margin-bottom:4px">${t.route}</div><div class="prog-bar"><div class="prog-fill" style="width:${t.progress}%;background:${t.color}"></div></div>`;
+    div.onmouseover = () => div.style.borderColor = t.color;
+    div.onmouseout = () => div.style.borderColor = 'var(--border)';
+    div.onclick = () => selectTrip(id);
+    el.appendChild(div);
+  });
+}
+buildMiniList();
+
+// Animate trucks on SVG map
+let tick = 0;
+setInterval(() => {
+  tick++;
+  [{id:'truck1',dx:-0.04,dy:-0.008},{id:'truck3',dx:-0.03,dy:-0.005},{id:'truck5',dx:-0.025,dy:-0.005}].forEach(({id,dx,dy}) => {
+    const g = document.getElementById(id); if (!g) return;
+    const offset = Math.sin(tick * 0.08) * 0.8;
+    g.setAttribute('transform', `translate(${tick*dx + offset},${tick*dy})`);
+  });
+}, 300);
+
+function closeModal() { document.getElementById('modal').classList.remove('show'); }
+</script>
+</body>
+</html>

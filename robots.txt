@@ -1,0 +1,31 @@
+# Truck Hub UA — robots.txt
+# https://truckhub.ua
+
+User-agent: *
+Allow: /
+
+# Закриті від індексації
+Disallow: /order.html
+Disallow: /carrier.html
+Disallow: /admin.html
+Disallow: /dashboard.html
+
+# Файли
+Disallow: /*.zip$
+Disallow: /*.docx$
+Disallow: /*.pdf$
+
+# Sitemap
+Sitemap: https://truckhub.ua/sitemap.xml
+
+# Основні пошуковики
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: YandexBot
+Disallow: /

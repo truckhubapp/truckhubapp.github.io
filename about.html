@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Про нас — Truck Hub UA | Місія, команда та цінності</title>
+<meta name="description" content="Truck Hub UA — українська команда яка змінює логістику. Дізнайтесь про нашу місію, цінності та шлях до створення першої цифрової екосистеми довіри для транспортної логістики.">
+<meta name="keywords" content="про truck hub, команда логістика, місія платформи, truck hub україна, цифрова логістика">
+<meta property="og:title" content="Про нас — Truck Hub UA">
+<meta property="og:description" content="Українська команда яка будує першу цифрову екосистему довіри для транспортної логістики України та Європи.">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--dark:#040d1e;--dark2:#071428;--dark3:#0a1a35;--blue:#1a4a8a;--ua-blue:#005bbb;--ua-yellow:#ffd500;--accent:#f0a500;--accent2:#ffbe2e;--cyan:#00c8ff;--green:#00d68f;--text:#ccdcf0;--text2:#8aaccc;--white:#fff;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08)}
+html,body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ua-blue) 50%,var(--ua-yellow) 50%);z-index:9999}
+
+/* HEADER */
+header{position:sticky;top:3px;background:rgba(4,13,30,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 60px;justify-content:space-between;z-index:100}
+.logo{display:flex;align-items:center;gap:8px;font-family:'Exo 2',sans-serif;font-weight:800;font-size:18px;text-decoration:none;color:var(--white)}
+.logo span{color:var(--accent)}
+.logo-badge{background:var(--blue);color:var(--white);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px}
+nav{display:flex;align-items:center;gap:28px}
+nav a{color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+nav a:hover,nav a.active{color:var(--white)}
+.btn-reg{background:var(--accent);border:none;border-radius:7px;padding:9px 20px;color:var(--dark);font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;text-decoration:none}
+.btn-reg:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-login{background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:9px 18px;color:var(--white);font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:none;margin-right:8px;transition:all .2s}
+.btn-login:hover{border-color:var(--white)}
+
+/* HERO */
+.hero{padding:100px 60px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(26,74,138,.35),transparent)}
+.hero-flag{display:flex;gap:0;border-radius:6px;overflow:hidden;width:48px;height:32px;margin:0 auto 24px;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.hero-flag .b{flex:1;background:var(--ua-blue)}
+.hero-flag .y{flex:1;background:var(--ua-yellow)}
+.hero h1{font-family:'Exo 2',sans-serif;font-size:clamp(36px,5vw,60px);font-weight:900;color:var(--white);text-align:center;margin-bottom:16px;line-height:1.1}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:17px;color:var(--text2);max-width:620px;margin:0 auto;line-height:1.75;text-align:center}
+
+/* MISSION */
+.mission{padding:80px 60px;background:var(--dark2)}
+.mission-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.mission-text h2{font-family:'Exo 2',sans-serif;font-size:38px;font-weight:900;color:var(--white);margin-bottom:20px;line-height:1.15}
+.mission-text h2 span{color:var(--accent)}
+.mission-text p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:16px}
+.mission-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.mstat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;transition:all .3s}
+.mstat:hover{border-color:rgba(240,165,0,.3);transform:translateY(-2px)}
+.mstat-val{font-family:'Exo 2',sans-serif;font-size:32px;font-weight:900;color:var(--accent);line-height:1}
+.mstat-lbl{font-size:12px;color:var(--text2);margin-top:5px}
+
+/* VALUES */
+.values{padding:80px 60px}
+.values h2{font-family:'Exo 2',sans-serif;font-size:38px;font-weight:900;color:var(--white);text-align:center;margin-bottom:14px}
+.values .sub{font-size:15px;color:var(--text2);text-align:center;margin-bottom:50px}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto}
+.value-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all .3s;position:relative;overflow:hidden}
+.value-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .3s}
+.value-card:hover{transform:translateY(-4px);border-color:rgba(240,165,0,.2)}
+.value-card:hover::before{opacity:1;background:linear-gradient(90deg,var(--accent),transparent)}
+.value-icon{font-size:36px;margin-bottom:16px}
+.value-title{font-family:'Exo 2',sans-serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px}
+.value-desc{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* STORY */
+.story{padding:80px 60px;background:var(--dark2)}
+.story-inner{max-width:900px;margin:0 auto}
+.story h2{font-family:'Exo 2',sans-serif;font-size:38px;font-weight:900;color:var(--white);margin-bottom:40px;text-align:center}
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:24px;padding-bottom:36px;position:relative}
+.tl-item::before{content:'';position:absolute;left:19px;top:40px;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),rgba(240,165,0,.1))}
+.tl-item:last-child::before{display:none}
+.tl-dot{width:40px;height:40px;border-radius:50%;background:rgba(240,165,0,.12);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.tl-content{flex:1;padding-top:6px}
+.tl-year{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.tl-title{font-family:'Exo 2',sans-serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px}
+.tl-desc{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* TEAM */
+.team{padding:80px 60px}
+.team h2{font-family:'Exo 2',sans-serif;font-size:38px;font-weight:900;color:var(--white);text-align:center;margin-bottom:14px}
+.team .sub{font-size:15px;color:var(--text2);text-align:center;margin-bottom:50px}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:0 auto}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center;transition:all .3s}
+.team-card:hover{border-color:rgba(0,200,255,.2);transform:translateY(-3px)}
+.team-avatar{width:72px;height:72px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:var(--white)}
+.team-name{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px}
+.team-role{font-size:12px;color:var(--accent);margin-bottom:8px;font-weight:600}
+.team-bio{font-size:12px;color:var(--text2);line-height:1.6}
+
+/* PARTNERS */
+.partners{padding:60px;background:var(--dark2)}
+.partners h2{font-family:'Exo 2',sans-serif;font-size:28px;font-weight:700;color:var(--white);text-align:center;margin-bottom:36px}
+.partner-logos{display:flex;justify-content:center;align-items:center;gap:32px;flex-wrap:wrap}
+.partner-logo{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 28px;font-size:13px;font-weight:600;color:var(--text2);transition:all .2s}
+.partner-logo:hover{border-color:rgba(240,165,0,.3);color:var(--white)}
+
+/* UA SECTION */
+.ua-section{padding:80px 60px;text-align:center;position:relative;overflow:hidden}
+.ua-section::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,91,187,.08),rgba(255,213,0,.05))}
+.ua-flag-big{display:flex;gap:0;border-radius:12px;overflow:hidden;width:80px;height:52px;margin:0 auto 24px;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.ua-flag-big .b{flex:1;background:var(--ua-blue)}
+.ua-flag-big .y{flex:1;background:var(--ua-yellow)}
+.ua-section h2{font-family:'Exo 2',sans-serif;font-size:36px;font-weight:900;color:var(--white);margin-bottom:16px}
+.ua-section p{font-size:15px;color:var(--text2);max-width:620px;margin:0 auto 32px;line-height:1.8}
+.ua-points{display:flex;justify-content:center;gap:32px;flex-wrap:wrap}
+.ua-point{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--text)}
+.ua-point span{font-size:20px}
+
+/* CTA */
+.cta{background:linear-gradient(135deg,#071428,#0a1e38);padding:80px 60px;text-align:center;border-top:1px solid var(--border)}
+.cta h2{font-family:'Exo 2',sans-serif;font-size:42px;font-weight:900;color:var(--white);margin-bottom:14px}
+.cta h2 span{color:var(--accent)}
+.cta p{font-size:16px;color:var(--text2);margin-bottom:32px}
+.cta-btns{display:flex;gap:14px;justify-content:center}
+.btn-cta{padding:15px 36px;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-cta.primary{background:var(--accent);color:var(--dark);border:none}
+.btn-cta.primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,165,0,.3)}
+.btn-cta.outline{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--white)}
+.btn-cta.outline:hover{border-color:var(--white)}
+
+/* FOOTER */
+footer{background:#030a18;padding:40px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);flex-wrap:wrap;gap:16px}
+footer p{font-size:12px;color:var(--text2)}
+footer nav{display:flex;gap:20px}
+footer nav a{color:var(--text2);text-decoration:none;font-size:12px;transition:color .2s}
+footer nav a:hover{color:var(--white)}
+
+/* FADE IN */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:none}
+
+  /* ═══ МОБІЛЬНА АДАПТАЦІЯ ═══ */
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .burger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .burger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  .mob-menu {
+    display: none;
+    position: fixed;
+    top: 67px;
+    left: 0;
+    right: 0;
+    background: rgba(4,13,30,0.98);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px 24px;
+    z-index: 999;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mob-menu.show { display: flex; }
+  .mob-menu a {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color .2s;
+  }
+  .mob-menu a:last-child { border-bottom: none; }
+  .mob-menu a:hover, .mob-menu a.active { color: var(--white); }
+  .mob-menu .mob-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .mob-menu .mob-btns a {
+    flex: 1;
+    text-align: center;
+    border: none;
+    padding: 11px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .mob-menu .mob-btns .m-login {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.2) !important;
+    color: var(--white) !important;
+  }
+  .mob-menu .mob-btns .m-reg {
+    background: var(--accent);
+    color: var(--dark) !important;
+    border: none !important;
+  }
+
+  @media (max-width: 900px) {
+    header { padding: 0 20px; }
+    header nav, header .btn-login, header .btn-reg { display: none !important; }
+    .burger { display: flex; }
+
+    /* Hero */
+    .hero { padding: 60px 24px 40px; }
+    .hero h1 { font-size: clamp(28px, 8vw, 44px); }
+    .hero p { font-size: 15px; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .hero-actions a { text-align: center; }
+    .features-strip { grid-template-columns: 1fr 1fr; }
+
+    /* Sections */
+    section { padding: 50px 24px; }
+    .why-grid { grid-template-columns: 1fr; }
+    .solutions-grid { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr 1fr; }
+    .eco-grid { grid-template-columns: 1fr; }
+    .cube-visual { display: none; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .cta-section { flex-direction: column; padding: 40px 24px; text-align: center; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+    /* About, Contact, Pricing, Blog */
+    .mission-inner { grid-template-columns: 1fr; }
+    .mission-stats { grid-template-columns: 1fr 1fr; }
+    .values-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .main-layout { grid-template-columns: 1fr; padding: 20px 24px 60px; }
+    .sidebar { display: none; }
+    .plans { grid-template-columns: 1fr; }
+    .plans-wrap { padding: 0 24px 60px; }
+    .comm-grid { grid-template-columns: 1fr 1fr; }
+    .bonus-grid { grid-template-columns: 1fr; }
+    .compare-wrap { overflow-x: auto; }
+    .faq { padding: 50px 24px; }
+    .bonuses, .commission, .compare { padding: 50px 24px; }
+    .sp-flow { grid-template-columns: 1fr; }
+    .sp-arrow { transform: rotate(90deg); margin: 0 auto; }
+    .trust-grid { grid-template-columns: 1fr 1fr; }
+    .hero-inner { flex-direction: column; }
+    .hero-stats { justify-content: center; }
+    .steps-flow .step-item { grid-template-columns: 60px 1fr; gap: 16px; }
+
+    /* Blog */
+    .articles-grid { grid-template-columns: 1fr; }
+    .article-page { padding: 30px 24px 60px; }
+
+    /* Dashboard */
+    .row4, .row3 { grid-template-columns: 1fr 1fr; }
+    .row2 { grid-template-columns: 1fr; }
+
+    /* Controls */
+    .controls { padding: 20px 24px; }
+    .filters-bar, .filters { flex-wrap: wrap; }
+
+    /* How it works */
+    .steps-section { padding: 0 24px 60px; }
+    .role-switcher { flex-wrap: wrap; }
+
+    /* Footer */
+    footer { padding: 30px 24px; flex-direction: column; text-align: center; gap: 12px; }
+    footer nav { flex-wrap: wrap; justify-content: center; }
+    footer nav a { margin: 0 8px; }
+
+    /* Contact */
+    .faq-grid { grid-template-columns: 1fr; }
+    .social-links { flex-wrap: wrap; justify-content: center; }
+
+    /* Pricing compare */
+    .rights-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .features-strip { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .row4, .row3, .row2 { grid-template-columns: 1fr; }
+    .mission-stats { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .comm-grid { grid-template-columns: 1fr; }
+    .trust-grid { grid-template-columns: 1fr; }
+    .period-toggle { flex-direction: column; border-radius: 12px; }
+    .plans-wrap { padding: 0 16px 40px; }
+    .hero { padding: 50px 16px 30px; }
+    section { padding: 40px 16px; }
+    footer { padding: 24px 16px; }
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <a href="truckhub.html" class="logo">TRUCK <span>HUB</span> <span class="logo-badge">UA</span></a>
+  <nav>
+    <a href="features.html">Можливості</a>
+    <a href="how-it-works.html">Як це працює</a>
+    <a href="pricing.html">Тарифи</a>
+    <a href="about.html" class="active">Про нас</a>
+    <a href="blog.html">Блог</a>
+  </nav>
+  <div style="display:flex;align-items:center">
+    <a href="truckhub.html" class="btn-login">Увійти</a>
+    <a href="truckhub.html" class="btn-reg">Реєстрація</a>
+  </div>
+  <button class="burger" id="burgerBtn" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-menu" id="mobMenu">
+    <a href="how-it-works.html">Як це працює</a>
+    <a href="pricing.html">Тарифи</a>
+    <a href="about.html">Про нас</a>
+    <a href="blog.html">Блог</a>
+    <a href="contact.html">Контакти</a>
+    <div class="mob-btns">
+      <a href="truckhub.html" class="m-login">Увійти</a>
+      <a href="truckhub.html" class="m-reg">Реєстрація</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-flag"><div class="b"></div><div class="y"></div></div>
+  <h1>Ми будуємо <span>довіру</span><br>в українській логістиці</h1>
+  <p>Truck Hub — це не просто платформа. Це рух за чесний, прозорий і безпечний ринок перевезень в Україні та Європі.</p>
+</section>
+
+<!-- MISSION -->
+<section class="mission fade-in">
+  <div class="mission-inner">
+    <div class="mission-text">
+      <h2>Наша <span>місія</span></h2>
+      <p>Щодня мільйони гривень втрачаються через шахрайство, невиконані домовленості та непрозоре ціноутворення на ринку перевезень. Замовники не довіряють перевізникам. Перевізники не отримують вчасну оплату.</p>
+      <p>Ми вирішили це змінити. Truck Hub — перша цифрова екосистема довіри де кожна угода захищена, кожен учасник верифікований, а кожен рейс під контролем.</p>
+      <p>Наша мета — стати стандартом логістики для України та Центральної і Східної Європи.</p>
+    </div>
+    <div class="mission-stats">
+      <div class="mstat"><div class="mstat-val">2 450+</div><div class="mstat-lbl">Верифікованих перевізників</div></div>
+      <div class="mstat"><div class="mstat-val">98%</div><div class="mstat-lbl">Успішних рейсів</div></div>
+      <div class="mstat"><div class="mstat-val">11 хв</div><div class="mstat-lbl">Середній час пошуку авто</div></div>
+      <div class="mstat"><div class="mstat-val">🇺🇦+🇪🇺</div><div class="mstat-lbl">Географія роботи</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values fade-in">
+  <h2>Наші цінності</h2>
+  <p class="sub">Принципи на яких побудована кожна функція платформи</p>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon">🛡️</div>
+      <div class="value-title">Довіра через верифікацію</div>
+      <div class="value-desc">Кожен перевізник проходить перевірку документів, транспорту та репутації. Ніяких анонімних угод — лише підтверджені учасники.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🔐</div>
+      <div class="value-title">Безпека через SafePay</div>
+      <div class="value-desc">Кошти захищені ескроу-механізмом. Замовник платить — гроші заморожені. Доставка підтверджена — перевізник отримує оплату. Просто і надійно.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">⚖️</div>
+      <div class="value-title">Прозорість через аукціон</div>
+      <div class="value-desc">Ринкова ціна визначається чесною конкуренцією між перевізниками, а не монополією посередників. Ви завжди знаєте чому платите саме стільки.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">📍</div>
+      <div class="value-title">Контроль через трекінг</div>
+      <div class="value-desc">Кожен рейс відстежується в реальному часі. Замовник бачить де знаходиться вантаж в будь-який момент. Ніяких "ось-ось буде".</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">⭐</div>
+      <div class="value-title">Репутація через Trust Score</div>
+      <div class="value-desc">Об'єктивний рейтинг на основі реальних перевезень, відгуків та вчасності. Хороші перевізники отримують більше замовлень.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🇺🇦</div>
+      <div class="value-title">Зроблено в Україні</div>
+      <div class="value-desc">Ми українська команда. Ми розуміємо реалії нашого ринку, менталітет учасників і виклики які стоять перед логістикою під час і після війни.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story fade-in">
+  <div class="story-inner">
+    <h2>Наш шлях</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot">💡</div>
+        <div class="tl-content">
+          <div class="tl-year">2023 — Ідея</div>
+          <div class="tl-title">Народження концепції</div>
+          <div class="tl-desc">Після багаторічного досвіду в бізнесі і спостереження за проблемами логістичного ринку — шахрайством, непрозорими цінами та відсутністю стандартів — виникла ідея створити платформу довіри для перевезень.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">📐</div>
+        <div class="tl-content">
+          <div class="tl-year">2024 — Проектування</div>
+          <div class="tl-title">Розробка концепції та прототипу</div>
+          <div class="tl-desc">Детальне дослідження ринку, інтерв'ю з перевізниками та замовниками. Проектування архітектури платформи, визначення ключових функцій: SafePay, Trust Score, верифікація, аукціон.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🚀</div>
+        <div class="tl-content">
+          <div class="tl-year">2025 — Запуск</div>
+          <div class="tl-title">Truck Hub UA виходить на ринок</div>
+          <div class="tl-desc">Запуск повнофункціональної платформи в Україні. Перші верифіковані перевізники, перші успішні угоди, перші відгуки. Початок шляху до стандарту логістики.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🌍</div>
+        <div class="tl-content">
+          <div class="tl-year">2025-2026 — Розширення</div>
+          <div class="tl-title">Вихід на ринок ЄС</div>
+          <div class="tl-desc">Підключення польського, румунського та угорського ринків. Підтримка EUR та PLN, локалізація на польську та англійську мови. Truck Hub стає міжнародною платформою.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot">🏆</div>
+        <div class="tl-content">
+          <div class="tl-year">2027+ — Лідерство</div>
+          <div class="tl-title">Стандарт логістики ЦСЄ</div>
+          <div class="tl-desc">Truck Hub Hub Network — власна мережа логістичних хабів в Україні та Європі. Фінансові сервіси: страхування, факторинг, кредитування для учасників ринку.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team fade-in">
+  <h2>Команда</h2>
+  <p class="sub">Люди які будують майбутнє логістики</p>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,#1a4a8a,#00c8ff)">ЗА</div>
+      <div class="team-name">Засновник</div>
+      <div class="team-role">CEO & Продукт</div>
+      <div class="team-bio">Багаторічний досвід управління бізнесом. Автор концепції Truck Hub. Барс Арт.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,#065f46,#00d68f)">TL</div>
+      <div class="team-name">Tech Lead</div>
+      <div class="team-role">Архітектура & Бекенд</div>
+      <div class="team-bio">Fullstack розробник. Node.js, PostgreSQL, AWS. Архітектура SafePay та аукціонного модулю.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">FE</div>
+      <div class="team-name">Frontend Lead</div>
+      <div class="team-role">React & UI/UX</div>
+      <div class="team-bio">React розробник. Адаптація дизайн-системи, компонентна архітектура, мобільна версія.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,#92400e,#f0a500)">МО</div>
+      <div class="team-name">Mobile Dev</div>
+      <div class="team-role">React Native</div>
+      <div class="team-bio">iOS та Android додаток для водіїв. GPS трекінг, push-сповіщення, офлайн режим.</div>
+    </div>
+  </div>
+  <p style="text-align:center;font-size:13px;color:var(--text2);margin-top:32px">Ми зростаємо. <a href="contact.html" style="color:var(--accent)">Приєднуйся до команди →</a></p>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners fade-in">
+  <h2>Технологічні партнери</h2>
+  <div class="partner-logos">
+    <div class="partner-logo">🗺️ Google Maps</div>
+    <div class="partner-logo">💳 LiqPay</div>
+    <div class="partner-logo">💳 Stripe</div>
+    <div class="partner-logo">☁️ AWS</div>
+    <div class="partner-logo">📱 Twilio</div>
+    <div class="partner-logo">📧 SendGrid</div>
+  </div>
+</section>
+
+<!-- UA SECTION -->
+<section class="ua-section fade-in">
+  <div class="ua-flag-big"><div class="b"></div><div class="y"></div></div>
+  <h2>Зроблено в Україні для України та Світу</h2>
+  <p>Ми українська компанія. Платимо податки в Україні. Наймаємо українських спеціалістів. Будуємо інфраструктуру яка допомагає економіці країни рости навіть у найважчі часи.</p>
+  <div class="ua-points">
+    <div class="ua-point"><span>🇺🇦</span> Українська юрисдикція</div>
+    <div class="ua-point"><span>👥</span> 100% українська команда</div>
+    <div class="ua-point"><span>💰</span> Гривневі розрахунки</div>
+    <div class="ua-point"><span>🏆</span> Стандарт логістики ЦСЄ</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Приєднуйся до <span>Truck Hub</span></h2>
+  <p>Будуймо чесний ринок перевезень разом</p>
+  <div class="cta-btns">
+    <a href="truckhub.html" class="btn-cta primary">🚀 Розпочати безкоштовно</a>
+    <a href="contact.html" class="btn-cta outline">💬 Зв'язатися з нами</a>
+  </div>
+</section>
+
+<footer>
+  <a href="truckhub.html" class="logo" style="font-size:15px">TRUCK <span>HUB</span> <span class="logo-badge">UA</span></a>
+  <p>© 2025 Truck Hub UA (Барс Арт). Усі права захищено. 🇺🇦</p>
+  <nav>
+    <a href="about.html">Про нас</a>
+    <a href="pricing.html">Тарифи</a>
+    <a href="contact.html">Контакти</a>
+    <a href="blog.html">Блог</a>
+  </nav>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<script>
+// Burger menu
+function initBurger() {
+  const burger = document.getElementById('burgerBtn');
+  const menu = document.getElementById('mobMenu');
+  if (!burger || !menu) return;
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    menu.classList.toggle('show');
+  });
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!burger.contains(e.target) && !menu.contains(e.target)) {
+      burger.classList.remove('open');
+      menu.classList.remove('show');
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', initBurger);
+</script>
+
+</body>
+</html>

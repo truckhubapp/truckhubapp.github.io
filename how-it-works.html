@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Як це працює — Truck Hub UA | Покроковий гайд</title>
+<meta name="description" content="Як замовити перевезення на Truck Hub: покрокова інструкція для замовників та перевізників. Аукціон, SafePay, верифікація, трекінг — все просто.">
+<meta name="keywords" content="як замовити перевезення, truck hub інструкція, як працює аукціон, safepay як працює, верифікація перевізника">
+<meta property="og:title" content="Як це працює — Truck Hub UA">
+<meta property="og:description" content="Покрокова інструкція: від розміщення замовлення до отримання вантажу. Просто, безпечно, прозоро.">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--dark:#040d1e;--dark2:#071428;--dark3:#0a1a35;--blue:#1a4a8a;--ua-blue:#005bbb;--ua-yellow:#ffd500;--accent:#f0a500;--accent2:#ffbe2e;--cyan:#00c8ff;--green:#00d68f;--text:#ccdcf0;--text2:#8aaccc;--white:#fff;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08)}
+html,body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ua-blue) 50%,var(--ua-yellow) 50%);z-index:9999}
+
+header{position:sticky;top:3px;background:rgba(4,13,30,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 60px;justify-content:space-between;z-index:100}
+.logo{display:flex;align-items:center;gap:8px;font-family:'Exo 2',sans-serif;font-weight:800;font-size:18px;text-decoration:none;color:var(--white)}
+.logo span{color:var(--accent)}
+.logo-badge{background:var(--blue);color:var(--white);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px}
+nav a{color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;margin-left:28px;transition:color .2s}
+nav a:hover,nav a.active{color:var(--white)}
+.btn-reg{background:var(--accent);border:none;border-radius:7px;padding:9px 20px;color:var(--dark);font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;text-decoration:none}
+.btn-reg:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-login{background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:9px 18px;color:var(--white);font-size:13px;text-decoration:none;margin-right:8px;transition:all .2s}
+.btn-login:hover{border-color:var(--white)}
+
+/* HERO */
+.hero{padding:90px 60px 70px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(26,74,138,.35),transparent)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:20px;padding:5px 16px}
+.hero h1{font-family:'Exo 2',sans-serif;font-size:clamp(36px,5vw,58px);font-weight:900;color:var(--white);margin-bottom:16px;line-height:1.1}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:17px;color:var(--text2);max-width:580px;margin:0 auto 40px;line-height:1.75}
+
+/* ROLE SWITCHER */
+.role-switcher{display:inline-flex;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:30px;padding:4px;gap:4px;margin-bottom:70px}
+.role-btn{padding:10px 28px;border-radius:24px;font-size:14px;font-weight:600;color:var(--text2);cursor:pointer;border:none;background:transparent;font-family:'Inter',sans-serif;transition:all .2s;display:flex;align-items:center;gap:8px}
+.role-btn.on{background:var(--accent);color:var(--dark)}
+
+/* STEPS */
+.steps-section{padding:0 60px 80px;max-width:1200px;margin:0 auto}
+.steps-view{display:none}
+.steps-view.show{display:block}
+
+.steps-title{font-family:'Exo 2',sans-serif;font-size:32px;font-weight:800;color:var(--white);text-align:center;margin-bottom:12px}
+.steps-sub{font-size:15px;color:var(--text2);text-align:center;margin-bottom:50px}
+
+.steps-flow{display:flex;flex-direction:column;gap:0;position:relative}
+
+.step-item{display:grid;grid-template-columns:80px 1fr;gap:32px;padding-bottom:48px;position:relative}
+.step-item:last-child{padding-bottom:0}
+.step-item::after{content:'';position:absolute;left:39px;top:80px;bottom:0;width:2px;background:linear-gradient(180deg,rgba(240,165,0,.4),rgba(240,165,0,.05));z-index:0}
+.step-item:last-child::after{display:none}
+
+.step-num-wrap{display:flex;flex-direction:column;align-items:center;gap:0;z-index:1}
+.step-num{width:80px;height:80px;border-radius:50%;background:rgba(240,165,0,.1);border:2px solid var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;transition:all .3s}
+.step-num .n{font-family:'Exo 2',sans-serif;font-size:11px;font-weight:700;color:var(--accent);margin-top:2px}
+.step-item:hover .step-num{background:rgba(240,165,0,.18);transform:scale(1.05);box-shadow:0 0 24px rgba(240,165,0,.2)}
+
+.step-content{padding-top:16px}
+.step-label{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.step-title{font-family:'Exo 2',sans-serif;font-size:22px;font-weight:800;color:var(--white);margin-bottom:10px}
+.step-desc{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:14px;max-width:680px}
+.step-details{display:flex;flex-wrap:wrap;gap:8px}
+.step-tag{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--text2)}
+.step-tag.accent{background:rgba(240,165,0,.08);border-color:rgba(240,165,0,.2);color:var(--accent)}
+.step-tag.green{background:rgba(0,214,143,.08);border-color:rgba(0,214,143,.2);color:var(--green)}
+.step-tag.cyan{background:rgba(0,200,255,.08);border-color:rgba(0,200,255,.2);color:var(--cyan)}
+
+/* SAFEPAY SECTION */
+.safepay-deep{padding:80px 60px;background:var(--dark2)}
+.safepay-deep h2{font-family:'Exo 2',sans-serif;font-size:36px;font-weight:900;color:var(--white);text-align:center;margin-bottom:12px}
+.safepay-deep .sub{font-size:15px;color:var(--text2);text-align:center;margin-bottom:50px}
+.sp-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;align-items:center;max-width:1100px;margin:0 auto}
+.sp-step{text-align:center;padding:20px 10px}
+.sp-step-ico{width:60px;height:60px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:24px;border:2px solid rgba(0,214,143,.3);background:rgba(0,214,143,.08)}
+.sp-step-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:5px}
+.sp-step-desc{font-size:11px;color:var(--text2);line-height:1.5}
+.sp-arrow{font-size:20px;color:rgba(0,214,143,.5);text-align:center;padding-top:10px}
+
+/* TRUST SCORE */
+.trust-section{padding:80px 60px}
+.trust-section h2{font-family:'Exo 2',sans-serif;font-size:36px;font-weight:900;color:var(--white);text-align:center;margin-bottom:12px}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1000px;margin:40px auto 0}
+.trust-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;text-align:center;transition:all .3s}
+.trust-card:hover{transform:translateY(-3px);border-color:rgba(240,165,0,.25)}
+.trust-pct{font-family:'Exo 2',sans-serif;font-size:36px;font-weight:900;color:var(--accent);margin-bottom:6px}
+.trust-name{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px}
+.trust-desc{font-size:11px;color:var(--text2);line-height:1.5}
+.trust-bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:12px;overflow:hidden}
+.trust-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+
+/* VIDEO PLACEHOLDER */
+.video-section{padding:80px 60px;background:var(--dark2);text-align:center}
+.video-section h2{font-family:'Exo 2',sans-serif;font-size:36px;font-weight:900;color:var(--white);margin-bottom:14px}
+.video-section p{font-size:15px;color:var(--text2);margin-bottom:40px}
+.video-wrap{max-width:800px;margin:0 auto;background:var(--dark3);border:1px solid var(--border);border-radius:16px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;position:relative;overflow:hidden;cursor:pointer;transition:border-color .3s}
+.video-wrap:hover{border-color:rgba(240,165,0,.3)}
+.video-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(26,74,138,.3),transparent)}
+.play-btn{width:72px;height:72px;border-radius:50%;background:rgba(240,165,0,.9);display:flex;align-items:center;justify-content:center;font-size:28px;position:relative;z-index:1;transition:all .3s;padding-left:4px}
+.video-wrap:hover .play-btn{background:var(--accent);transform:scale(1.1);box-shadow:0 0 32px rgba(240,165,0,.4)}
+.video-title{font-size:16px;font-weight:600;color:var(--white);position:relative;z-index:1}
+.video-dur{font-size:12px;color:var(--text2);position:relative;z-index:1}
+
+/* CTA */
+.cta{background:linear-gradient(135deg,#071428,#0a1e38);padding:80px 60px;text-align:center;border-top:1px solid var(--border)}
+.cta h2{font-family:'Exo 2',sans-serif;font-size:42px;font-weight:900;color:var(--white);margin-bottom:14px}
+.cta h2 span{color:var(--accent)}
+.cta p{font-size:16px;color:var(--text2);margin-bottom:32px}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-cta{padding:15px 36px;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-cta.primary{background:var(--accent);color:var(--dark);border:none}
+.btn-cta.primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,165,0,.3)}
+.btn-cta.outline{background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--white)}
+.btn-cta.outline:hover{border-color:var(--white)}
+
+footer{background:#030a18;padding:40px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);flex-wrap:wrap;gap:16px}
+footer p{font-size:12px;color:var(--text2)}
+footer nav a{color:var(--text2);text-decoration:none;font-size:12px;margin-left:20px;transition:color .2s}
+footer nav a:hover{color:var(--white)}
+
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:none}
+
+  /* ═══ МОБІЛЬНА АДАПТАЦІЯ ═══ */
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .burger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .burger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  .mob-menu {
+    display: none;
+    position: fixed;
+    top: 67px;
+    left: 0;
+    right: 0;
+    background: rgba(4,13,30,0.98);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px 24px;
+    z-index: 999;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mob-menu.show { display: flex; }
+  .mob-menu a {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color .2s;
+  }
+  .mob-menu a:last-child { border-bottom: none; }
+  .mob-menu a:hover, .mob-menu a.active { color: var(--white); }
+  .mob-menu .mob-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .mob-menu .mob-btns a {
+    flex: 1;
+    text-align: center;
+    border: none;
+    padding: 11px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .mob-menu .mob-btns .m-login {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.2) !important;
+    color: var(--white) !important;
+  }
+  .mob-menu .mob-btns .m-reg {
+    background: var(--accent);
+    color: var(--dark) !important;
+    border: none !important;
+  }
+
+  @media (max-width: 900px) {
+    header { padding: 0 20px; }
+    header nav, header .btn-login, header .btn-reg { display: none !important; }
+    .burger { display: flex; }
+
+    /* Hero */
+    .hero { padding: 60px 24px 40px; }
+    .hero h1 { font-size: clamp(28px, 8vw, 44px); }
+    .hero p { font-size: 15px; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .hero-actions a { text-align: center; }
+    .features-strip { grid-template-columns: 1fr 1fr; }
+
+    /* Sections */
+    section { padding: 50px 24px; }
+    .why-grid { grid-template-columns: 1fr; }
+    .solutions-grid { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr 1fr; }
+    .eco-grid { grid-template-columns: 1fr; }
+    .cube-visual { display: none; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .cta-section { flex-direction: column; padding: 40px 24px; text-align: center; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+    /* About, Contact, Pricing, Blog */
+    .mission-inner { grid-template-columns: 1fr; }
+    .mission-stats { grid-template-columns: 1fr 1fr; }
+    .values-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .main-layout { grid-template-columns: 1fr; padding: 20px 24px 60px; }
+    .sidebar { display: none; }
+    .plans { grid-template-columns: 1fr; }
+    .plans-wrap { padding: 0 24px 60px; }
+    .comm-grid { grid-template-columns: 1fr 1fr; }
+    .bonus-grid { grid-template-columns: 1fr; }
+    .compare-wrap { overflow-x: auto; }
+    .faq { padding: 50px 24px; }
+    .bonuses, .commission, .compare { padding: 50px 24px; }
+    .sp-flow { grid-template-columns: 1fr; }
+    .sp-arrow { transform: rotate(90deg); margin: 0 auto; }
+    .trust-grid { grid-template-columns: 1fr 1fr; }
+    .hero-inner { flex-direction: column; }
+    .hero-stats { justify-content: center; }
+    .steps-flow .step-item { grid-template-columns: 60px 1fr; gap: 16px; }
+
+    /* Blog */
+    .articles-grid { grid-template-columns: 1fr; }
+    .article-page { padding: 30px 24px 60px; }
+
+    /* Dashboard */
+    .row4, .row3 { grid-template-columns: 1fr 1fr; }
+    .row2 { grid-template-columns: 1fr; }
+
+    /* Controls */
+    .controls { padding: 20px 24px; }
+    .filters-bar, .filters { flex-wrap: wrap; }
+
+    /* How it works */
+    .steps-section { padding: 0 24px 60px; }
+    .role-switcher { flex-wrap: wrap; }
+
+    /* Footer */
+    footer { padding: 30px 24px; flex-direction: column; text-align: center; gap: 12px; }
+    footer nav { flex-wrap: wrap; justify-content: center; }
+    footer nav a { margin: 0 8px; }
+
+    /* Contact */
+    .faq-grid { grid-template-columns: 1fr; }
+    .social-links { flex-wrap: wrap; justify-content: center; }
+
+    /* Pricing compare */
+    .rights-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .features-strip { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .row4, .row3, .row2 { grid-template-columns: 1fr; }
+    .mission-stats { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .comm-grid { grid-template-columns: 1fr; }
+    .trust-grid { grid-template-columns: 1fr; }
+    .period-toggle { flex-direction: column; border-radius: 12px; }
+    .plans-wrap { padding: 0 16px 40px; }
+    .hero { padding: 50px 16px 30px; }
+    section { padding: 40px 16px; }
+    footer { padding: 24px 16px; }
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <a href="truckhub.html" class="logo">TRUCK <span>HUB</span> <span class="logo-badge">UA</span></a>
+  <nav>
+    <a href="features.html">Можливості</a>
+    <a href="how-it-works.html" class="active">Як це працює</a>
+    <a href="pricing.html">Тарифи</a>
+    <a href="about.html">Про нас</a>
+    <a href="blog.html">Блог</a>
+  </nav>
+  <div style="display:flex;align-items:center">
+    <a href="truckhub.html" class="btn-login">Увійти</a>
+    <a href="truckhub.html" class="btn-reg">Реєстрація</a>
+  </div>
+  <button class="burger" id="burgerBtn" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-menu" id="mobMenu">
+    <a href="how-it-works.html">Як це працює</a>
+    <a href="pricing.html">Тарифи</a>
+    <a href="about.html">Про нас</a>
+    <a href="blog.html">Блог</a>
+    <a href="contact.html">Контакти</a>
+    <div class="mob-btns">
+      <a href="truckhub.html" class="m-login">Увійти</a>
+      <a href="truckhub.html" class="m-reg">Реєстрація</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">📖 Покроковий гайд</div>
+  <h1>Просто як <span>1 — 2 — 3</span></h1>
+  <p>Truck Hub зроблений так щоб ним міг користуватись будь-хто. Від розміщення замовлення до отримання вантажу — все в одному місці.</p>
+  <div class="role-switcher">
+    <button class="role-btn on" onclick="switchRole('customer',this)">📦 Я замовник</button>
+    <button class="role-btn" onclick="switchRole('carrier',this)">🚛 Я перевізник</button>
+  </div>
+</section>
+
+<!-- STEPS: CUSTOMER -->
+<div class="steps-section">
+  <div class="steps-view show" id="view_customer">
+    <div class="steps-title">Як замовити перевезення</div>
+    <p class="steps-sub">Від заявки до доставки — 7 простих кроків</p>
+    <div class="steps-flow">
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">📋<div class="n">01</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 1</div>
+          <div class="step-title">Зареєструйтесь за 2 хвилини</div>
+          <div class="step-desc">Введіть номер телефону, отримайте SMS-код, оберіть роль "Замовник". Жодних зайвих даних — тільки те що потрібно. Верифікація документів для замовника не обов'язкова.</div>
+          <div class="step-details">
+            <span class="step-tag green">✓ Безкоштовно</span>
+            <span class="step-tag">📱 SMS підтвердження</span>
+            <span class="step-tag">⏱ 2 хвилини</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">🗺️<div class="n">02</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 2</div>
+          <div class="step-title">Вкажіть маршрут</div>
+          <div class="step-desc">Введіть адреси відправлення та призначення через Google Maps. Додайте проміжні зупинки якщо потрібно. Платформа автоматично розрахує відстань, час у дорозі та рекомендовану вартість.</div>
+          <div class="step-details">
+            <span class="step-tag cyan">🗺️ Google Maps</span>
+            <span class="step-tag">📍 Проміжні зупинки</span>
+            <span class="step-tag accent">🤖 AI розрахунок ціни</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">🚛<div class="n">03</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 3</div>
+          <div class="step-title">Оберіть тип транспорту</div>
+          <div class="step-desc">Вантажний (тент, реф, цистерна, платформа), пасажирський (легковий, мікроавтобус, автобус), спецтехніка або мікровантаж. Вкажіть вагу та об'єм — система підбере відповідний транспорт.</div>
+          <div class="step-details">
+            <span class="step-tag">🚛 Вантажний</span>
+            <span class="step-tag">🚌 Пасажирський</span>
+            <span class="step-tag">🏗️ Спецтехніка</span>
+            <span class="step-tag">🚐 Мікровантаж</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">💰<div class="n">04</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 4</div>
+          <div class="step-title">Вкажіть ціну та метод оплати</div>
+          <div class="step-desc">AI рекомендує вартість на основі маршруту, типу транспорту та ваги вантажу. Ви можете прийняти рекомендацію або встановити свою ціну. Оберіть метод оплати: SafePay, готівка або безнал.</div>
+          <div class="step-details">
+            <span class="step-tag accent">🔐 SafePay захист</span>
+            <span class="step-tag">💵 Готівка</span>
+            <span class="step-tag">🏦 Безготівковий</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">🏛️<div class="n">05</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 5</div>
+          <div class="step-title">Отримайте пропозиції від перевізників</div>
+          <div class="step-desc">Ваше замовлення одразу видно всім верифікованим перевізникам. Вони роблять ставки в реальному часі — ви бачите їх Trust Score, кількість рейсів та відгуки. Оберіть найкращу пропозицію.</div>
+          <div class="step-details">
+            <span class="step-tag cyan">⚡ Реальний час</span>
+            <span class="step-tag green">⭐ Trust Score</span>
+            <span class="step-tag">✅ Тільки верифіковані</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">📍<div class="n">06</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 6</div>
+          <div class="step-title">Відстежуйте рейс в реальному часі</div>
+          <div class="step-desc">Після старту рейсу ви бачите де знаходиться ваш вантаж на карті. GPS трекінг оновлюється кожні 30 секунд. Отримуйте сповіщення про ключові події: виїзд, прибуття, затримки.</div>
+          <div class="step-details">
+            <span class="step-tag cyan">📡 GPS трекінг</span>
+            <span class="step-tag">🔔 Push-сповіщення</span>
+            <span class="step-tag">⏱ Онлайн ETA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">✅<div class="n">07</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 7</div>
+          <div class="step-title">Підтвердіть доставку — оплата відбувається автоматично</div>
+          <div class="step-desc">Отримали вантаж? Натисніть "Підтвердити доставку" — кошти SafePay автоматично перейдуть перевізнику. Залиште відгук — це допоможе іншим замовникам обирати надійних перевізників.</div>
+          <div class="step-details">
+            <span class="step-tag accent">🔐 SafePay автовиплата</span>
+            <span class="step-tag green">⭐ Залишити відгук</span>
+            <span class="step-tag">📄 Акт виконання</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEPS: CARRIER -->
+  <div class="steps-view" id="view_carrier">
+    <div class="steps-title">Як стати перевізником</div>
+    <p class="steps-sub">Реєстрація, верифікація та перший рейс — 6 кроків</p>
+    <div class="steps-flow">
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">📝<div class="n">01</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 1</div>
+          <div class="step-title">Зареєструйтесь як перевізник</div>
+          <div class="step-desc">Введіть номер телефону, оберіть роль "Перевізник". Вкажіть тип особи: фізична особа, ФОП або юридична особа. Кожен тип має свої поля для заповнення.</div>
+          <div class="step-details">
+            <span class="step-tag green">✓ Безкоштовно</span>
+            <span class="step-tag">👤 ФОП / Юр. особа</span>
+            <span class="step-tag">⏱ 5 хвилин</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">📋<div class="n">02</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 2</div>
+          <div class="step-title">Пройдіть верифікацію</div>
+          <div class="step-desc">Завантажте необхідні документи: паспорт або ID-картку, ІПН, водійське посвідчення (категорія CE для вантажівок), виписку ФОП або статут компанії. Наш адмін перевіряє документи протягом 4 годин.</div>
+          <div class="step-details">
+            <span class="step-tag cyan">🪪 Паспорт / ID</span>
+            <span class="step-tag">🚗 Водійське CE</span>
+            <span class="step-tag">📄 Виписка ФОП</span>
+            <span class="step-tag accent">⏱ До 4 годин</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">🚛<div class="n">03</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 3</div>
+          <div class="step-title">Додайте транспортний засіб</div>
+          <div class="step-desc">Зареєструйте свій транспорт: марка, модель, держ. номер, VIN-код, вантажопідйомність. Завантажте техпаспорт та страховий поліс (ОСЦПВ). Транспорт також проходить верифікацію.</div>
+          <div class="step-details">
+            <span class="step-tag">📝 Техпаспорт</span>
+            <span class="step-tag">🛡️ ОСЦПВ</span>
+            <span class="step-tag green">✓ Верифікація ТЗ</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">🏛️<div class="n">04</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 4</div>
+          <div class="step-title">Беріть участь в аукціонах</div>
+          <div class="step-desc">Перегляньте доступні замовлення, фільтруйте за маршрутом, типом вантажу та відстанню. Зробіть ставку — вкажіть свою ціну та оберіть транспортний засіб. Нижча ціна при вищому Trust Score — ваша перевага.</div>
+          <div class="step-details">
+            <span class="step-tag cyan">⚡ Реальний час</span>
+            <span class="step-tag">🔍 Фільтри</span>
+            <span class="step-tag accent">💰 Своя ціна</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">🤝<div class="n">05</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 5</div>
+          <div class="step-title">Підпишіть угоду та вкажіть реквізити</div>
+          <div class="step-desc">Виграли аукціон? Підпишіть цифрову угоду з умовами перевезення. Якщо оплата безготівкова — введіть IBAN рахунку для отримання коштів. SafePay не потребує реквізитів — все автоматично.</div>
+          <div class="step-details">
+            <span class="step-tag">📄 Цифрова угода</span>
+            <span class="step-tag cyan">🏦 IBAN для безналу</span>
+            <span class="step-tag accent">🔐 SafePay авто</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num-wrap">
+          <div class="step-num">💰<div class="n">06</div></div>
+        </div>
+        <div class="step-content">
+          <div class="step-label">Крок 6</div>
+          <div class="step-title">Виконайте рейс та отримайте оплату</div>
+          <div class="step-desc">Виконайте рейс під GPS моніторингом. Після підтвердження доставки замовником — кошти SafePay автоматично надходять на ваш рахунок. Збирайте відгуки — це підвищує Trust Score і приносить більше замовлень.</div>
+          <div class="step-details">
+            <span class="step-tag green">💰 Гарантована оплата</span>
+            <span class="step-tag cyan">📡 GPS трекінг</span>
+            <span class="step-tag accent">⭐ Зростання рейтингу</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SAFEPAY DEEP -->
+<section class="safepay-deep fade-in">
+  <h2>🔐 Як працює SafePay</h2>
+  <p class="sub">Ескроу-захист для кожної угоди. Ні замовник, ні перевізник не ризикують.</p>
+  <div class="sp-flow">
+    <div class="sp-step">
+      <div class="sp-step-ico">💳</div>
+      <div class="sp-step-title">Замовник резервує</div>
+      <div class="sp-step-desc">Кошти заморожуються на рахунку платформи при підтвердженні замовлення</div>
+    </div>
+    <div class="sp-arrow">→</div>
+    <div class="sp-step">
+      <div class="sp-step-ico">🚛</div>
+      <div class="sp-step-title">Рейс виконується</div>
+      <div class="sp-step-desc">Перевізник бачить підтвердження платежу і виконує рейс спокійно</div>
+    </div>
+    <div class="sp-arrow">→</div>
+    <div class="sp-step">
+      <div class="sp-step-ico">✅</div>
+      <div class="sp-step-title">Доставка підтверджена</div>
+      <div class="sp-step-desc">Замовник натискає "Підтвердити" або автопідтвердження через 72 год</div>
+    </div>
+    <div class="sp-arrow">→</div>
+    <div class="sp-step">
+      <div class="sp-step-ico">💰</div>
+      <div class="sp-step-title">Автоматична виплата</div>
+      <div class="sp-step-desc">Кошти миттєво переходять на рахунок перевізника без затримок</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST SCORE -->
+<section class="trust-section fade-in">
+  <h2>⭐ Як формується Trust Score</h2>
+  <p style="text-align:center;color:var(--text2);font-size:15px;margin-top:8px">Об'єктивний рейтинг на основі реальних даних — не відгуків знайомих</p>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="trust-pct">40%</div>
+      <div class="trust-name">Вчасність</div>
+      <div class="trust-desc">Відсоток рейсів виконаних у погоджені терміни за даними GPS</div>
+      <div class="trust-bar"><div class="trust-fill" style="width:40%"></div></div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-pct">35%</div>
+      <div class="trust-name">Відгуки замовників</div>
+      <div class="trust-desc">Оцінки від реальних замовників після кожного завершеного рейсу</div>
+      <div class="trust-bar"><div class="trust-fill" style="width:35%"></div></div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-pct">15%</div>
+      <div class="trust-name">Верифікація</div>
+      <div class="trust-desc">Актуальність документів: паспорт, права, техпаспорт, страховка</div>
+      <div class="trust-bar"><div class="trust-fill" style="width:15%"></div></div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-pct">10%</div>
+      <div class="trust-name">Досвід</div>
+      <div class="trust-desc">Кількість успішно завершених рейсів на платформі</div>
+      <div class="trust-bar"><div class="trust-fill" style="width:10%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="video-section fade-in">
+  <h2>Подивіться як це працює</h2>
+  <p>Відеоогляд платформи — від реєстрації до першого рейсу за 3 хвилини</p>
+  <div class="video-wrap" onclick="this.innerHTML='<iframe width=\'100%\' height=\'100%\' src=\'https://www.youtube.com/embed/dQw4w9WgXcQ\' frameborder=\'0\' allowfullscreen style=\'border-radius:16px\'></iframe>'">
+    <div class="play-btn">▶</div>
+    <div class="video-title">Truck Hub UA — Огляд платформи</div>
+    <div class="video-dur">3:24 · Українська мова</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Готові спробувати?</h2>
+  <p>Реєстрація займає 2 хвилини. Перше замовлення — безкоштовно.</p>
+  <div class="cta-btns">
+    <a href="truckhub.html" class="btn-cta primary" onclick="openAuthModal&&openAuthModal('customer')">📦 Я замовник — Розпочати</a>
+    <a href="truckhub.html" class="btn-cta outline" onclick="openAuthModal&&openAuthModal('carrier')">🚛 Я перевізник — Реєстрація</a>
+  </div>
+</section>
+
+<footer>
+  <a href="truckhub.html" class="logo" style="font-size:15px">TRUCK <span>HUB</span> <span class="logo-badge">UA</span></a>
+  <p>© 2025 Truck Hub UA (Барс Арт). м. Львів 🇺🇦</p>
+  <nav>
+    <a href="about.html">Про нас</a>
+    <a href="pricing.html">Тарифи</a>
+    <a href="contact.html">Контакти</a>
+    <a href="blog.html">Блог</a>
+  </nav>
+</footer>
+
+<script>
+function switchRole(role, btn) {
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.steps-view').forEach(v => v.classList.remove('show'));
+  document.getElementById('view_' + role).classList.add('show');
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<script>
+// Burger menu
+function initBurger() {
+  const burger = document.getElementById('burgerBtn');
+  const menu = document.getElementById('mobMenu');
+  if (!burger || !menu) return;
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    menu.classList.toggle('show');
+  });
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!burger.contains(e.target) && !menu.contains(e.target)) {
+      burger.classList.remove('open');
+      menu.classList.remove('show');
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', initBurger);
+</script>
+
+</body>
+</html>

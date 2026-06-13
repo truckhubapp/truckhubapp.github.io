@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кабінет перевізника — Truck Hub UA</title>
+<meta name="description" content="Особистий кабінет перевізника Truck Hub. Аукціони замовлень, управління рейсами, Trust Score, SafePay виплати, верифікація транспорту та документів.">
+<meta name="keywords" content="кабінет перевізника, аукціон перевезень, truck hub перевізник, trust score, safepay виплати">
+<meta name="author" content="Truck Hub UA">
+<meta name="robots" content="index, follow">
+<meta name="language" content="uk">
+<link rel="canonical" href="https://truckhub.ua/carrier.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Кабінет перевізника — Truck Hub UA">
+<meta property="og:description" content="Керуйте рейсами, беріть участь в аукціонах та отримуйте виплати через SafePay.">
+<meta property="og:url" content="https://truckhub.ua/carrier.html">
+<meta property="og:image" content="https://truckhub.ua/og-image.jpg">
+<meta property="og:site_name" content="Truck Hub UA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Кабінет перевізника — Truck Hub UA">
+<meta name="twitter:description" content="Керуйте рейсами, беріть участь в аукціонах та отримуйте виплати через SafePay.">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --dark:#040d1e;--dark2:#071428;--dark3:#0a1a35;
+  --blue:#1a4a8a;--ua-blue:#005bbb;--ua-yellow:#ffd500;
+  --accent:#f0a500;--accent2:#ffbe2e;--cyan:#00c8ff;
+  --green:#00d68f;--red:#ff4d4d;--orange:#ff8c00;
+  --text:#ccdcf0;--text2:#8aaccc;--white:#fff;
+  --card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);
+  --sidebar:260px;
+}
+html,body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ua-blue) 50%,var(--ua-yellow) 50%);z-index:9999}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;top:3px;left:0;width:var(--sidebar);height:calc(100vh - 3px);background:var(--dark2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sb-logo{padding:20px 24px 16px;border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:8px;font-family:'Exo 2',sans-serif;font-weight:800;font-size:17px;text-decoration:none;color:var(--white)}
+.logo span{color:var(--accent)}
+.logo-badge{background:var(--blue);color:var(--white);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px}
+.sb-user{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--white);flex-shrink:0}
+.sb-user-info h4{font-size:13px;font-weight:600;color:var(--white)}
+.sb-user-info p{font-size:11px;color:var(--text2);margin-top:1px}
+.trust-badge{display:flex;align-items:center;gap:4px;background:rgba(0,214,143,.1);border:1px solid rgba(0,214,143,.25);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;color:var(--green);margin-top:4px;width:fit-content}
+
+.sb-nav{padding:12px 0;flex:1}
+.sb-section{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text2);padding:8px 24px 4px;margin-top:8px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:10px 24px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .2s;position:relative;text-decoration:none}
+.sb-item:hover{background:rgba(255,255,255,.03);color:var(--white)}
+.sb-item.active{background:rgba(240,165,0,.08);color:var(--accent)}
+.sb-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:0 2px 2px 0}
+.sb-item .ico{font-size:16px;width:20px;text-align:center}
+.sb-item .badge{margin-left:auto;background:var(--red);color:var(--white);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px}
+.sb-item .badge-g{margin-left:auto;background:rgba(0,214,143,.15);color:var(--green);font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;border:1px solid rgba(0,214,143,.25)}
+
+.sb-bottom{padding:16px 24px;border-top:1px solid var(--border)}
+.btn-logout{display:flex;align-items:center;gap:8px;width:100%;background:transparent;border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar);min-height:100vh;padding-top:3px}
+
+/* TOP BAR */
+.topbar{height:60px;background:rgba(4,13,30,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 32px;justify-content:space-between;position:sticky;top:3px;z-index:50}
+.topbar-left{display:flex;align-items:center;gap:8px}
+.topbar-left h2{font-family:'Exo 2',sans-serif;font-size:18px;font-weight:700;color:var(--white)}
+.topbar-left .sep{color:var(--border);font-size:18px}
+.topbar-left .sub{font-size:13px;color:var(--text2)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.notif-btn{width:36px;height:36px;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;position:relative;transition:all .2s}
+.notif-btn:hover{border-color:rgba(240,165,0,.3)}
+.notif-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--red);border-radius:50%;border:2px solid var(--dark)}
+.status-toggle{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:600;transition:all .2s}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green)}
+.status-dot.off{background:var(--text2);box-shadow:none}
+
+/* CONTENT */
+.content{padding:28px 32px}
+
+/* PANELS */
+.panel{display:none}
+.panel.show{display:block}
+
+/* ── DASHBOARD ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .3s;position:relative;overflow:hidden}
+.stat-card:hover{border-color:rgba(240,165,0,.2);transform:translateY(-2px)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .3s}
+.stat-card:hover::before{opacity:1}
+.stat-card.c1::before{background:linear-gradient(90deg,var(--accent),transparent)}
+.stat-card.c2::before{background:linear-gradient(90deg,var(--green),transparent)}
+.stat-card.c3::before{background:linear-gradient(90deg,var(--cyan),transparent)}
+.stat-card.c4::before{background:linear-gradient(90deg,var(--orange),transparent)}
+.stat-ico{font-size:24px;margin-bottom:10px}
+.stat-val{font-family:'Exo 2',sans-serif;font-size:28px;font-weight:900;color:var(--white);line-height:1}
+.stat-val span{color:var(--accent);font-size:16px}
+.stat-lbl{font-size:12px;color:var(--text2);margin-top:4px}
+.stat-chg{font-size:11px;margin-top:6px;display:flex;align-items:center;gap:4px}
+.stat-chg.up{color:var(--green)}.stat-chg.dn{color:var(--red)}
+
+/* Chart placeholder */
+.chart-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:28px}
+.chart-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.chart-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.chart-hdr h3{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:var(--white)}
+.chart-tabs{display:flex;gap:4px}
+.ctab{background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.ctab.on{background:rgba(240,165,0,.1);border-color:var(--accent);color:var(--accent)}
+.chart-bars{display:flex;align-items:flex-end;gap:8px;height:120px;padding-top:10px}
+.bar-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.bar{width:100%;border-radius:4px 4px 0 0;transition:height .5s ease;cursor:pointer;position:relative}
+.bar:hover::after{content:attr(data-val);position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--white);white-space:nowrap;background:rgba(0,0,0,.6);padding:2px 6px;border-radius:4px}
+.bar-lbl{font-size:9px;color:var(--text2);white-space:nowrap}
+
+/* Trust score widget */
+.trust-widget{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.trust-ring{position:relative;width:110px;height:110px}
+.trust-ring svg{transform:rotate(-90deg)}
+.trust-ring-val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.trust-ring-val .num{font-family:'Exo 2',sans-serif;font-size:26px;font-weight:900;color:var(--white)}
+.trust-ring-val .stars{font-size:11px;color:var(--accent);letter-spacing:1px}
+.trust-lbl{font-size:12px;color:var(--text2);text-align:center}
+.trust-items{display:flex;flex-direction:column;gap:6px;width:100%}
+.trust-item{display:flex;justify-content:space-between;font-size:11px}
+.trust-item .k{color:var(--text2)}
+.trust-item .v{font-weight:600;color:var(--white)}
+
+/* Recent activity */
+.recent-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.section-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.section-box h3{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.view-all{font-size:11px;font-weight:500;color:var(--accent);cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif}
+
+/* ── AUCTIONS ── */
+.filters-bar{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.filter-input{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--white);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.filter-input:focus{border-color:rgba(0,200,255,.4)}
+.filter-input::placeholder{color:rgba(138,172,204,.45)}
+.filter-select{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--white);font-size:13px;font-family:'Inter',sans-serif;outline:none;-webkit-appearance:none;padding-right:32px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238aaccc' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.filter-select option{background:var(--dark2)}
+.filter-btn{background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.3);border-radius:8px;padding:9px 16px;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.filter-btn:hover{background:rgba(240,165,0,.18)}
+
+.auction-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.acard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.acard:hover{border-color:rgba(0,200,255,.25);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.acard-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.acard-id{font-size:11px;color:var(--text2);font-weight:600}
+.acard-timer{display:flex;align-items:center;gap:5px;background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.2);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--red)}
+.acard-timer.soon{background:rgba(240,165,0,.1);border-color:rgba(240,165,0,.3);color:var(--accent)}
+.acard-route{margin-bottom:10px}
+.acard-route-row{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--white)}
+.acard-route-row .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.acard-route-row .dot.from{background:var(--cyan)}
+.acard-route-row .dot.to{background:var(--accent)}
+.acard-route-line{width:1px;height:14px;background:var(--border);margin-left:3.5px}
+.acard-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ameta{font-size:11px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:3px 8px;color:var(--text2)}
+.ameta.hl{background:rgba(0,200,255,.07);border-color:rgba(0,200,255,.2);color:var(--cyan)}
+.acard-footer{display:flex;align-items:center;justify-content:space-between}
+.acard-price{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:800;color:var(--white)}
+.acard-price span{font-size:12px;color:var(--text2);font-weight:400}
+.btn-bid{background:var(--accent);border:none;border-radius:8px;padding:9px 18px;color:var(--dark);font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-bid:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 4px 14px rgba(240,165,0,.3)}
+.acard-dist{font-size:11px;color:var(--text2)}
+.new-tag{position:absolute;top:0;right:0;background:var(--green);color:var(--dark);font-size:9px;font-weight:800;padding:3px 8px;border-radius:0 12px 0 6px;letter-spacing:.5px}
+
+/* ── ACTIVE TRIPS ── */
+.trips-list{display:flex;flex-direction:column;gap:12px}
+.trip-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all .2s}
+.trip-card:hover{border-color:rgba(0,200,255,.2)}
+.trip-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.trip-id{font-size:12px;font-weight:700;color:var(--text2)}
+.trip-status{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px}
+.ts-active{background:rgba(0,214,143,.1);border:1px solid rgba(0,214,143,.25);color:var(--green)}
+.ts-loading{background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.25);color:var(--cyan)}
+.ts-done{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text2)}
+.ts-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.trip-route{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.trip-city{font-size:14px;font-weight:700;color:var(--white)}
+.trip-arrow{font-size:16px;color:var(--text2)}
+.trip-meta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.tmeta{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px}
+.tmeta strong{color:var(--text)}
+
+/* Progress bar */
+.trip-progress{margin-bottom:12px}
+.tp-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:5px}
+.tp-bar{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.tp-fill{height:100%;border-radius:3px;transition:width .5s ease}
+.tp-fill.active{background:linear-gradient(90deg,var(--cyan),var(--green))}
+.tp-fill.loading{background:linear-gradient(90deg,var(--accent),var(--orange))}
+
+.trip-actions{display:flex;gap:8px}
+.btn-sm{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-sm:hover{border-color:rgba(0,200,255,.3);color:var(--white)}
+.btn-sm.accent{background:rgba(240,165,0,.1);border-color:rgba(240,165,0,.3);color:var(--accent)}
+.btn-sm.accent:hover{background:rgba(240,165,0,.18)}
+.btn-sm.green{background:rgba(0,214,143,.1);border-color:rgba(0,214,143,.3);color:var(--green)}
+
+/* ── PROFILE ── */
+.profile-grid{display:grid;grid-template-columns:320px 1fr;gap:20px}
+.profile-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px}
+.profile-card h3{font-family:'Exo 2',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.profile-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:var(--white);margin:0 auto 16px}
+.profile-name{font-family:'Exo 2',sans-serif;font-size:18px;font-weight:800;color:var(--white);text-align:center;margin-bottom:4px}
+.profile-role{font-size:12px;color:var(--text2);text-align:center;margin-bottom:14px}
+.profile-trust{display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(0,214,143,.08);border:1px solid rgba(0,214,143,.2);border-radius:8px;padding:8px 16px;margin-bottom:16px}
+.profile-trust .score{font-family:'Exo 2',sans-serif;font-size:22px;font-weight:900;color:var(--green)}
+.profile-trust .stars{font-size:13px;color:var(--accent)}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pstat{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center}
+.pstat-val{font-family:'Exo 2',sans-serif;font-size:18px;font-weight:800;color:var(--white)}
+.pstat-lbl{font-size:10px;color:var(--text2);margin-top:2px}
+
+/* Form inputs for profile */
+.inp-group{margin-bottom:14px}
+.inp-group label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px}
+.inp-group input,.inp-group select,.inp-group textarea{width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--white);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.inp-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238aaccc' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.inp-group select option{background:var(--dark2)}
+.inp-group input:focus,.inp-group select:focus{border-color:rgba(0,200,255,.4)}
+.inp-group input::placeholder{color:rgba(138,172,204,.45)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-save{background:var(--accent);border:none;border-radius:8px;padding:11px 24px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-save:hover{background:var(--accent2);transform:translateY(-1px)}
+
+/* TRANSPORT CARDS */
+.transport-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.tr-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;transition:all .2s;position:relative}
+.tr-card:hover{border-color:rgba(240,165,0,.25)}
+.tr-card-ico{font-size:32px;margin-bottom:10px}
+.tr-card-name{font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px}
+.tr-card-type{font-size:11px;color:var(--text2);margin-bottom:10px}
+.tr-card-meta{display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.tr-meta-row{display:flex;justify-content:space-between;font-size:11px}
+.tr-meta-row .k{color:var(--text2)}
+.tr-meta-row .v{color:var(--text);font-weight:500}
+.tr-status{position:absolute;top:12px;right:12px;font-size:9px;font-weight:700;padding:3px 8px;border-radius:3px}
+.tr-status.ok{background:rgba(0,214,143,.15);color:var(--green);border:1px solid rgba(0,214,143,.25)}
+.tr-status.pending{background:rgba(240,165,0,.15);color:var(--accent);border:1px solid rgba(240,165,0,.25)}
+.tr-actions{display:flex;gap:6px}
+
+/* Add transport btn */
+.btn-add-tr{display:flex;align-items:center;gap:8px;background:rgba(240,165,0,.06);border:1px dashed rgba(240,165,0,.3);border-radius:12px;padding:16px;width:100%;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;justify-content:center}
+.btn-add-tr:hover{background:rgba(240,165,0,.1)}
+
+/* Doc items */
+.doc-list{display:flex;flex-direction:column;gap:8px}
+.doc-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:12px 16px;transition:all .2s}
+.doc-item:hover{border-color:rgba(255,255,255,.15)}
+.doc-ico{font-size:22px;flex-shrink:0}
+.doc-info{flex:1}
+.doc-name{font-size:13px;font-weight:600;color:var(--white)}
+.doc-exp{font-size:11px;color:var(--text2);margin-top:2px}
+.doc-st{font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px}
+.doc-st.ok{background:rgba(0,214,143,.15);color:var(--green)}
+.doc-st.warn{background:rgba(240,165,0,.15);color:var(--accent)}
+.doc-st.exp{background:rgba(255,77,77,.15);color:var(--red)}
+.btn-up{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--text2);cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap}
+.btn-up:hover{border-color:var(--accent);color:var(--accent)}
+
+/* UA stripe accent */
+.ua-stripe{height:2px;background:linear-gradient(90deg,var(--ua-blue),var(--ua-yellow));border-radius:1px;margin-bottom:20px}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Truck Hub UA — Кабінет перевізника",
+  "description": "Особистий кабінет перевізника: аукціони замовлень, управління рейсами, Trust Score, SafePay виплати",
+  "url": "https://truckhub.ua/carrier.html",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "uk"
+}
+</script>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sb-logo">
+    <a href="truckhub.html" class="logo">TRUCK <span>HUB</span> <span class="logo-badge">UA</span></a>
+  </div>
+  <div class="sb-user">
+    <div class="avatar">МК</div>
+    <div class="sb-user-info">
+      <h4>Микола Коваль</h4>
+      <p>Перевізник · ФОП</p>
+      <div class="trust-badge">⭐ 4.8 Trust Score</div>
+    </div>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-section">Головне</div>
+    <a class="sb-item active" onclick="showPanel('dashboard')"><span class="ico">📊</span> Дашборд</a>
+    <a class="sb-item" onclick="showPanel('auctions')"><span class="ico">🏛️</span> Аукціони <span class="badge">12</span></a>
+    <a class="sb-item" onclick="showPanel('trips')"><span class="ico">🚛</span> Мої рейси <span class="badge-g">3</span></a>
+    <div class="sb-section">Профіль</div>
+    <a class="sb-item" onclick="showPanel('profile')"><span class="ico">👤</span> Мій профіль</a>
+    <a class="sb-item" onclick="showPanel('transport')"><span class="ico">🚛</span> Транспорт</a>
+    <a class="sb-item" onclick="showPanel('docs')"><span class="ico">📋</span> Документи</a>
+    <div class="sb-section">Фінанси</div>
+    <a class="sb-item" onclick="showPanel('finance')"><span class="ico">💰</span> Виплати</a>
+    <a class="sb-item" onclick="showPanel('finance')"><span class="ico">🔐</span> SafePay</a>
+  </div>
+  <div class="sb-bottom">
+    <button class="btn-logout" onclick="location.href='truckhub.html'">🚪 Вийти з кабінету</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h2 id="topTitle">Дашборд</h2>
+      <span class="sep">·</span>
+      <span class="sub" id="topSub">Огляд активності</span>
+    </div>
+    <div class="topbar-right">
+      <div class="status-toggle" onclick="toggleStatus(this)" title="Ваш статус">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusTxt">Онлайн</span>
+      </div>
+      <div class="notif-btn" title="Повідомлення">🔔<div class="notif-dot"></div></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div class="panel show" id="panel_dashboard">
+      <div class="ua-stripe"></div>
+
+      <div class="stats-row">
+        <div class="stat-card c1">
+          <div class="stat-ico">💰</div>
+          <div class="stat-val">47 200 <span>грн</span></div>
+          <div class="stat-lbl">Зароблено цього місяця</div>
+          <div class="stat-chg up">↑ +18% до минулого місяця</div>
+        </div>
+        <div class="stat-card c2">
+          <div class="stat-ico">✅</div>
+          <div class="stat-val">23</div>
+          <div class="stat-lbl">Завершених рейсів</div>
+          <div class="stat-chg up">↑ +5 до минулого місяця</div>
+        </div>
+        <div class="stat-card c3">
+          <div class="stat-ico">⭐</div>
+          <div class="stat-val">4.8</div>
+          <div class="stat-lbl">Trust Score</div>
+          <div class="stat-chg up">↑ +0.2 за місяць</div>
+        </div>
+        <div class="stat-card c4">
+          <div class="stat-ico">🏛️</div>
+          <div class="stat-val">12</div>
+          <div class="stat-lbl">Доступних аукціонів</div>
+          <div class="stat-chg" style="color:var(--cyan)">→ 3 нові сьогодні</div>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-box">
+          <div class="chart-hdr">
+            <h3>📈 Доходи по тижнях</h3>
+            <div class="chart-tabs">
+              <button class="ctab on" onclick="selTab(this)">Тиждень</button>
+              <button class="ctab" onclick="selTab(this)">Місяць</button>
+              <button class="ctab" onclick="selTab(this)">Рік</button>
+            </div>
+          </div>
+          <div class="chart-bars" id="chartBars"></div>
+        </div>
+        <div class="trust-widget">
+          <h3 style="font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:var(--white);align-self:flex-start">⭐ Trust Score</h3>
+          <div class="trust-ring">
+            <svg width="110" height="110" viewBox="0 0 110 110">
+              <circle cx="55" cy="55" r="46" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>
+              <circle cx="55" cy="55" r="46" fill="none" stroke="url(#tg)" stroke-width="10" stroke-linecap="round"
+                stroke-dasharray="289" stroke-dashoffset="58"/>
+              <defs><linearGradient id="tg" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f0a500"/><stop offset="100%" stop-color="#00c8ff"/>
+              </linearGradient></defs>
+            </svg>
+            <div class="trust-ring-val">
+              <div class="num">4.8</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="trust-items">
+            <div class="trust-item"><span class="k">Вчасність</span><span class="v" style="color:var(--green)">98%</span></div>
+            <div class="trust-item"><span class="k">Відгуки</span><span class="v">47 / 49</span></div>
+            <div class="trust-item"><span class="k">Верифікація</span><span class="v" style="color:var(--green)">✓ Пройдено</span></div>
+            <div class="trust-item"><span class="k">Рейсів</span><span class="v">127</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="recent-row">
+        <div class="section-box">
+          <h3>🏛️ Нові аукціони <button class="view-all" onclick="showPanel('auctions')">Всі →</button></h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div onclick="showPanel('auctions')" style="cursor:pointer;padding:10px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,255,.2)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:13px;font-weight:600;color:var(--white)">Київ → Львів</span><span style="font-size:12px;color:var(--accent);font-weight:700">18 500 грн</span></div>
+              <div style="font-size:11px;color:var(--text2)">🚛 Тент · 15 т · 540 км · Завтра 08:00</div>
+            </div>
+            <div onclick="showPanel('auctions')" style="cursor:pointer;padding:10px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,255,.2)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:13px;font-weight:600;color:var(--white)">Харків → Одеса</span><span style="font-size:12px;color:var(--accent);font-weight:700">22 000 грн</span></div>
+              <div style="font-size:11px;color:var(--text2)">❄️ Реф · 18 т · 720 км · 06.06</div>
+            </div>
+            <div onclick="showPanel('auctions')" style="cursor:pointer;padding:10px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,255,.2)'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:13px;font-weight:600;color:var(--white)">Дніпро → Польща</span><span style="font-size:12px;color:var(--accent);font-weight:700">38 000 грн</span></div>
+              <div style="font-size:11px;color:var(--text2)">🚛 Тент · 20 т · 1 200 км · 07.06</div>
+            </div>
+          </div>
+        </div>
+        <div class="section-box">
+          <h3>🚛 Активні рейси <button class="view-all" onclick="showPanel('trips')">Всі →</button></h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="padding:10px;background:rgba(0,214,143,.04);border:1px solid rgba(0,214,143,.15);border-radius:8px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:13px;font-weight:600;color:var(--white)">Київ → Варшава</span><span style="font-size:11px;color:var(--green);font-weight:700">● В дорозі</span></div>
+              <div style="font-size:11px;color:var(--text2);margin-bottom:6px">TH-2025-04821 · 1 100 км</div>
+              <div style="height:4px;background:rgba(255,255,255,.08);border-radius:2px"><div style="width:65%;height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:2px"></div></div>
+              <div style="font-size:10px;color:var(--text2);margin-top:3px">65% маршруту пройдено</div>
+            </div>
+            <div style="padding:10px;background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.15);border-radius:8px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:13px;font-weight:600;color:var(--white)">Одеса → Берлін</span><span style="font-size:11px;color:var(--cyan);font-weight:700">⏳ Завантаження</span></div>
+              <div style="font-size:11px;color:var(--text2)">TH-2025-04756 · 1 850 км</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ AUCTIONS ═══ -->
+    <div class="panel" id="panel_auctions">
+      <div class="ua-stripe"></div>
+      <div class="filters-bar">
+        <input class="filter-input" placeholder="🔍 Пошук за маршрутом..." style="flex:1;min-width:200px">
+        <select class="filter-select"><option>Всі типи</option><option>🚛 Тент</option><option>❄️ Рефрижератор</option><option>🚐 Мікровантаж</option><option>🚌 Пасажирський</option><option>🏗️ Спецтехніка</option></select>
+        <select class="filter-select"><option>Будь-яка відстань</option><option>До 100 км</option><option>100–500 км</option><option>500–1000 км</option><option>1000+ км</option></select>
+        <select class="filter-select"><option>Сортування</option><option>За ціною ↑</option><option>За ціною ↓</option><option>За відстанню</option><option>За терміном</option></select>
+        <button class="filter-btn">⚡ Тільки нові</button>
+      </div>
+      <div class="auction-grid">
+        <div class="acard">
+          <div class="new-tag">НОВИЙ</div>
+          <div class="acard-top"><span class="acard-id">#TH-2025-04901</span><span class="acard-timer soon">⏱ 2 год 14 хв</span></div>
+          <div class="acard-route">
+            <div class="acard-route-row"><div class="dot from"></div> Київ, вул. Хрещатик 1</div>
+            <div class="acard-route-line"></div>
+            <div class="acard-route-row"><div class="dot to"></div> Варшава, Польща</div>
+          </div>
+          <div class="acard-meta">
+            <span class="ameta hl">🚛 Тент</span><span class="ameta">20 т</span><span class="ameta">1 100 км</span><span class="ameta">07.06 · 09:00</span><span class="ameta">🔐 SafePay</span>
+          </div>
+          <div class="acard-footer">
+            <div><div class="acard-price">38 000 <span>грн</span></div><div class="acard-dist">≈ 34.5 грн/км</div></div>
+            <button class="btn-bid" onclick="placeBid(this)">Зробити ставку</button>
+          </div>
+        </div>
+        <div class="acard">
+          <div class="acard-top"><span class="acard-id">#TH-2025-04898</span><span class="acard-timer">⏱ 45 хв</span></div>
+          <div class="acard-route">
+            <div class="acard-route-row"><div class="dot from"></div> Харків</div>
+            <div class="acard-route-line"></div>
+            <div class="acard-route-row"><div class="dot to"></div> Одеса</div>
+          </div>
+          <div class="acard-meta">
+            <span class="ameta hl">❄️ Реф</span><span class="ameta">18 т</span><span class="ameta">720 км</span><span class="ameta">06.06 · 07:00</span><span class="ameta">💵 Готівка</span>
+          </div>
+          <div class="acard-footer">
+            <div><div class="acard-price">22 000 <span>грн</span></div><div class="acard-dist">≈ 30.6 грн/км</div></div>
+            <button class="btn-bid" onclick="placeBid(this)">Зробити ставку</button>
+          </div>
+        </div>
+        <div class="acard">
+          <div class="new-tag">НОВИЙ</div>
+          <div class="acard-top"><span class="acard-id">#TH-2025-04895</span><span class="acard-timer soon">⏱ 5 год 30 хв</span></div>
+          <div class="acard-route">
+            <div class="acard-route-row"><div class="dot from"></div> Дніпро</div>
+            <div class="acard-route-line"></div>
+            <div class="acard-route-row"><div class="dot to"></div> Берлін, Німеччина</div>
+          </div>
+          <div class="acard-meta">
+            <span class="ameta hl">🚛 Тент</span><span class="ameta">15 т</span><span class="ameta">1 850 км</span><span class="ameta">08.06 · 06:00</span><span class="ameta">🔐 SafePay</span>
+          </div>
+          <div class="acard-footer">
+            <div><div class="acard-price">54 000 <span>грн</span></div><div class="acard-dist">≈ 29.2 грн/км</div></div>
+            <button class="btn-bid" onclick="placeBid(this)">Зробити ставку</button>
+          </div>
+        </div>
+        <div class="acard">
+          <div class="acard-top"><span class="acard-id">#TH-2025-04890</span><span class="acard-timer soon">⏱ 3 год 10 хв</span></div>
+          <div class="acard-route">
+            <div class="acard-route-row"><div class="dot from"></div> Львів</div>
+            <div class="acard-route-line"></div>
+            <div class="acard-route-row"><div class="dot to"></div> Краків, Польща</div>
+          </div>
+          <div class="acard-meta">
+            <span class="ameta hl">🚌 Мікроавт.</span><span class="ameta">18 міс.</span><span class="ameta">320 км</span><span class="ameta">05.06 · 14:00</span><span class="ameta">🏦 Безнал</span>
+          </div>
+          <div class="acard-footer">
+            <div><div class="acard-price">8 500 <span>грн</span></div><div class="acard-dist">≈ 26.6 грн/км</div></div>
+            <button class="btn-bid" onclick="placeBid(this)">Зробити ставку</button>
+          </div>
+        </div>
+        <div class="acard">
+          <div class="acard-top"><span class="acard-id">#TH-2025-04885</span><span class="acard-timer">⏱ 1 год 20 хв</span></div>
+          <div class="acard-route">
+            <div class="acard-route-row"><div class="dot from"></div> Запоріжжя</div>
+            <div class="acard-route-line"></div>
+            <div class="acard-route-row"><div class="dot to"></div> Київ</div>
+          </div>
+          <div class="acard-meta">
+            <span class="ameta hl">🛢️ Цистерна</span><span class="ameta">25 т</span><span class="ameta">480 км</span><span class="ameta">06.06 · 05:00</span><span class="ameta">🔐 SafePay</span>
+          </div>
+          <div class="acard-footer">
+            <div><div class="acard-price">14 500 <span>грн</span></div><div class="acard-dist">≈ 30.2 грн/км</div></div>
+            <button class="btn-bid" onclick="placeBid(this)">Зробити ставку</button>
+          </div>
+        </div>
+        <div class="acard">
+          <div class="acard-top"><span class="acard-id">#TH-2025-04880</span><span class="acard-timer soon">⏱ 8 год</span></div>
+          <div class="acard-route">
+            <div class="acard-route-row"><div class="dot from"></div> Київ</div>
+            <div class="acard-route-line"></div>
+            <div class="acard-route-row"><div class="dot to"></div> Бухарест, Румунія</div>
+          </div>
+          <div class="acard-meta">
+            <span class="ameta hl">🏗️ Платформа</span><span class="ameta">22 т</span><span class="ameta">950 км</span><span class="ameta">09.06 · 08:00</span><span class="ameta">🤝 Домовл.</span>
+          </div>
+          <div class="acard-footer">
+            <div><div class="acard-price">31 000 <span>грн</span></div><div class="acard-dist">≈ 32.6 грн/км</div></div>
+            <button class="btn-bid" onclick="placeBid(this)">Зробити ставку</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TRIPS ═══ -->
+    <div class="panel" id="panel_trips">
+      <div class="ua-stripe"></div>
+      <div class="trips-list">
+        <div class="trip-card">
+          <div class="trip-hdr">
+            <span class="trip-id">#TH-2025-04821</span>
+            <span class="trip-status ts-active"><span class="ts-dot"></span> В дорозі</span>
+          </div>
+          <div class="trip-route">
+            <span class="trip-city">Київ</span>
+            <span class="trip-arrow">→</span>
+            <span class="trip-city">Варшава</span>
+          </div>
+          <div class="trip-meta">
+            <span class="tmeta">🚛 <strong>Тент · 20 т</strong></span>
+            <span class="tmeta">📍 <strong>1 100 км</strong></span>
+            <span class="tmeta">💰 <strong>38 000 грн</strong></span>
+            <span class="tmeta">🔐 <strong>SafePay</strong></span>
+            <span class="tmeta">📅 <strong>07.06.2025</strong></span>
+          </div>
+          <div class="trip-progress">
+            <div class="tp-labels"><span>Київ</span><span>65% · ≈ 385 км залишилось</span><span>Варшава</span></div>
+            <div class="tp-bar"><div class="tp-fill active" style="width:65%"></div></div>
+          </div>
+          <div class="trip-actions">
+            <button class="btn-sm">📍 Трекінг</button>
+            <button class="btn-sm">💬 Чат</button>
+            <button class="btn-sm">📋 Документи</button>
+            <button class="btn-sm green">✅ Підтвердити доставку</button>
+          </div>
+        </div>
+        <div class="trip-card">
+          <div class="trip-hdr">
+            <span class="trip-id">#TH-2025-04756</span>
+            <span class="trip-status ts-loading"><span class="ts-dot"></span> Завантаження</span>
+          </div>
+          <div class="trip-route">
+            <span class="trip-city">Одеса</span>
+            <span class="trip-arrow">→</span>
+            <span class="trip-city">Берлін</span>
+          </div>
+          <div class="trip-meta">
+            <span class="tmeta">🚛 <strong>Тент · 18 т</strong></span>
+            <span class="tmeta">📍 <strong>1 850 км</strong></span>
+            <span class="tmeta">💰 <strong>54 000 грн</strong></span>
+            <span class="tmeta">🔐 <strong>SafePay</strong></span>
+            <span class="tmeta">📅 <strong>08.06.2025</strong></span>
+          </div>
+          <div class="trip-progress">
+            <div class="tp-labels"><span>Одеса</span><span>Завантаження на складі</span><span>Берлін</span></div>
+            <div class="tp-bar"><div class="tp-fill loading" style="width:5%"></div></div>
+          </div>
+          <div class="trip-actions">
+            <button class="btn-sm">💬 Чат</button>
+            <button class="btn-sm">📋 CMR</button>
+            <button class="btn-sm accent">▶ Розпочати рейс</button>
+          </div>
+        </div>
+        <div class="trip-card" style="opacity:.7">
+          <div class="trip-hdr">
+            <span class="trip-id">#TH-2025-04698</span>
+            <span class="trip-status ts-done"><span class="ts-dot"></span> Завершено</span>
+          </div>
+          <div class="trip-route">
+            <span class="trip-city">Львів</span>
+            <span class="trip-arrow">→</span>
+            <span class="trip-city">Краків</span>
+          </div>
+          <div class="trip-meta">
+            <span class="tmeta">🚛 <strong>Тент · 12 т</strong></span>
+            <span class="tmeta">📍 <strong>320 км</strong></span>
+            <span class="tmeta">💰 <strong>9 800 грн</strong></span>
+            <span class="tmeta">📅 <strong>03.06.2025</strong></span>
+          </div>
+          <div class="trip-progress">
+            <div class="tp-labels"><span>Завершено</span><span>100%</span><span>✓</span></div>
+            <div class="tp-bar"><div class="tp-fill active" style="width:100%"></div></div>
+          </div>
+          <div class="trip-actions">
+            <button class="btn-sm">📄 Акт виконання</button>
+            <button class="btn-sm">⭐ Відгук замовника</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PROFILE ═══ -->
+    <div class="panel" id="panel_profile">
+      <div class="ua-stripe"></div>
+      <div class="profile-grid">
+        <div>
+          <div class="profile-card" style="margin-bottom:16px">
+            <div class="profile-avatar">МК</div>
+            <div class="profile-name">Микола Коваль</div>
+            <div class="profile-role">Перевізник · ФОП · Верифікований</div>
+            <div class="profile-trust">
+              <div><div class="score">4.8</div><div style="font-size:10px;color:var(--text2)">Trust Score</div></div>
+              <div class="stars" style="font-size:16px;color:var(--accent)">★★★★★</div>
+              <div style="font-size:11px;color:var(--text2)">127 рейсів</div>
+            </div>
+            <div class="profile-stats">
+              <div class="pstat"><div class="pstat-val" style="color:var(--green)">98%</div><div class="pstat-lbl">Вчасність</div></div>
+              <div class="pstat"><div class="pstat-val">47</div><div class="pstat-lbl">Відгуків</div></div>
+              <div class="pstat"><div class="pstat-val" style="color:var(--cyan)">3</div><div class="pstat-lbl">Авто</div></div>
+              <div class="pstat"><div class="pstat-val" style="color:var(--accent)">5</div><div class="pstat-lbl">Років досвіду</div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="profile-card" style="margin-bottom:16px">
+            <h3>👤 Особисті дані</h3>
+            <div class="row2">
+              <div class="inp-group"><label>Ім'я</label><input type="text" value="Микола"></div>
+              <div class="inp-group"><label>Прізвище</label><input type="text" value="Коваль"></div>
+            </div>
+            <div class="inp-group"><label>Телефон</label><input type="tel" value="+380 67 123 45 67"></div>
+            <div class="inp-group"><label>Email</label><input type="email" value="mykola.koval@gmail.com"></div>
+            <div class="inp-group"><label>Тип особи</label>
+              <select><option selected>ФОП</option><option>Юридична особа</option><option>Фізична особа</option></select>
+            </div>
+            <div class="inp-group"><label>ЄДРПОУ / ІПН</label><input type="text" value="3456789012"></div>
+            <button class="btn-save">Зберегти зміни</button>
+          </div>
+          <div class="profile-card">
+            <h3>🌍 Географія роботи</h3>
+            <div class="inp-group"><label>Базове місто</label><input type="text" value="Київ"></div>
+            <div class="inp-group"><label>Радіус роботи (км)</label>
+              <select><option>100 км</option><option>300 км</option><option selected>500 км</option><option>1000 км</option><option>Вся Україна</option><option>Міжнародні</option></select>
+            </div>
+            <div class="inp-group"><label>Напрямки</label>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+                <span style="background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--cyan)">🇺🇦 Україна</span>
+                <span style="background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--cyan)">🇵🇱 Польща</span>
+                <span style="background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--cyan)">🇩🇪 Німеччина</span>
+                <span style="background:rgba(255,255,255,.04);border:1px dashed var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--text2);cursor:pointer">+ Додати</span>
+              </div>
+            </div>
+            <button class="btn-save">Зберегти</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TRANSPORT ═══ -->
+    <div class="panel" id="panel_transport">
+      <div class="ua-stripe"></div>
+      <div class="transport-list">
+        <div class="tr-card">
+          <span class="tr-status ok">✓ Верифіковано</span>
+          <div class="tr-card-ico">🚛</div>
+          <div class="tr-card-name">Volvo FH 2021</div>
+          <div class="tr-card-type">Тентований напівпричіп</div>
+          <div class="tr-card-meta">
+            <div class="tr-meta-row"><span class="k">Держ. номер</span><span class="v">АА 1234 КК</span></div>
+            <div class="tr-meta-row"><span class="k">Вантажопідйомність</span><span class="v">20 т</span></div>
+            <div class="tr-meta-row"><span class="k">Об'єм кузова</span><span class="v">82 м³</span></div>
+            <div class="tr-meta-row"><span class="k">Рік випуску</span><span class="v">2021</span></div>
+            <div class="tr-meta-row"><span class="k">Страховка</span><span class="v" style="color:var(--green)">До 01.2026</span></div>
+          </div>
+          <div class="tr-actions">
+            <button class="btn-sm">✏️ Редагувати</button>
+            <button class="btn-sm">📋 Документи</button>
+          </div>
+        </div>
+        <div class="tr-card">
+          <span class="tr-status ok">✓ Верифіковано</span>
+          <div class="tr-card-ico">❄️</div>
+          <div class="tr-card-name">Mercedes Actros 2020</div>
+          <div class="tr-card-type">Рефрижератор</div>
+          <div class="tr-card-meta">
+            <div class="tr-meta-row"><span class="k">Держ. номер</span><span class="v">АА 5678 МН</span></div>
+            <div class="tr-meta-row"><span class="k">Вантажопідйомність</span><span class="v">18 т</span></div>
+            <div class="tr-meta-row"><span class="k">Температура</span><span class="v">-25°C / +25°C</span></div>
+            <div class="tr-meta-row"><span class="k">Рік випуску</span><span class="v">2020</span></div>
+            <div class="tr-meta-row"><span class="k">Страховка</span><span class="v" style="color:var(--accent)">До 03.2025 ⚠️</span></div>
+          </div>
+          <div class="tr-actions">
+            <button class="btn-sm">✏️ Редагувати</button>
+            <button class="btn-sm">📋 Документи</button>
+          </div>
+        </div>
+        <div class="tr-card">
+          <span class="tr-status pending">⏳ Перевірка</span>
+          <div class="tr-card-ico">🚐</div>
+          <div class="tr-card-name">Ford Transit 2022</div>
+          <div class="tr-card-type">Мікровантажний фургон</div>
+          <div class="tr-card-meta">
+            <div class="tr-meta-row"><span class="k">Держ. номер</span><span class="v">КА 9012 ВС</span></div>
+            <div class="tr-meta-row"><span class="k">Вантажопідйомність</span><span class="v">1.5 т</span></div>
+            <div class="tr-meta-row"><span class="k">Об'єм кузова</span><span class="v">9 м³</span></div>
+            <div class="tr-meta-row"><span class="k">Рік випуску</span><span class="v">2022</span></div>
+            <div class="tr-meta-row"><span class="k">Страховка</span><span class="v" style="color:var(--green)">До 06.2026</span></div>
+          </div>
+          <div class="tr-actions">
+            <button class="btn-sm">✏️ Редагувати</button>
+            <button class="btn-sm accent">📤 Завантажити документи</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn-add-tr" onclick="showAddTransport()">➕ Додати транспортний засіб</button>
+
+      <!-- Add transport form (hidden by default) -->
+      <div id="addTrForm" style="display:none;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:16px">
+        <h3 style="font-family:'Exo 2',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:16px">➕ Новий транспортний засіб</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+          <button class="ctab on" onclick="this.parentElement.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));this.classList.add('on')">🚛 Вантажний</button>
+          <button class="ctab" onclick="this.parentElement.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));this.classList.add('on')">🚐 Мікровантаж</button>
+          <button class="ctab" onclick="this.parentElement.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));this.classList.add('on')">🏗️ Спецтехніка</button>
+          <button class="ctab" onclick="this.parentElement.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));this.classList.add('on')">🚌 Пасажирський</button>
+        </div>
+        <div class="row2">
+          <div class="inp-group"><label>Марка та модель</label><input type="text" placeholder="Volvo FH"></div>
+          <div class="inp-group"><label>Рік випуску</label><input type="number" placeholder="2020"></div>
+        </div>
+        <div class="row2">
+          <div class="inp-group"><label>Держ. номер</label><input type="text" placeholder="АА 0000 ББ"></div>
+          <div class="inp-group"><label>VIN-код</label><input type="text" placeholder="WDB9630321L..."></div>
+        </div>
+        <div class="row2">
+          <div class="inp-group"><label>Вантажопідйомність (т)</label><input type="number" placeholder="20"></div>
+          <div class="inp-group"><label>Об'єм кузова (м³)</label><input type="number" placeholder="82"></div>
+        </div>
+        <div class="inp-group"><label>Тип кузова</label>
+          <select><option>Тент</option><option>Рефрижератор</option><option>Цистерна</option><option>Платформа</option><option>Джамбо</option><option>Фургон</option></select>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:4px">
+          <button class="btn-save" onclick="document.getElementById('addTrForm').style.display='none'">💾 Зберегти</button>
+          <button class="btn-sm" onclick="document.getElementById('addTrForm').style.display='none'">Скасувати</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ DOCUMENTS ═══ -->
+    <div class="panel" id="panel_docs">
+      <div class="ua-stripe"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div class="profile-card">
+          <h3>🪪 Особисті документи</h3>
+          <div class="doc-list">
+            <div class="doc-item">
+              <div class="doc-ico">🪪</div>
+              <div class="doc-info"><div class="doc-name">Паспорт / ID-карта</div><div class="doc-exp">Завантажено 01.01.2024</div></div>
+              <span class="doc-st ok">✓ Верифіковано</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-ico">📋</div>
+              <div class="doc-info"><div class="doc-name">ІПН / РНОКПП</div><div class="doc-exp">Завантажено 01.01.2024</div></div>
+              <span class="doc-st ok">✓ Верифіковано</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-ico">🚗</div>
+              <div class="doc-info"><div class="doc-name">Водійське посвідчення</div><div class="doc-exp">Дійсне до 15.08.2028</div></div>
+              <span class="doc-st ok">✓ Верифіковано</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-ico">📄</div>
+              <div class="doc-info"><div class="doc-name">Виписка ФОП</div><div class="doc-exp">Завантажено 10.03.2024</div></div>
+              <span class="doc-st ok">✓ Верифіковано</span>
+            </div>
+          </div>
+        </div>
+        <div class="profile-card">
+          <h3>🚛 Документи на транспорт</h3>
+          <div class="doc-list">
+            <div class="doc-item">
+              <div class="doc-ico">📝</div>
+              <div class="doc-info"><div class="doc-name">Техпаспорт — Volvo FH</div><div class="doc-exp">АА 1234 КК · Дійсний</div></div>
+              <span class="doc-st ok">✓ OK</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-ico">🛡️</div>
+              <div class="doc-info"><div class="doc-name">ОСЦПВ — Volvo FH</div><div class="doc-exp">Дійсне до 01.01.2026</div></div>
+              <span class="doc-st ok">✓ OK</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-ico">🛡️</div>
+              <div class="doc-info"><div class="doc-name">ОСЦПВ — Mercedes</div><div class="doc-exp">Спливає 15.03.2025 ⚠️</div></div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span class="doc-st warn">⚠️ Спливає</span>
+                <button class="btn-up">Оновити</button>
+              </div>
+            </div>
+            <div class="doc-item">
+              <div class="doc-ico">📋</div>
+              <div class="doc-info"><div class="doc-name">Техпаспорт — Ford Transit</div><div class="doc-exp">КА 9012 ВС</div></div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span class="doc-st warn">⏳ На перевірці</span>
+                <button class="btn-up">Завантажити</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="profile-card" style="grid-column:1/-1">
+          <h3>📦 Дозволи та ліцензії</h3>
+          <div class="doc-list">
+            <div class="doc-item">
+              <div class="doc-ico">🌍</div>
+              <div class="doc-info"><div class="doc-name">Ліцензія міжнародних перевезень</div><div class="doc-exp">Дійсна до 31.12.2025</div></div>
+              <span class="doc-st ok">✓ Активна</span>
+            </div>
+            <div class="doc-item">
+              <div class="doc-ico">☢️</div>
+              <div class="doc-info"><div class="doc-name">Дозвіл на небезпечні вантажі (ADR)</div><div class="doc-exp">Не завантажено</div></div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span class="doc-st exp">✗ Відсутній</span>
+                <button class="btn-up">Завантажити</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ FINANCE ═══ -->
+    <div class="panel" id="panel_finance">
+      <div class="ua-stripe"></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+        <div class="stat-card c2"><div class="stat-ico">💰</div><div class="stat-val">47 200 <span>грн</span></div><div class="stat-lbl">Зароблено цього місяця</div></div>
+        <div class="stat-card c3"><div class="stat-ico">🔐</div><div class="stat-val">38 000 <span>грн</span></div><div class="stat-lbl">В SafePay (очікує)</div></div>
+        <div class="stat-card c1"><div class="stat-ico">📤</div><div class="stat-val">142 500 <span>грн</span></div><div class="stat-lbl">Виплачено всього</div></div>
+      </div>
+      <div class="profile-card">
+        <h3>📊 Історія виплат</h3>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr 1fr;gap:12px;padding:8px 12px;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border)">
+            <span>Дата</span><span>Маршрут</span><span>Сума</span><span>Спосіб</span><span>Статус</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr 1fr;gap:12px;padding:8px 12px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04)">
+            <span style="color:var(--text2)">04.06.2025</span><span>Київ → Варшава</span><span style="color:var(--white);font-weight:600">38 000 грн</span><span style="color:var(--green)">🔐 SafePay</span><span style="color:var(--accent)">⏳ Очікує</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr 1fr;gap:12px;padding:8px 12px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04)">
+            <span style="color:var(--text2)">03.06.2025</span><span>Львів → Краків</span><span style="color:var(--white);font-weight:600">9 800 грн</span><span style="color:var(--text2)">💵 Готівка</span><span style="color:var(--green)">✓ Отримано</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr 1fr;gap:12px;padding:8px 12px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.04)">
+            <span style="color:var(--text2)">01.06.2025</span><span>Харків → Одеса</span><span style="color:var(--white);font-weight:600">22 000 грн</span><span style="color:var(--cyan)">🏦 Безнал</span><span style="color:var(--green)">✓ Отримано</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr 1fr 1fr 1fr;gap:12px;padding:8px 12px;font-size:13px">
+            <span style="color:var(--text2)">28.05.2025</span><span>Дніпро → Берлін</span><span style="color:var(--white);font-weight:600">54 000 грн</span><span style="color:var(--green)">🔐 SafePay</span><span style="color:var(--green)">✓ Отримано</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// NAVIGATION
+const titles = {
+  dashboard: ['Дашборд','Огляд активності'],
+  auctions:  ['Аукціони','Доступні замовлення'],
+  trips:     ['Мої рейси','Активні та завершені'],
+  profile:   ['Мій профіль','Особисті дані'],
+  transport: ['Транспорт','Мій автопарк'],
+  docs:      ['Документи','Верифікація та ліцензії'],
+  finance:   ['Фінанси','Виплати та SafePay'],
+};
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('panel_' + id).classList.add('show');
+  document.querySelectorAll('.sb-item').forEach(i => {
+    if (i.getAttribute('onclick') && i.getAttribute('onclick').includes("'" + id + "'")) i.classList.add('active');
+  });
+  document.getElementById('topTitle').textContent = titles[id][0];
+  document.getElementById('topSub').textContent = titles[id][1];
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// STATUS TOGGLE
+function toggleStatus(el) {
+  const dot = document.getElementById('statusDot');
+  const txt = document.getElementById('statusTxt');
+  if (dot.classList.contains('off')) {
+    dot.classList.remove('off'); txt.textContent = 'Онлайн';
+  } else {
+    dot.classList.add('off'); txt.textContent = 'Офлайн';
+  }
+}
+
+// CHART
+function drawChart() {
+  const data = [12400, 9800, 15200, 8600, 18500, 14200, 11800];
+  const labels = ['Пн','Вт','Ср','Чт','Пт','Сб','Нд'];
+  const max = Math.max(...data);
+  const bars = document.getElementById('chartBars');
+  if (!bars) return;
+  bars.innerHTML = data.map((v,i) => `
+    <div class="bar-wrap">
+      <div class="bar" data-val="${(v/1000).toFixed(1)}к грн"
+        style="height:${(v/max*100)}%;background:${i===4?'linear-gradient(180deg,var(--accent),var(--orange))':'linear-gradient(180deg,rgba(0,200,255,0.6),rgba(0,100,200,0.3))'};"></div>
+      <span class="bar-lbl">${labels[i]}</span>
+    </div>`).join('');
+}
+drawChart();
+
+// TAB SWITCH
+function selTab(btn) {
+  btn.closest('.chart-tabs').querySelectorAll('.ctab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  drawChart();
+}
+
+// BID
+// BID FLOW
+function placeBid(btn) {
+  // Get auction card data
+  const card = btn.closest('.acard');
+  const id = card.querySelector('.acard-id').textContent;
+  const route = card.querySelectorAll('.acard-route-row')[0].textContent.trim() + ' → ' + card.querySelectorAll('.acard-route-row')[1].textContent.trim();
+  const price = card.querySelector('.acard-price').textContent.trim();
+  const meta = [...card.querySelectorAll('.ameta')].map(m=>m.textContent.trim());
+  openBidModal({id, route, price, meta});
+}
+
+function openBidModal(data) {
+  document.getElementById('bidModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  // Fill data
+  document.getElementById('bm_id').textContent = data.id;
+  document.getElementById('bm_route').textContent = data.route;
+  document.getElementById('bm_price').textContent = data.price;
+  document.getElementById('bm_meta').textContent = data.meta.join(' · ');
+  // Reset
+  document.getElementById('bmStep1').style.display = 'block';
+  document.getElementById('bmStep2').style.display = 'none';
+  document.getElementById('bmStep3').style.display = 'none';
+  document.getElementById('bm_payMode').value = 'safepay';
+  renderBidPayFields('safepay');
+}
+
+function closeBidModal() {
+  document.getElementById('bidModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function goToBidStep2() {
+  const myPrice = document.getElementById('bm_myPrice').value;
+  if (!myPrice || parseInt(myPrice) < 1000) {
+    document.getElementById('bm_myPrice').style.borderColor = 'var(--red)';
+    return;
+  }
+  document.getElementById('bmStep1').style.display = 'none';
+  document.getElementById('bmStep2').style.display = 'block';
+}
+
+function goToBidStep3() {
+  const mode = document.getElementById('bm_payMode').value;
+  if (mode === 'noncash') {
+    const iban = document.getElementById('bm_iban')?.value.trim();
+    if (!iban || iban.length < 15) {
+      document.getElementById('bm_iban').style.borderColor = 'var(--red)';
+      document.getElementById('bm_iban').focus();
+      return;
+    }
+  }
+  document.getElementById('bmStep2').style.display = 'none';
+  document.getElementById('bmStep3').style.display = 'block';
+  // Fill summary
+  const mode2 = document.getElementById('bm_payMode').value;
+  const names = {cash:'💵 Готівка',noncash:'🏦 Безготівковий',safepay:'🔐 SafePay',any:'🤝 На розсуд'};
+  document.getElementById('bm_summary').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--text2)">Маршрут</span><span id="bm_routeSum" style="font-weight:600;color:var(--white)"></span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:var(--text2)">Ваша ставка</span><span style="font-weight:800;color:var(--accent);font-size:16px">${parseInt(document.getElementById('bm_myPrice').value).toLocaleString('uk-UA')} грн</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0"><span style="color:var(--text2)">Спосіб оплати</span><span>${names[mode2]}</span></div>
+      ${mode2==='noncash'?`<div style="font-size:11px;color:var(--text2);background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;padding:8px">IBAN: <strong style="color:var(--white)">${document.getElementById('bm_iban')?.value||'—'}</strong></div>`:''}
+    </div>`;
+  setTimeout(()=>{document.getElementById('bm_routeSum').textContent=document.getElementById('bm_route').textContent},50);
+}
+
+function confirmBid() {
+  closeBidModal();
+  // Update button on auction card
+  document.querySelectorAll('.btn-bid').forEach(btn => {
+    if (!btn.disabled) {
+      btn.textContent = '✓ Ставку зроблено';
+      btn.style.background = 'var(--green)';
+      btn.style.color = 'var(--dark)';
+      btn.disabled = true;
+    }
+  });
+}
+
+function renderBidPayFields(mode) {
+  const body = document.getElementById('bm_payFields');
+  if (mode === 'cash') {
+    body.innerHTML = `<div style="display:flex;gap:10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;color:var(--text2)"><span>💵</span><span>Водій отримує готівку від замовника при доставці. Реквізити не потрібні.</span></div>`;
+  } else if (mode === 'noncash') {
+    body.innerHTML = `
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text2);margin-bottom:10px">Реквізити для оплати</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div class="bm-inp-g"><label>Назва отримувача</label><input type="text" id="bm_name" placeholder="ФОП Коваль Микола Іванович"/></div>
+        <div class="bm-inp-g"><label>ЄДРПОУ / ІПН</label><input type="text" id="bm_edrpou" placeholder="3456789012"/></div>
+      </div>
+      <div class="bm-inp-g" style="margin-bottom:10px"><label>IBAN рахунку *</label><input type="text" id="bm_iban" placeholder="UA213223130000026007233566001" maxlength="34" style="font-family:monospace"/></div>
+      <div class="bm-inp-g"><label>Банк</label><input type="text" id="bm_bank" placeholder="ПАТ КБ «Приватбанк»"/></div>`;
+  } else if (mode === 'safepay') {
+    body.innerHTML = `<div style="display:flex;gap:10px;background:rgba(0,214,143,.05);border:1px solid rgba(0,214,143,.2);border-radius:8px;padding:12px;font-size:12px;color:var(--text2)"><span>🔐</span><div><strong style="color:var(--green)">SafePay</strong> — кошти автоматично надходять на ваш гаманець після підтвердження доставки замовником. Банківські реквізити не потрібні.</div></div>`;
+  } else {
+    body.innerHTML = `<div style="display:flex;gap:10px;background:rgba(240,165,0,.05);border:1px solid rgba(240,165,0,.2);border-radius:8px;padding:12px;font-size:12px;color:var(--text2)"><span>💬</span><span>Ви запропонуєте зручний спосіб оплати замовнику в чаті після виграшу аукціону.</span></div>`;
+  }
+}
+
+// ADD TRANSPORT
+function showAddTransport() {
+  const f = document.getElementById('addTrForm');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+</script>
+
+<!-- BID MODAL -->
+<div id="bidModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(2,8,20,.88);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px" onclick="if(event.target===this)closeBidModal()" class="bm-show">
+  <div style="background:linear-gradient(145deg,#0d1e3a,#071428);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:28px 32px;width:100%;max-width:520px;position:relative;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.5)">
+    <button onclick="closeBidModal()" style="position:absolute;top:12px;right:14px;background:rgba(255,255,255,.07);border:none;color:var(--text2);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:13px">✕</button>
+
+    <!-- STEP 1: Bid amount -->
+    <div id="bmStep1">
+      <div style="font-family:'Exo 2',sans-serif;font-size:18px;font-weight:800;color:var(--white);margin-bottom:4px">🏛️ Зробити ставку</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:16px" id="bm_id"></div>
+
+      <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:16px">
+        <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:6px" id="bm_route"></div>
+        <div style="font-size:11px;color:var(--text2)" id="bm_meta"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+          <span style="font-size:12px;color:var(--text2)">Стартова ціна замовника</span>
+          <span style="font-family:'Exo 2',sans-serif;font-size:18px;font-weight:800;color:var(--accent)" id="bm_price"></span>
+        </div>
+      </div>
+
+      <div class="bm-inp-g" style="margin-bottom:14px">
+        <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px">Ваша ставка (грн) *</label>
+        <input type="number" id="bm_myPrice" placeholder="Введіть вашу ціну" style="width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--white);font-size:16px;font-family:'Exo 2',sans-serif;font-weight:700;outline:none;transition:border-color .2s" oninput="this.style.borderColor='var(--border)'">
+        <div style="font-size:11px;color:var(--text2);margin-top:5px">💡 Нижча ставка збільшує шанс перемоги. Середня ставка по маршруту: <strong style="color:var(--accent)">34 грн/км</strong></div>
+      </div>
+
+      <div class="bm-inp-g">
+        <label style="display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px">Транспортний засіб</label>
+        <select style="width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--white);font-size:13px;font-family:'Inter',sans-serif;outline:none;-webkit-appearance:none">
+          <option>🚛 Volvo FH 2021 · АА 1234 КК · 20 т</option>
+          <option>❄️ Mercedes Actros 2020 · АА 5678 МН · 18 т</option>
+        </select>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:16px">
+        <button onclick="closeBidModal()" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:12px 20px;color:var(--text);font-size:13px;cursor:pointer;font-family:'Inter',sans-serif">Скасувати</button>
+        <button onclick="goToBidStep2()" style="flex:1;background:var(--accent);border:none;border-radius:8px;padding:12px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">Далі: Спосіб оплати →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Payment -->
+    <div id="bmStep2" style="display:none">
+      <div style="font-family:'Exo 2',sans-serif;font-size:18px;font-weight:800;color:var(--white);margin-bottom:16px">💳 Спосіб оплати</div>
+
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text2);margin-bottom:10px">Оберіть зручний спосіб</div>
+      <select id="bm_payMode" onchange="renderBidPayFields(this.value)" style="width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--white);font-size:13px;font-family:'Inter',sans-serif;outline:none;margin-bottom:14px;-webkit-appearance:none">
+        <option value="safepay">🔐 SafePay (рекомендовано)</option>
+        <option value="noncash">🏦 Безготівковий (IBAN)</option>
+        <option value="cash">💵 Готівка при доставці</option>
+        <option value="any">🤝 На мій розсуд (узгодити в чаті)</option>
+      </select>
+
+      <div id="bm_payFields"></div>
+
+      <div style="display:flex;gap:8px;margin-top:16px">
+        <button onclick="document.getElementById('bmStep2').style.display='none';document.getElementById('bmStep1').style.display='block'" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:12px 20px;color:var(--text);font-size:13px;cursor:pointer;font-family:'Inter',sans-serif">← Назад</button>
+        <button onclick="goToBidStep3()" style="flex:1;background:var(--accent);border:none;border-radius:8px;padding:12px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">Далі: Підтвердження →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Confirm -->
+    <div id="bmStep3" style="display:none">
+      <div style="font-family:'Exo 2',sans-serif;font-size:18px;font-weight:800;color:var(--white);margin-bottom:16px">✅ Підтвердження ставки</div>
+      <div id="bm_summary" style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:16px"></div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:16px">
+        <input type="checkbox" id="bm_agree" style="accent-color:var(--accent);width:16px;height:16px;margin-top:2px;flex-shrink:0">
+        <label for="bm_agree" style="font-size:12px;color:var(--text2)">Погоджуюся з умовами перевезення та підтверджую наявність вказаного транспортного засобу та документів</label>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="document.getElementById('bmStep3').style.display='none';document.getElementById('bmStep2').style.display='block'" style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:12px 20px;color:var(--text);font-size:13px;cursor:pointer;font-family:'Inter',sans-serif">← Назад</button>
+        <button onclick="confirmBid()" style="flex:1;background:linear-gradient(135deg,var(--accent),#ff8c00);border:none;border-radius:8px;padding:12px;color:var(--dark);font-size:15px;font-weight:800;cursor:pointer;font-family:'Exo 2',sans-serif;box-shadow:0 4px 16px rgba(240,165,0,.3)">🚀 Підтвердити ставку</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+#bidModal.bm-show{display:flex!important}
+.bm-inp-g label{display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:5px}
+.bm-inp-g input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:7px;padding:9px 12px;color:var(--white);font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.bm-inp-g input:focus{border-color:rgba(0,200,255,.4)}
+.bm-inp-g input::placeholder{color:rgba(138,172,204,.4)}
+</style>

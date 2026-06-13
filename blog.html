@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Блог — Truck Hub UA | Логістика, перевезення, поради</title>
+<meta name="description" content="Корисні статті про вантажні та пасажирські перевезення в Україні та Європі. Поради для перевізників та замовників, новини логістики, кейси платформи Truck Hub.">
+<meta name="keywords" content="блог логістика, перевезення Україна, поради перевізникам, вантажні перевезення Польща, truck hub блог, логістика ЄС">
+<meta property="og:title" content="Блог Truck Hub UA — Логістика та перевезення">
+<meta property="og:description" content="Корисні статті, поради та кейси для учасників ринку транспортних перевезень.">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--dark:#040d1e;--dark2:#071428;--blue:#1a4a8a;--ua-blue:#005bbb;--ua-yellow:#ffd500;--accent:#f0a500;--accent2:#ffbe2e;--cyan:#00c8ff;--green:#00d68f;--text:#ccdcf0;--text2:#8aaccc;--white:#fff;--card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08)}
+html,body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);min-height:100vh}
+body::before{content:'';position:fixed;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ua-blue) 50%,var(--ua-yellow) 50%);z-index:9999}
+
+header{position:sticky;top:3px;background:rgba(4,13,30,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;padding:0 60px;justify-content:space-between;z-index:100}
+.logo{display:flex;align-items:center;gap:8px;font-family:'Exo 2',sans-serif;font-weight:800;font-size:18px;text-decoration:none;color:var(--white)}
+.logo span{color:var(--accent)}
+.logo-badge{background:var(--blue);color:var(--white);font-size:9px;font-weight:700;padding:2px 5px;border-radius:3px}
+nav a{color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;margin-left:28px;transition:color .2s}
+nav a:hover,nav a.active{color:var(--white)}
+.btn-reg{background:var(--accent);border:none;border-radius:7px;padding:9px 20px;color:var(--dark);font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;text-decoration:none}
+.btn-reg:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-login{background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:9px 18px;color:var(--white);font-size:13px;text-decoration:none;margin-right:8px;transition:all .2s}
+.btn-login:hover{border-color:var(--white)}
+
+/* HERO */
+.hero{padding:70px 60px 50px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(26,74,138,.3),transparent)}
+.hero-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:40px}
+.hero-text h1{font-family:'Exo 2',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:900;color:var(--white);margin-bottom:12px;line-height:1.15}
+.hero-text h1 span{color:var(--accent)}
+.hero-text p{font-size:15px;color:var(--text2);line-height:1.75;max-width:480px}
+.hero-stats{display:flex;gap:24px;flex-shrink:0}
+.hstat{text-align:center;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 24px}
+.hstat-val{font-family:'Exo 2',sans-serif;font-size:28px;font-weight:900;color:var(--accent)}
+.hstat-lbl{font-size:11px;color:var(--text2);margin-top:3px}
+
+/* SEARCH + CATEGORIES */
+.controls{padding:30px 60px;max-width:1200px;margin:0 auto}
+.search-row{display:flex;gap:12px;margin-bottom:20px}
+.search-inp{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 18px;color:var(--white);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.search-inp:focus{border-color:rgba(0,200,255,.4)}
+.search-inp::placeholder{color:rgba(138,172,204,.4)}
+.search-btn{background:var(--accent);border:none;border-radius:10px;padding:12px 24px;color:var(--dark);font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.search-btn:hover{background:var(--accent2)}
+
+.cats{display:flex;gap:8px;flex-wrap:wrap}
+.cat-btn{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:7px 16px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.cat-btn:hover{border-color:rgba(240,165,0,.3);color:var(--text)}
+.cat-btn.on{background:rgba(240,165,0,.1);border-color:var(--accent);color:var(--accent)}
+
+/* MAIN LAYOUT */
+.main-layout{max-width:1200px;margin:0 auto;padding:20px 60px 80px;display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:start}
+
+/* FEATURED */
+.featured{background:linear-gradient(135deg,rgba(26,74,138,.3),rgba(0,200,255,.1));border:1px solid rgba(0,200,255,.2);border-radius:16px;overflow:hidden;margin-bottom:28px;cursor:pointer;transition:all .3s}
+.featured:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.3);border-color:rgba(0,200,255,.4)}
+.featured-img{height:200px;background:linear-gradient(135deg,#0a1e38,#071428);display:flex;align-items:center;justify-content:center;font-size:64px;position:relative;overflow:hidden}
+.featured-img::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,.04) 1px,transparent 1px);background-size:30px 30px}
+.featured-body{padding:24px}
+.article-cat{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.ac-guide{background:rgba(0,214,143,.12);color:var(--green);border:1px solid rgba(0,214,143,.2)}
+.ac-news{background:rgba(0,200,255,.1);color:var(--cyan);border:1px solid rgba(0,200,255,.2)}
+.ac-case{background:rgba(240,165,0,.1);color:var(--accent);border:1px solid rgba(240,165,0,.2)}
+.ac-carrier{background:rgba(139,92,246,.1);color:#a78bfa;border:1px solid rgba(139,92,246,.2)}
+.ac-law{background:rgba(255,77,77,.1);color:#ff8080;border:1px solid rgba(255,77,77,.2)}
+.featured-title{font-family:'Exo 2',sans-serif;font-size:22px;font-weight:800;color:var(--white);margin-bottom:8px;line-height:1.3}
+.featured-excerpt{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px}
+.article-meta{display:flex;align-items:center;gap:14px;font-size:12px;color:var(--text2)}
+.article-meta span{display:flex;align-items:center;gap:4px}
+.read-more{color:var(--accent);font-weight:600;font-size:13px;margin-left:auto}
+
+/* ARTICLES GRID */
+.articles-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.article-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .3s}
+.article-card:hover{transform:translateY(-3px);border-color:rgba(240,165,0,.2);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.ac-img{height:120px;display:flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(135deg,#071428,#0a1e38)}
+.ac-body{padding:16px}
+.ac-title{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.35}
+.ac-excerpt{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px}
+.ac-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text2)}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:16px;position:sticky;top:80px}
+.sb-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.sb-title{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+
+/* Popular articles */
+.pop-list{display:flex;flex-direction:column;gap:10px}
+.pop-item{display:flex;gap:10px;cursor:pointer;transition:all .2s;padding:6px;border-radius:7px}
+.pop-item:hover{background:rgba(255,255,255,.03)}
+.pop-num{font-family:'Exo 2',sans-serif;font-size:20px;font-weight:900;color:rgba(240,165,0,.3);flex-shrink:0;width:24px;line-height:1}
+.pop-title{font-size:12px;font-weight:600;color:var(--text);line-height:1.4}
+.pop-meta{font-size:10px;color:var(--text2);margin-top:3px}
+
+/* Tags */
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:5px;padding:4px 10px;font-size:11px;color:var(--text2);cursor:pointer;transition:all .2s}
+.tag:hover{border-color:rgba(240,165,0,.3);color:var(--accent)}
+
+/* Newsletter */
+.newsletter{background:linear-gradient(135deg,rgba(240,165,0,.08),rgba(0,200,255,.05));border:1px solid rgba(240,165,0,.2);border-radius:12px;padding:20px}
+.nl-title{font-family:'Exo 2',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px}
+.nl-desc{font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5}
+.nl-inp{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:7px;padding:9px 12px;color:var(--white);font-size:13px;font-family:'Inter',sans-serif;outline:none;margin-bottom:8px}
+.nl-inp:focus{border-color:rgba(240,165,0,.4)}
+.nl-inp::placeholder{color:rgba(138,172,204,.4)}
+.nl-btn{width:100%;background:var(--accent);border:none;border-radius:7px;padding:10px;color:var(--dark);font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.nl-btn:hover{background:var(--accent2)}
+
+/* LOAD MORE */
+.load-more{text-align:center;margin-top:32px}
+.btn-load{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 36px;color:var(--text);font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-load:hover{border-color:rgba(240,165,0,.3);color:var(--accent)}
+
+/* ARTICLE PAGE */
+.article-page{display:none;max-width:800px;margin:0 auto;padding:40px 60px 80px}
+.article-page.show{display:block}
+.blog-list.hide{display:none}
+.back-btn{display:inline-flex;align-items:center;gap:8px;color:var(--text2);font-size:13px;cursor:pointer;margin-bottom:28px;transition:color .2s;background:none;border:none;font-family:'Inter',sans-serif}
+.back-btn:hover{color:var(--accent)}
+.article-h1{font-family:'Exo 2',sans-serif;font-size:clamp(28px,4vw,40px);font-weight:900;color:var(--white);margin-bottom:16px;line-height:1.2}
+.article-hero-img{height:280px;background:linear-gradient(135deg,#071428,#0d2040);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:80px;margin-bottom:28px;position:relative;overflow:hidden}
+.article-hero-img::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,.04) 1px,transparent 1px);background-size:30px 30px}
+.article-body{font-size:15px;color:var(--text2);line-height:1.85}
+.article-body h2{font-family:'Exo 2',sans-serif;font-size:22px;font-weight:800;color:var(--white);margin:32px 0 12px}
+.article-body h3{font-family:'Exo 2',sans-serif;font-size:18px;font-weight:700;color:var(--white);margin:24px 0 10px}
+.article-body p{margin-bottom:16px}
+.article-body ul{margin:12px 0 16px 20px;display:flex;flex-direction:column;gap:7px}
+.article-body li{color:var(--text2)}
+.article-body strong{color:var(--white)}
+.article-body .highlight{background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:10px;padding:16px 20px;margin:20px 0}
+.article-body .highlight p{margin-bottom:0;color:var(--accent)}
+.article-body table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px}
+.article-body th{padding:10px 14px;background:rgba(26,74,138,.4);color:var(--white);font-weight:700;text-align:left;border-bottom:1px solid var(--border)}
+.article-body td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text2)}
+.article-body tr:hover td{background:rgba(255,255,255,.02)}
+
+footer{background:#030a18;padding:40px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);flex-wrap:wrap;gap:16px}
+footer p{font-size:12px;color:var(--text2)}
+footer nav a{color:var(--text2);text-decoration:none;font-size:12px;margin-left:20px;transition:color .2s}
+footer nav a:hover{color:var(--white)}
+
+  /* ═══ МОБІЛЬНА АДАПТАЦІЯ ═══ */
+  .burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .burger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .burger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  .mob-menu {
+    display: none;
+    position: fixed;
+    top: 67px;
+    left: 0;
+    right: 0;
+    background: rgba(4,13,30,0.98);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px 24px;
+    z-index: 999;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mob-menu.show { display: flex; }
+  .mob-menu a {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color .2s;
+  }
+  .mob-menu a:last-child { border-bottom: none; }
+  .mob-menu a:hover, .mob-menu a.active { color: var(--white); }
+  .mob-menu .mob-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .mob-menu .mob-btns a {
+    flex: 1;
+    text-align: center;
+    border: none;
+    padding: 11px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .mob-menu .mob-btns .m-login {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.2) !important;
+    color: var(--white) !important;
+  }
+  .mob-menu .mob-btns .m-reg {
+    background: var(--accent);
+    color: var(--dark) !important;
+    border: none !important;
+  }
+
+  @media (max-width: 900px) {
+    header { padding: 0 20px; }
+    header nav, header .btn-login, header .btn-reg { display: none !important; }
+    .burger { display: flex; }
+
+    /* Hero */
+    .hero { padding: 60px 24px 40px; }
+    .hero h1 { font-size: clamp(28px, 8vw, 44px); }
+    .hero p { font-size: 15px; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .hero-actions a { text-align: center; }
+    .features-strip { grid-template-columns: 1fr 1fr; }
+
+    /* Sections */
+    section { padding: 50px 24px; }
+    .why-grid { grid-template-columns: 1fr; }
+    .solutions-grid { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr 1fr; }
+    .eco-grid { grid-template-columns: 1fr; }
+    .cube-visual { display: none; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .cta-section { flex-direction: column; padding: 40px 24px; text-align: center; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+
+    /* About, Contact, Pricing, Blog */
+    .mission-inner { grid-template-columns: 1fr; }
+    .mission-stats { grid-template-columns: 1fr 1fr; }
+    .values-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .main-layout { grid-template-columns: 1fr; padding: 20px 24px 60px; }
+    .sidebar { display: none; }
+    .plans { grid-template-columns: 1fr; }
+    .plans-wrap { padding: 0 24px 60px; }
+    .comm-grid { grid-template-columns: 1fr 1fr; }
+    .bonus-grid { grid-template-columns: 1fr; }
+    .compare-wrap { overflow-x: auto; }
+    .faq { padding: 50px 24px; }
+    .bonuses, .commission, .compare { padding: 50px 24px; }
+    .sp-flow { grid-template-columns: 1fr; }
+    .sp-arrow { transform: rotate(90deg); margin: 0 auto; }
+    .trust-grid { grid-template-columns: 1fr 1fr; }
+    .hero-inner { flex-direction: column; }
+    .hero-stats { justify-content: center; }
+    .steps-flow .step-item { grid-template-columns: 60px 1fr; gap: 16px; }
+
+    /* Blog */
+    .articles-grid { grid-template-columns: 1fr; }
+    .article-page { padding: 30px 24px 60px; }
+
+    /* Dashboard */
+    .row4, .row3 { grid-template-columns: 1fr 1fr; }
+    .row2 { grid-template-columns: 1fr; }
+
+    /* Controls */
+    .controls { padding: 20px 24px; }
+    .filters-bar, .filters { flex-wrap: wrap; }
+
+    /* How it works */
+    .steps-section { padding: 0 24px 60px; }
+    .role-switcher { flex-wrap: wrap; }
+
+    /* Footer */
+    footer { padding: 30px 24px; flex-direction: column; text-align: center; gap: 12px; }
+    footer nav { flex-wrap: wrap; justify-content: center; }
+    footer nav a { margin: 0 8px; }
+
+    /* Contact */
+    .faq-grid { grid-template-columns: 1fr; }
+    .social-links { flex-wrap: wrap; justify-content: center; }
+
+    /* Pricing compare */
+    .rights-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .features-strip { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr; }
+    .row4, .row3, .row2 { grid-template-columns: 1fr; }
+    .mission-stats { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .comm-grid { grid-template-columns: 1fr; }
+    .trust-grid { grid-template-columns: 1fr; }
+    .period-toggle { flex-direction: column; border-radius: 12px; }
+    .plans-wrap { padding: 0 16px 40px; }
+    .hero { padding: 50px 16px 30px; }
+    section { padding: 40px 16px; }
+    footer { padding: 24px 16px; }
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <a href="truckhub.html" class="logo">TRUCK <span>HUB</span> <span class="logo-badge">UA</span></a>
+  <nav>
+    <a href="how-it-works.html">Як це працює</a>
+    <a href="pricing.html">Тарифи</a>
+    <a href="about.html">Про нас</a>
+    <a href="blog.html" class="active">Блог</a>
+    <a href="contact.html">Контакти</a>
+  </nav>
+  <div style="display:flex;align-items:center">
+    <a href="truckhub.html" class="btn-login">Увійти</a>
+    <a href="truckhub.html" class="btn-reg">Реєстрація</a>
+  </div>
+  <button class="burger" id="burgerBtn" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-menu" id="mobMenu">
+    <a href="how-it-works.html">Як це працює</a>
+    <a href="pricing.html">Тарифи</a>
+    <a href="about.html">Про нас</a>
+    <a href="blog.html">Блог</a>
+    <a href="contact.html">Контакти</a>
+    <div class="mob-btns">
+      <a href="truckhub.html" class="m-login">Увійти</a>
+      <a href="truckhub.html" class="m-reg">Реєстрація</a>
+    </div>
+  </div>
+</header>
+
+<!-- BLOG LIST VIEW -->
+<div class="blog-list" id="blogList">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>Блог <span>Truck Hub</span></h1>
+        <p>Корисні статті про логістику, поради для перевізників та замовників, новини ринку та кейси платформи.</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-val">24</div><div class="hstat-lbl">Статті</div></div>
+        <div class="hstat"><div class="hstat-val">5</div><div class="hstat-lbl">Категорії</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH + CATS -->
+  <div class="controls">
+    <div class="search-row">
+      <input class="search-inp" placeholder="🔍 Пошук статей...">
+      <button class="search-btn">Пошук</button>
+    </div>
+    <div class="cats">
+      <button class="cat-btn on" onclick="selCat(this)">Всі статті</button>
+      <button class="cat-btn" onclick="selCat(this)">📖 Гайди</button>
+      <button class="cat-btn" onclick="selCat(this)">📰 Новини</button>
+      <button class="cat-btn" onclick="selCat(this)">💼 Кейси</button>
+      <button class="cat-btn" onclick="selCat(this)">🚛 Перевізникам</button>
+      <button class="cat-btn" onclick="selCat(this)">⚖️ Законодавство</button>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="main-layout">
+    <div>
+      <!-- FEATURED -->
+      <div class="featured" onclick="openArticle()">
+        <div class="featured-img" style="font-size:64px">🚛🇵🇱</div>
+        <div class="featured-body">
+          <div class="article-cat ac-guide">📖 Гайд</div>
+          <div class="featured-title">Як перевезти вантаж до Польщі у 2025 році: повний гайд для українських перевізників</div>
+          <div class="featured-excerpt">Митне оформлення, CMR документи, дозволи ЄКМТ, страхування та найпоширеніші помилки. Все що потрібно знати для успішного міжнародного рейсу Україна — Польща.</div>
+          <div class="article-meta">
+            <span>📅 5 червня 2025</span>
+            <span>⏱ 8 хв читання</span>
+            <span>👁 2 847 переглядів</span>
+            <span class="read-more">Читати →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRID -->
+      <div class="articles-grid">
+
+        <div class="article-card" onclick="openArticle()">
+          <div class="ac-img">🔐💰</div>
+          <div class="ac-body">
+            <div class="article-cat ac-guide">📖 Гайд</div>
+            <div class="ac-title">SafePay: як захистити оплату за перевезення від шахраїв</div>
+            <div class="ac-excerpt">Покрокова інструкція як використовувати ескроу-систему SafePay для безпечних розрахунків.</div>
+            <div class="ac-meta"><span>📅 1 чер 2025</span><span>⏱ 5 хв</span><span>👁 1 543</span></div>
+          </div>
+        </div>
+
+        <div class="article-card" onclick="openArticle()">
+          <div class="ac-img">⭐📊</div>
+          <div class="ac-body">
+            <div class="article-cat ac-carrier">🚛 Перевізникам</div>
+            <div class="ac-title">Trust Score: як підвищити рейтинг і отримувати більше замовлень</div>
+            <div class="ac-excerpt">5 перевірених способів збільшити Trust Score від 3.5 до 4.8 за 3 місяці роботи на платформі.</div>
+            <div class="ac-meta"><span>📅 28 тра 2025</span><span>⏱ 6 хв</span><span>👁 2 102</span></div>
+          </div>
+        </div>
+
+        <div class="article-card" onclick="openArticle()">
+          <div class="ac-img">📋🚛</div>
+          <div class="ac-body">
+            <div class="article-cat ac-law">⚖️ Законодавство</div>
+            <div class="ac-title">CMR накладна 2025: що змінилось і як правильно оформити</div>
+            <div class="ac-excerpt">Актуальні вимоги до міжнародних вантажних накладних для перевезень Україна — ЄС.</div>
+            <div class="ac-meta"><span>📅 22 тра 2025</span><span>⏱ 7 хв</span><span>👁 3 218</span></div>
+          </div>
+        </div>
+
+        <div class="article-card" onclick="openArticle()">
+          <div class="ac-img">💼✅</div>
+          <div class="ac-body">
+            <div class="article-cat ac-case">💼 Кейс</div>
+            <div class="ac-title">Як ФОП Коваль збільшив дохід на 40% за 2 місяці через Truck Hub</div>
+            <div class="ac-excerpt">Реальна історія перевізника з Києва: від скептицизму до 127 успішних рейсів та Trust Score 4.8.</div>
+            <div class="ac-meta"><span>📅 15 тра 2025</span><span>⏱ 4 хв</span><span>👁 4 671</span></div>
+          </div>
+        </div>
+
+        <div class="article-card" onclick="openArticle()">
+          <div class="ac-img">🚌👥</div>
+          <div class="ac-body">
+            <div class="article-cat ac-guide">📖 Гайд</div>
+            <div class="ac-title">Пасажирські перевезення на Truck Hub: як замовити автобус або мікроавтобус</div>
+            <div class="ac-excerpt">Покрокова інструкція для замовників корпоративного транспорту, весільних кортежів та групових поїздок.</div>
+            <div class="ac-meta"><span>📅 10 тра 2025</span><span>⏱ 5 хв</span><span>👁 987</span></div>
+          </div>
+        </div>
+
+        <div class="article-card" onclick="openArticle()">
+          <div class="ac-img">📰🇺🇦</div>
+          <div class="ac-body">
+            <div class="article-cat ac-news">📰 Новини</div>
+            <div class="ac-title">Truck Hub запускає SafePay для міжнародних перевезень в EUR</div>
+            <div class="ac-excerpt">Тепер замовники з Польщі та Румунії можуть використовувати SafePay захист в євро для угод з українськими перевізниками.</div>
+            <div class="ac-meta"><span>📅 3 тра 2025</span><span>⏱ 3 хв</span><span>👁 1 329</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="load-more">
+        <button class="btn-load">Завантажити ще статті</button>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <div class="newsletter">
+        <div class="nl-title">📬 Щотижневий дайджест</div>
+        <div class="nl-desc">Найкращі статті та новини логістики — щопонеділка на вашу пошту.</div>
+        <input class="nl-inp" type="email" placeholder="your@email.com">
+        <button class="nl-btn">Підписатися</button>
+      </div>
+
+      <div class="sb-card">
+        <div class="sb-title">🔥 Популярне</div>
+        <div class="pop-list">
+          <div class="pop-item" onclick="openArticle()">
+            <div class="pop-num">1</div>
+            <div><div class="pop-title">Як перевезти вантаж до Польщі у 2025 році</div><div class="pop-meta">2 847 переглядів</div></div>
+          </div>
+          <div class="pop-item" onclick="openArticle()">
+            <div class="pop-num">2</div>
+            <div><div class="pop-title">Кейс: ФОП Коваль +40% доходу за 2 місяці</div><div class="pop-meta">4 671 перегляд</div></div>
+          </div>
+          <div class="pop-item" onclick="openArticle()">
+            <div class="pop-num">3</div>
+            <div><div class="pop-title">CMR накладна 2025: актуальні вимоги</div><div class="pop-meta">3 218 переглядів</div></div>
+          </div>
+          <div class="pop-item" onclick="openArticle()">
+            <div class="pop-num">4</div>
+            <div><div class="pop-title">Trust Score: як підвищити рейтинг</div><div class="pop-meta">2 102 перегляди</div></div>
+          </div>
+          <div class="pop-item" onclick="openArticle()">
+            <div class="pop-num">5</div>
+            <div><div class="pop-title">SafePay: захист від шахраїв</div><div class="pop-meta">1 543 перегляди</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sb-card">
+        <div class="sb-title">🏷️ Теги</div>
+        <div class="tags">
+          <span class="tag">вантажні перевезення</span>
+          <span class="tag">SafePay</span>
+          <span class="tag">Trust Score</span>
+          <span class="tag">Польща</span>
+          <span class="tag">CMR</span>
+          <span class="tag">митниця</span>
+          <span class="tag">ФОП перевізник</span>
+          <span class="tag">аукціон</span>
+          <span class="tag">GPS трекінг</span>
+          <span class="tag">пасажирські</span>
+          <span class="tag">міжнародні</span>
+          <span class="tag">страхування</span>
+          <span class="tag">верифікація</span>
+        </div>
+      </div>
+
+      <div class="sb-card" style="background:linear-gradient(135deg,rgba(240,165,0,.08),rgba(0,200,255,.04));border-color:rgba(240,165,0,.2)">
+        <div class="sb-title" style="color:var(--accent)">🚀 Спробуй платформу</div>
+        <p style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px">Перший місяць безкоштовно. Верифікація за 4 години. 2 450+ перевізників вже на платформі.</p>
+        <a href="truckhub.html" style="display:block;background:var(--accent);border-radius:8px;padding:10px;text-align:center;color:var(--dark);font-size:13px;font-weight:700;text-decoration:none;transition:all .2s">Зареєструватись →</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ARTICLE VIEW -->
+<div class="article-page" id="articlePage">
+  <div style="max-width:800px;margin:0 auto;padding-top:30px">
+    <button class="back-btn" onclick="closeArticle()">← Назад до блогу</button>
+
+    <div class="article-cat ac-guide" style="margin-bottom:14px">📖 Гайд</div>
+    <h1 class="article-h1">Як перевезти вантаж до Польщі у 2025 році: повний гайд для українських перевізників</h1>
+
+    <div class="article-meta" style="margin-bottom:24px;font-size:13px;color:var(--text2);display:flex;gap:16px">
+      <span>📅 5 червня 2025</span>
+      <span>⏱ 8 хв читання</span>
+      <span>👁 2 847 переглядів</span>
+    </div>
+
+    <div class="article-hero-img">🚛🇵🇱</div>
+
+    <div class="article-body">
+      <p>Польща — найпопулярніший напрямок для українських перевізників. Щодня сотні вантажівок перетинають кордон у обох напрямках. Але незнання правил може коштувати дорого: штрафи, затримки на митниці, навіть конфіскація вантажу.</p>
+
+      <p>У цьому гайді ми зібрали все що потрібно знати для успішного рейсу Україна — Польща у 2025 році.</p>
+
+      <div class="highlight"><p>💡 Використовуйте Truck Hub для пошуку замовлень до Польщі. На платформі щодня з'являються нові аукціони за маршрутами Київ → Варшава, Львів → Краків, Одеса → Гданськ та іншими.</p></div>
+
+      <h2>1. Необхідні документи</h2>
+      <p>Для міжнародного перевезення вантажів Україна — Польща вам знадобляться:</p>
+      <ul>
+        <li><strong>CMR накладна</strong> — міжнародна товарно-транспортна накладна. Оформлюється у 3 примірниках: для відправника, одержувача та перевізника.</li>
+        <li><strong>TIR карнет</strong> — для перевезень під процедурою TIR (спрощена митниця). Оформляється через АСКУ.</li>
+        <li><strong>Інвойс та пакувальний лист</strong> — надає відправник вантажу.</li>
+        <li><strong>Дозвіл ЄКМТ</strong> — для нерезидентів ЄС обов'язковий для транзитних перевезень через країни ЄС.</li>
+        <li><strong>Страховий поліс CMR</strong> — страхування відповідальності перевізника.</li>
+        <li><strong>Посвідчення водія міжнародного зразка</strong> — категорія CE.</li>
+      </ul>
+
+      <h2>2. Митне оформлення</h2>
+      <p>З 2022 року Україна запровадила спрощену процедуру митного оформлення для перевезень в країни ЄС. Ось основні кроки:</p>
+
+      <table>
+        <thead><tr><th>Крок</th><th>Де</th><th>Час</th></tr></thead>
+        <tbody>
+          <tr><td>Подача електронної декларації</td><td>Онлайн через АСМР</td><td>До в'їзду на митний термінал</td></tr>
+          <tr><td>Митний огляд в Україні</td><td>КПП «Краківець», «Ягодин» та ін.</td><td>1–4 години</td></tr>
+          <tr><td>Митний огляд в Польщі</td><td>КПП «Медика», «Дорогуськ» та ін.</td><td>30 хв – 2 години</td></tr>
+          <tr><td>Доставка до одержувача</td><td>Польща</td><td>Залежить від відстані</td></tr>
+        </tbody>
+      </table>
+
+      <h2>3. Дозволи ЄКМТ: що потрібно знати</h2>
+      <p>ЄКМТ (ЕКМТ) — багатостороннє дозвіл для міжнародних автомобільних перевезень між країнами-членами Міжнародного транспортного форуму. Дозволяє необмежену кількість рейсів між країнами ЄС протягом року.</p>
+
+      <div class="highlight"><p>⚠️ Кількість дозволів ЄКМТ обмежена. Подавайте заявку заздалегідь через Асоціацію міжнародних автомобільних перевізників України (АсМАП).</p></div>
+
+      <h2>4. Найпоширеніші помилки</h2>
+      <ul>
+        <li>Неправильно оформлена CMR — найчастіша причина затримки на митниці</li>
+        <li>Відсутність страхового поліса CMR — штраф від 5 000 злотих</li>
+        <li>Перевищення ваги — штраф та примусове розвантаження</li>
+        <li>Невірно вказана вартість вантажу в інвойсі — затримка для перевірки</li>
+        <li>Закінчений технічний огляд ТЗ — заборона в'їзду на територію ЄС</li>
+      </ul>
+
+      <h2>5. Корисні контакти</h2>
+      <ul>
+        <li>АсМАП України — asmap.com.ua — дозволи, консультації</li>
+        <li>Державна митна служба України — customs.gov.ua</li>
+        <li>Митна служба Польщі — mf.gov.pl</li>
+        <li>Truck Hub підтримка — 0 800 33 67 22 (безкоштовно)</li>
+      </ul>
+
+      <div class="highlight"><p>🚀 Знайдіть замовлення до Польщі на Truck Hub прямо зараз. Понад 40 нових аукціонів щодня за польськими напрямками. Верифіковані замовники, SafePay захист, гарантована оплата.</p></div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;padding-top:20px;border-top:1px solid var(--border)">
+      <span style="font-size:13px;color:var(--text2)">Теги:</span>
+      <span class="tag">вантажні перевезення</span>
+      <span class="tag">Польща</span>
+      <span class="tag">CMR</span>
+      <span class="tag">митниця</span>
+      <span class="tag">міжнародні</span>
+      <span class="tag">ЄКМТ</span>
+    </div>
+
+    <div style="margin-top:32px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;display:flex;align-items:center;gap:20px">
+      <div style="font-size:40px">🚛</div>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px">Знайдіть замовлення до Польщі на Truck Hub</div>
+        <div style="font-size:13px;color:var(--text2);margin-bottom:12px">40+ нових аукціонів щодня. SafePay захист. Верифіковані замовники.</div>
+        <a href="truckhub.html" style="display:inline-flex;align-items:center;gap:6px;background:var(--accent);border-radius:7px;padding:9px 18px;color:var(--dark);font-size:13px;font-weight:700;text-decoration:none">Знайти замовлення →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="truckhub.html" class="logo" style="font-size:15px">TRUCK <span>HUB</span> <span class="logo-badge">UA</span></a>
+  <p>© 2025 Truck Hub UA (Барс Арт). м. Львів 🇺🇦</p>
+  <nav>
+    <a href="about.html">Про нас</a>
+    <a href="pricing.html">Тарифи</a>
+    <a href="contact.html">Контакти</a>
+    <a href="blog.html">Блог</a>
+  </nav>
+</footer>
+
+<script>
+function selCat(btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function openArticle() {
+  document.getElementById('blogList').classList.add('hide');
+  document.getElementById('articlePage').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function closeArticle() {
+  document.getElementById('blogList').classList.remove('hide');
+  document.getElementById('articlePage').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+<script>
+// Burger menu
+function initBurger() {
+  const burger = document.getElementById('burgerBtn');
+  const menu = document.getElementById('mobMenu');
+  if (!burger || !menu) return;
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    menu.classList.toggle('show');
+  });
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!burger.contains(e.target) && !menu.contains(e.target)) {
+      burger.classList.remove('open');
+      menu.classList.remove('show');
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', initBurger);
+</script>
+
+</body>
+</html>
