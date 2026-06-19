@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Truck Hub UA — Login V3</title>
+  <meta name="description" content="Вхід до кабінету Truck Hub UA для замовників і перевізників.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="login-page">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">TH</span>
+        <span class="brand-text">
+          <strong>TRUCK HUB</strong>
+          <small>Login V3</small>
+        </span>
+      </a>
+
+      <a href="index.html" class="btn btn-ghost">На головну</a>
+    </div>
+  </header>
+
+  <main class="login-main">
+    <div class="container login-grid">
+      <section class="login-hero">
+        <span>Truck Hub UA</span>
+        <h1>Один вхід. Дві ролі. Одна система довіри.</h1>
+        <p>
+          Замовник створює заявку. Перевізник бере участь в аукціоні.
+          Платформа супроводжує рейс від старту до завершення оплати.
+        </p>
+
+        <div class="login-feature-grid">
+          <article>
+            <strong>Verification</strong>
+            <p>перевірка документів і учасників</p>
+          </article>
+          <article>
+            <strong>Trust Score</strong>
+            <p>репутація на основі реальних дій</p>
+          </article>
+          <article>
+            <strong>SafePay</strong>
+            <p>безпечне резервування коштів</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="login-card">
+        <span>Secure Access</span>
+        <h2>Вхід до кабінету</h2>
+        <p>Оберіть роль і продовжуйте роботу в системі Truck Hub.</p>
+
+        <div class="role-tabs" role="tablist" aria-label="Вибір ролі">
+          <button class="role-tab is-active" id="customerTab" type="button">Замовник</button>
+          <button class="role-tab" id="carrierTab" type="button">Перевізник</button>
+        </div>
+
+        <form class="login-form" id="loginForm">
+          <label>
+            <span>Email або телефон</span>
+            <input type="text" name="login" placeholder="example@truckhub.ua" required>
+          </label>
+
+          <label>
+            <span>Пароль</span>
+            <input type="password" name="password" placeholder="••••••••" required>
+          </label>
+
+          <div class="login-options">
+            <label>
+              <input type="checkbox" name="remember">
+              Запам’ятати мене
+            </label>
+            <a href="#">Забули пароль?</a>
+          </div>
+
+          <button class="btn btn-gold btn-full" type="submit">Увійти</button>
+        </form>
+
+        <div class="register-box">
+          <strong>Ще немає акаунта?</strong>
+          <div>
+            <a href="#" class="btn btn-blue">Стати замовником</a>
+            <a href="#" class="btn btn-ghost">Стати перевізником</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
